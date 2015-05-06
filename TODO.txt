@@ -1,0 +1,17 @@
+This is our little todo file for our project.
+
+Submit final proposal
+Choose JSON parser/format
+   jquery stuff of course
+
+make implementation files 
+make a most recent changes.txt file whatever
+make a simple cube in Three.js
+structure demo for both (separate branches so we don't crap on each
+other)
+
+notes: 
+   canvas size will be the same as the window
+
+
+
