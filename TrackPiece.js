@@ -9,21 +9,33 @@
  * Use the presets to make ones you would actually use.
  */
 var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
+    
+    // the world coordinates from the previous piece of track
     this.xIn = xIn;
     this.yIn = yIn;
     this.zIn = zIn;
+    // how many world coordinates the piece changes by
     this.dx = dx;
     this.dy = dy;
     this.dz = 0;
+    // the coordinate that the piece exits.
     this.xOut = xIn+dx;
     this.yOut = yIn+dy;
-    this.zOut = zIn+this.dz;
+    this.zOut = zIn + this.dz;
 
+// Do we really need these booleans? dz, zIn, and zOut should have overlap with them
+    // if the piece rises a level. If this is true zOut should be zIn + 1; 
     this.lift = false;
 
+    // if the piece falls down a level 
+    this.fall = false;
+    
+    // the slope at which the pieces enter and exit
     this.slopeIn = TrackPiece.enumerate.slope.SLOPE_FLAT;
     this.slopeOut = TrackPiece.enumerate.slope.SLOPE_FLAT;
 
+    // the directions we enter and exit from
+ // Dow we really need this with xIn, yIn and zIn?
     this.dirIn = dirIn;
     this.dirOut = dirOut;
     
@@ -53,11 +65,16 @@ TrackPiece.preset = {
 //would be called "enum" but that's a reserved word, even though JS doesn't have enum types...
 TrackPiece.enumerate = {};
 
+
+// the slope of the piece as in concave vs convex vs flat
 TrackPiece.enumerate.slope = {
     SLOPE_FLAT: "flat",
-    SLOPE_UP: "up"
+    SLOPE_UP: "up",
+    SLOPE_DOWN: "down"
 };
 
+// the direction facing.
+// Is this really necessary with dx, dy, dz
 TrackPiece.enumerate.direction = {
     NORTH: "north",
     EAST: "east",
