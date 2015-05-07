@@ -10,21 +10,24 @@
 
 
 
-var TrackPiece = function(xInit, yInit, zInit, dx, dy, dz) {
-    this.xInit = xInit;
-    this.yInit = yInit;
-    this.zInit = zInit;
+var TrackPiece = function(xIn, yIn, zIn, dx, dy) {
+    this.xIn = xIn;
+    this.yIn = yIn;
+    this.zIn = zIn;
     this.dx = dx;
     this.dy = dy;
-    this.dz = dz;
+    this.dz = 0;
+    this.xOut = xIn+dx;
+    this.yOut = yIn+dy;
+    this.zOut = zIn+this.dz;
 
     this.lift = false;
 
-    this.slopeInit = TrackPiece.slopeEnum.SLOPE_FLAT;
-    this.slopeFin = TrackPiece.slopeEnum.SLOPE_FLAT;
+    this.slopeIn = TrackPiece.enums.slope.SLOPE_FLAT;
+    this.slopeOut = TrackPiece.enums.slope.SLOPE_FLAT;
 
-    this.dirInit = 0;
-    this.dirFin = 0;
+    this.dirIn = TrackPiece.enums.direction.EAST;
+    this.dirOut = TrackPiece.enums.direction.EAST;
 };
 
 
@@ -34,8 +37,16 @@ TrackPiece.presets = {
 
 };
 
+TrackPiece.enums = {};
 
-TrackPiece.slopeEnum = {
+TrackPiece.enums.slope = {
     SLOPE_FLAT: "flat",
     SLOPE_UP: "up"
 };
+
+TrackPiece.enums.direction = {
+    NORTH: 1,
+    EAST: 0,
+    SOUTH: 3,
+    WEST: 2
+}
