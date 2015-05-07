@@ -35,12 +35,19 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.slopeOut = TrackPiece.enumerate.slope.SLOPE_FLAT;
 
     // the directions we enter and exit from
- // Dow we really need this with xIn, yIn and zIn?
+ // Do we really need this with xIn, yIn and zIn?
     this.dirIn = dirIn;
     this.dirOut = dirOut;
     
     // key value of the piece to be added to tracks[] in world.js
     this.key;
+    
+    /**
+     * This is some experimental code for the track. Insert it as you
+     * will
+     */
+   tracks.insert(this);
+    
 };
 
 /**
