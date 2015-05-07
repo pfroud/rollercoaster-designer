@@ -45,7 +45,7 @@ var CENTER = new Coordinate(
 // =====================================================================
 
 // Coordinate ==========================================================
-// specifies a world coordinate. 
+// specifies a world coordinate. Doesn't have a specific use yet.
 function Coordinate(x, y, z) {
    this.x = x;
    this.y = y; 
@@ -66,7 +66,8 @@ function Coordinate(x, y, z) {
  * set: array of all tracks, every track is held as a key-value pair
  * for quick deletion
  * 
- * counter: an integer that starts at 0, to give track piece 
+ * counter: an integer that starts at 0, to give track piece a unique
+ * key. Resets to zero
  */
 function Tracks(){
    this.set = []; // the actual array
@@ -101,9 +102,7 @@ Tracks.prototype.deleteAll = function () {
  */
 
 /**
- * An array of all of the track peices. New pieces are placed into the
+ * An array of all of the track pieces. New pieces are placed into the
  * array, when a piece is deleted it should be removed from the array
- * 
- * TODO: find out a good convention to pop from track array
  */
 var tracks = new Tracks();
