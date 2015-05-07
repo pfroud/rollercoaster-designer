@@ -26,6 +26,9 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
 
     this.dirIn = dirIn;
     this.dirOut = dirOut;
+    
+    // key value of the piece to be added to tracks[] in world.js
+    this.key;
 };
 
 /**
@@ -61,3 +64,5 @@ TrackPiece.enumerate.direction = {
     SOUTH: "south",
     WEST: "west"
 }
+
+
