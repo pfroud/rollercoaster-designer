@@ -1,3 +1,5 @@
 .idea/
 other/
 *.zip
+*.swp
+*.swo
