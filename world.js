@@ -79,15 +79,12 @@ Tracks.prototype.insert = function (track) {
    this.counter++;
    // set the track's key 
    track.key = this.counter;
-   // 
-   this.set.push({
-      key: this.counter,
-      track: track
-   });
+   // put the key in 
+   this.set[String(this.counter)] = track;
 };
 
 Tracks.prototype.delete = function (key) {
-   
+   this.set[String(key)] = null; 
 };
 
 Tracks.prototype.deleteAll = function () {
