@@ -9,7 +9,6 @@
 "use strict";
 
 
-
 var TrackPiece = function(xIn, yIn, zIn, dx, dy) {
     this.xIn = xIn;
     this.yIn = yIn;
@@ -33,8 +32,11 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy) {
 
 TrackPiece.presets = {
 
-    straight: function(xI, yI, zI){return new TrackPiece(xI, yI, zI, 1, 1, 0)}
+    //north-south straight piece
+    straight_NS: function(x, y){return new TrackPiece(x,y,0, 0,1)},
 
+    //east-west straight piece
+    straight_EW: function(x, y){return new TrackPiece(x,y,0, 1,0)}
 };
 
 TrackPiece.enums = {};
