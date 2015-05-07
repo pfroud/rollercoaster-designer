@@ -1,14 +1,13 @@
-/*
- x, y, z initial and final (integer)
- lift (boolean)
- slope initial and final (enum)
- direction initial and final (number of enum)
- */
-
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript
+
 "use strict";
 
-
+/**
+ * Use this to make (almost) and track piece.
+ * I haven't added argument for dz, slope, or lift because nothing uses them yet.
+ *
+ * Use the presets to make ones you would actually use.
+ */
 var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.xIn = xIn;
     this.yIn = yIn;
@@ -29,14 +28,23 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.dirOut = dirOut;
 };
 
-
+/**
+ * Presets for track pieces.
+ * I did this without much though, it might be better to do inheritance, if that even exists.
+ */
 TrackPiece.preset = {
 
-    //north-south straight piece
+    /** straight piece going north */
     straight_N: function(x, y){return new TrackPiece(x,y,0, 0,1, TrackPiece.enumerate.direction.NORTH, TrackPiece.enumerate.direction.NORTH)},
 
-    //east-west straight piece
-    straight_E: function(x, y){return new TrackPiece(x,y,0, 1,0, TrackPiece.enumerate.direction.EAST, TrackPiece.enumerate.direction.EAST)}
+    /** straight piece going south */
+    straight_S: function(x, y){return new TrackPiece(x,y,0, 0,-1, TrackPiece.enumerate.direction.SOUTH, TrackPiece.enumerate.direction.SOUTH)},
+
+    /** straight piece going east */
+    straight_E: function(x, y){return new TrackPiece(x,y,0, 1,0, TrackPiece.enumerate.direction.EAST, TrackPiece.enumerate.direction.EAST)},
+
+    /** straight piece going west */
+    straight_W: function(x, y){return new TrackPiece(x,y,0, -1,0, TrackPiece.enumerate.direction.WEST, TrackPiece.enumerate.direction.WEST)}
 };
 
 //would be called "enum" but that's a reserved word, even though JS doesn't have enum types...

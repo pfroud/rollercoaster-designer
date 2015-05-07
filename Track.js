@@ -1,18 +1,26 @@
 "use strict";
 
-var Track = {};
+var Track = {}; //empty namespace thing
 
+/**
+ * Checks integrity of a track.
+ * Iterates over all the track pieces and makes sure the out properties of piece n equal the in properties of piece n+1.
+ *
+ * @returns {boolean} True if the track is valid.
+ */
 Track.validate = function (trackArray) {
     if (trackArray.length == 1) return true;
 
     var currentPiece;
 
+    //for loop starts at 1, this is initial stuff to compare with
     var xOut_prev     = trackArray[0].xOut;
     var yOut_prev     = trackArray[0].yOut;
     var zOut_prev     = trackArray[0].zOut;
     var slopeOut_prev = trackArray[0].slopeOut;
     var dirOut_prev   = trackArray[0].dirOut;
 
+    //these get set in the fop loop
     var xIn_curr;
     var yIn_curr;
     var zIn_curr;
@@ -54,8 +62,11 @@ Track.validate = function (trackArray) {
 };
 
 var aTrack;
-//aTrack = [TrackPiece.preset.straight_N(0,0), TrackPiece.preset.straight_N(0, 1), TrackPiece.preset.straight_N(0, 2)];
-//console.log(Track.validate(aTrack));
 
+//this track is valid
+aTrack = [TrackPiece.preset.straight_N(0,0), TrackPiece.preset.straight_N(0, 1), TrackPiece.preset.straight_N(0, 2)];
+console.log(Track.validate(aTrack));
+
+//this track is invalid
 aTrack = [TrackPiece.preset.straight_N(0,0), TrackPiece.preset.straight_E(0, 1), TrackPiece.preset.straight_N(6, 9)];
 console.log(Track.validate(aTrack));
