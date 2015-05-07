@@ -28,14 +28,22 @@ Track.validate = function (trackArray) {
         slopeIn_curr = currentPiece.slopeIn;
         dirIn_curr   = currentPiece.dirIn;
 
-        if (xOut_prev     != xIn_curr ||
-            yOut_prev     != yIn_curr ||
-            zOut_prev     != zIn_curr ||
-            slopeOut_prev != slopeIn_curr ||
-            dirOut_prev   != dirIn_curr) {
-
-            throw "Track.validate(): something wrong at index "+i;
+        if (xOut_prev != xIn_curr) {
+            throw "Track.validate(): index " + i + ": xOut_prev=" + xOut_prev + " but xIn_curr=" + xIn_curr;
         }
+        if (yOut_prev != yIn_curr) {
+            throw "Track.validate(): index " + i + ": yOut_prev=" + yOut_prev + " but yIn_curr=" + yIn_curr;
+        }
+        if (zOut_prev != zIn_curr) {
+            throw "Track.validate(): index " + i + ": zOut_prev=" + zOut_prev + " but zIn_curr=" + zIn_curr;
+        }
+        if (slopeOut_prev != slopeIn_curr) {
+            throw "Track.validate(): index " + i + ": slopeOut_prev=" + slopeOut_prev + " but slopeIn_curr=" + slopeIn_curr;
+        }
+        if (dirOut_prev != dirIn_curr) {
+            throw "Track.validate(): index " + i + ": dirOut_prev=" + dirOut_prev + " but dirIn_curr=" + dirIn_curr;
+        }
+
         xOut_prev     = currentPiece.xOut;
         yOut_prev     = currentPiece.yOut;
         zOut_prev     = currentPiece.zOut;
@@ -45,6 +53,8 @@ Track.validate = function (trackArray) {
     return true;
 };
 
-var aTrack = [TrackPiece.presets.straight_NS(0, 0, 1)];
+var aTrack = [TrackPiece.preset.straight_NS(0,0), TrackPiece.preset.straight_NS(0, 1), TrackPiece.preset.straight_NS(0, 2)];
+console.log(Track.validate(aTrack));
 
+aTrack = [TrackPiece.preset.straight_NS(0,0), TrackPiece.preset.straight_EW(0, 1), TrackPiece.preset.straight_NS(6, 9)];
 console.log(Track.validate(aTrack));

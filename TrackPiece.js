@@ -22,15 +22,15 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy) {
 
     this.lift = false;
 
-    this.slopeIn = TrackPiece.enums.slope.SLOPE_FLAT;
-    this.slopeOut = TrackPiece.enums.slope.SLOPE_FLAT;
+    this.slopeIn = TrackPiece.enmr.slope.SLOPE_FLAT;
+    this.slopeOut = TrackPiece.enmr.slope.SLOPE_FLAT;
 
-    this.dirIn = TrackPiece.enums.direction.EAST;
-    this.dirOut = TrackPiece.enums.direction.EAST;
+    this.dirIn = TrackPiece.enmr.direction.EAST;
+    this.dirOut = TrackPiece.enmr.direction.EAST;
 };
 
 
-TrackPiece.presets = {
+TrackPiece.preset = {
 
     //north-south straight piece
     straight_NS: function(x, y){return new TrackPiece(x,y,0, 0,1)},
@@ -39,14 +39,15 @@ TrackPiece.presets = {
     straight_EW: function(x, y){return new TrackPiece(x,y,0, 1,0)}
 };
 
-TrackPiece.enums = {};
+//would be called "enum" but that's a reserved word, even though JS doesn't have enum types...
+TrackPiece.enmr = {};
 
-TrackPiece.enums.slope = {
+TrackPiece.enmr.slope = {
     SLOPE_FLAT: "flat",
     SLOPE_UP: "up"
 };
 
-TrackPiece.enums.direction = {
+TrackPiece.enmr.direction = {
     NORTH: 1,
     EAST: 0,
     SOUTH: 3,
