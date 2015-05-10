@@ -1,17 +1,20 @@
 This is our little todo file for our project.
 
-Submit final proposal
 Choose JSON parser/format
    jquery stuff of course
 
-make implementation files 
-make a most recent changes.txt file whatever
-make a simple cube in Three.js
-structure demo for both (separate branches so we don't crap on each
-other)
+Peter
+Three.js track pieces
+Find models and export from blender
 
-notes: 
-   canvas size will be the same as the window
+Jonathan
+Make UI stuff - editor 2D interface
+   has buttons to execute functions
 
+
+Function to put track piece into three.js world
+Function to move track piece in three.js world
+
+These functions don't need to work yet!!!!
 
 
