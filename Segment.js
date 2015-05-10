@@ -9,7 +9,12 @@
  * Use the presets to make ones you would actually use.
  */
 var Segment = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
-    
+
+
+    /**
+     * These are mostly used for validator code. In the future we might reimplement them, but for now we don't really
+     * care that much.
+     */
     // the world coordinates from the previous piece of track
     this.xIn = xIn;
     this.yIn = yIn;
@@ -17,7 +22,7 @@ var Segment = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     // how many world coordinates the piece changes by
     this.dx = dx;
     this.dy = dy;
-    this.dz = 0;
+    this.dz = 0; // should only be 1, -1, or 0
     // the coordinate that the piece exits.
     this.xOut = xIn+dx;
     this.yOut = yIn+dy;
@@ -31,7 +36,6 @@ var Segment = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.slopeOut = Segment.enumerate.slope.SLOPE_FLAT;
 
     // the directions we enter and exit from
- // Do we really need this with xIn, yIn and zIn?
     this.dirIn = dirIn;
     this.dirOut = dirOut;
     
@@ -83,6 +87,6 @@ Segment.enumerate.direction = {
     EAST: "east",
     SOUTH: "south",
     WEST: "west"
-}
+};
 
 

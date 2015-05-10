@@ -59,42 +59,6 @@ function Coordinate(x, y, z) {
    }
 }
 
-// Tracks ==========================================================
-/** 
- * The set of all tracks, held in a class to apply methods upon them
- * 
- * set: array of all tracks, every track is held as a key-value pair
- * for quick deletion
- * 
- * counter: an integer that starts at 0, to give track piece a unique
- * key. Resets to zero
- */
-function Tracks(){
-   this.set = []; // the actual array
-   this.counter = 0; // a counter to make unique key values
-}
-
-// insert a track piece
-Tracks.prototype.insert = function (track) {
-   // increment the counter to get a new key
-   this.counter++;
-   // set the track's key 
-   track.key = this.counter;
-   // put the key in 
-   this.set[String(this.counter)] = track;
-};
-
-Tracks.prototype.delete = function (key) {
-   this.set[String(key)] = null; 
-};
-
-Tracks.prototype.deleteAll = function () {
-   this.counter = 0;
-   this.set = [];
-};
-
-
-
 // =====================================================================
 // GLOBALS =============================================================
 // =====================================================================
