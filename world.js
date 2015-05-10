@@ -94,6 +94,7 @@ Tracks.prototype.deleteAll = function () {
 };
 
 
+
 // =====================================================================
 // GLOBALS =============================================================
 // =====================================================================
@@ -106,3 +107,4 @@ Tracks.prototype.deleteAll = function () {
  * array, when a piece is deleted it should be removed from the array
  */
 var tracks = new Tracks();
+
