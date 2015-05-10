@@ -9,41 +9,8 @@
 	<body>
 		<script src="three.js"></script>
         <script src="OrbitControls.js"></script>
-		<script>
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+        <script src="index.js"></script>
 
-            // setup rendered
-			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
-
-
-            // add plane
-            var geometry = new THREE.PlaneGeometry( 5, 5, 5 );
-            var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-            var plane = new THREE.Mesh( geometry, material );
-            scene.add( plane );
-
-			camera.position.z = 5;
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-
-
-			var render = function () {
-				requestAnimationFrame( render );
-
-                renderer.render(scene, camera);
-                controls.update();
-
-				//plane.rotation.x += 0.1;
-				//cube.rotation.y += 0.1;
-			};
-             render();
-
-
-
-		</script>
 	</body>
 	<!-- script src="World.js"></script -->
 </html>
