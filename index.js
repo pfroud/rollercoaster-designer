@@ -1,31 +1,36 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 // setup rendered
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-/*************************** BOX *********************************/
-
-// add plane
-var boxGeometry = new THREE.BoxGeometry(1, 1, 1, 1, 1, 1);
-var boxMaterial = new THREE.MeshNormalMaterial({
-    color: 0xffff33,
-    specular: 0x009900,
-    shininess: 30,
-    shading: THREE.FlatShading
-});
-var cube = new THREE.Mesh(
-    boxGeometry,
-    boxMaterial
-);
-scene.add(cube);
-
-
 camera.position.z = 5;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+/*************************** CUBE *********************************/
+
+/*scene.add(new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
+    new THREE.MeshNormalMaterial({
+        color: 0xffff33,
+        specular: 0x009900,
+        shininess: 30,
+        shading: THREE.FlatShading
+    })
+));*/
+
+/*************************** PLANE *********************************/
+
+var planeGeo = new THREE.PlaneBufferGeometry(2, 3, 1, 1);
+var planeMat = new THREE.MeshBasicMaterial({color: 0x00cc33, side: THREE.DoubleSide});
+var planeMesh = new THREE.Mesh(planeGeo, planeMat);
+scene.add(planeMesh);
+
+var light = new THREE.AmbientLight(0xffffff); // soft white light
+scene.add(light);
 
 /*************************** SKYBOX *********************************/
 
