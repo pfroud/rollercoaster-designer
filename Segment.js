@@ -39,7 +39,7 @@ var Segment = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.dirIn = dirIn;
     this.dirOut = dirOut;
     
-    // key value of the piece to be added to tracks[] in world.js
+    // key value of the piece to be added to tracks[] in World.js
     this.key;
     
     /**
