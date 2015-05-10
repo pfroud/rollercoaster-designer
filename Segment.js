@@ -23,12 +23,8 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.yOut = yIn+dy;
     this.zOut = zIn + this.dz;
 
-// Do we really need these booleans? dz, zIn, and zOut should have overlap with them
-    // if the piece rises a level. If this is true zOut should be zIn + 1; 
+    // Whether or not the piece has a chain lift 
     this.lift = false;
-
-    // if the piece falls down a level 
-    this.fall = false;
     
     // the slope at which the pieces enter and exit
     this.slopeIn = TrackPiece.enumerate.slope.SLOPE_FLAT;
