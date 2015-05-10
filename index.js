@@ -15,13 +15,42 @@ var material = new THREE.MeshNormalMaterial({
     shininess: 30,
     shading: THREE.FlatShading
 });
-var plane = new THREE.Mesh(geometry, material);
-scene.add(plane);
 
 
 camera.position.z = 5;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+var skyboxImages = [
+    "skybox/skybox1.jpg",
+    "skybox/skybox2.jpg",
+    "skybox/skybox3.jpg",
+    "skybox/skybox4.jpg",
+    "skybox/skybox5.jpg",
+    "skybox/skybox6.jpg"
+];
+
+var cubemap = THREE.ImageUtils.loadTextureCube(skyboxImages); // load textures
+cubemap.format = THREE.RGBFormat;
+
+var shader = THREE.ShaderLib['cube']; // init cube shader from built-in lib
+shader.uniforms['tCube'].value = cubemap; // apply textures to shader
+
+// create shader material
+var skyBoxMaterial = new THREE.ShaderMaterial( {
+    fragmentShader: shader.fragmentShader,
+    vertexShader: shader.vertexShader,
+    uniforms: shader.uniforms,
+    depthWrite: false,
+    side: THREE.BackSide
+});
+
+// create skybox mesh
+var skybox = new THREE.Mesh(
+    new THREE.BoxGeometry(1000, 1000, 1000),
+    skyBoxMaterial
+);
+
+scene.add(skybox);
 
 var render = function () {
     requestAnimationFrame(render);
