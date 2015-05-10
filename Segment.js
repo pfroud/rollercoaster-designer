@@ -8,7 +8,7 @@
  *
  * Use the presets to make ones you would actually use.
  */
-var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
+var Segment = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     
     // the world coordinates from the previous piece of track
     this.xIn = xIn;
@@ -31,8 +31,8 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     this.fall = false;
     
     // the slope at which the pieces enter and exit
-    this.slopeIn = TrackPiece.enumerate.slope.SLOPE_FLAT;
-    this.slopeOut = TrackPiece.enumerate.slope.SLOPE_FLAT;
+    this.slopeIn = Segment.enumerate.slope.SLOPE_FLAT;
+    this.slopeOut = Segment.enumerate.slope.SLOPE_FLAT;
 
     // the directions we enter and exit from
  // Do we really need this with xIn, yIn and zIn?
@@ -54,27 +54,27 @@ var TrackPiece = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
  * Presets for track pieces.
  * I did this without much though, it might be better to do inheritance, if that even exists.
  */
-TrackPiece.preset = {
+Segment.preset = {
 
     /** straight piece going north */
-    straight_N: function(x, y){return new TrackPiece(x,y,0, 0,1, TrackPiece.enumerate.direction.NORTH, TrackPiece.enumerate.direction.NORTH)},
+    straight_N: function(x, y){return new Segment(x,y,0, 0,1, Segment.enumerate.direction.NORTH, Segment.enumerate.direction.NORTH)},
 
     /** straight piece going south */
-    straight_S: function(x, y){return new TrackPiece(x,y,0, 0,-1, TrackPiece.enumerate.direction.SOUTH, TrackPiece.enumerate.direction.SOUTH)},
+    straight_S: function(x, y){return new Segment(x,y,0, 0,-1, Segment.enumerate.direction.SOUTH, Segment.enumerate.direction.SOUTH)},
 
     /** straight piece going east */
-    straight_E: function(x, y){return new TrackPiece(x,y,0, 1,0, TrackPiece.enumerate.direction.EAST, TrackPiece.enumerate.direction.EAST)},
+    straight_E: function(x, y){return new Segment(x,y,0, 1,0, Segment.enumerate.direction.EAST, Segment.enumerate.direction.EAST)},
 
     /** straight piece going west */
-    straight_W: function(x, y){return new TrackPiece(x,y,0, -1,0, TrackPiece.enumerate.direction.WEST, TrackPiece.enumerate.direction.WEST)}
+    straight_W: function(x, y){return new Segment(x,y,0, -1,0, Segment.enumerate.direction.WEST, Segment.enumerate.direction.WEST)}
 };
 
 //would be called "enum" but that's a reserved word, even though JS doesn't have enum types...
-TrackPiece.enumerate = {};
+Segment.enumerate = {};
 
 
 // the slope of the piece as in concave vs convex vs flat
-TrackPiece.enumerate.slope = {
+Segment.enumerate.slope = {
     SLOPE_FLAT: "flat",
     SLOPE_UP: "up",
     SLOPE_DOWN: "down"
@@ -82,7 +82,7 @@ TrackPiece.enumerate.slope = {
 
 // the direction facing.
 // Is this really necessary with dx, dy, dz
-TrackPiece.enumerate.direction = {
+Segment.enumerate.direction = {
     NORTH: "north",
     EAST: "east",
     SOUTH: "south",
