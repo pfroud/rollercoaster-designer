@@ -41,12 +41,11 @@ var Segment = function(xIn, yIn, zIn, dx, dy, dirIn, dirOut) {
     
     // key value of the piece to be added to tracks[] in World.js
     this.key;
-    
-    /**
-     * This is some experimental code for the track. Insert it as you
-     * will
-     */
-   tracks.insert(this);
+
+    // the track automatrically inserts itself into the array
+    track.insert(this);
+
+
     
 };
 

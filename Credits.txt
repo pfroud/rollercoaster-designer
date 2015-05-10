@@ -1,0 +1,8 @@
+This is the file crediting all the resources we used on the project
+
+Three.js
+jquery
+
+Skybox from
+http://www.braynzarsoft.net/vision/texturesamples/Above_The_Sea.jpg
+
