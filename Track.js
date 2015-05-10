@@ -64,9 +64,9 @@ Track.validate = function (trackArray) {
 var aTrack;
 
 //this track is valid
-aTrack = [TrackPiece.preset.straight_N(0,0), TrackPiece.preset.straight_N(0, 1), TrackPiece.preset.straight_N(0, 2)];
+aTrack = [Segment.preset.straight_N(0,0), Segment.preset.straight_N(0, 1), Segment.preset.straight_N(0, 2)];
 console.log(Track.validate(aTrack));
 
 //this track is invalid
-aTrack = [TrackPiece.preset.straight_N(0,0), TrackPiece.preset.straight_E(0, 1), TrackPiece.preset.straight_N(6, 9)];
+aTrack = [Segment.preset.straight_N(0,0), Segment.preset.straight_E(0, 1), Segment.preset.straight_N(6, 9)];
 console.log(Track.validate(aTrack));
