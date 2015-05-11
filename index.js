@@ -10,6 +10,9 @@ document.body.appendChild(renderer.domElement);
 camera.position.z = 5;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+var light = new THREE.AmbientLight(0xffffff); // soft white light
+scene.add(light);
+
 /*************************** CUBE *********************************/
 
 /*scene.add(new THREE.Mesh(
@@ -29,8 +32,6 @@ var planeMat = new THREE.MeshBasicMaterial({color: 0x00cc33, side: THREE.DoubleS
 var planeMesh = new THREE.Mesh(planeGeo, planeMat);
 scene.add(planeMesh);
 
-var light = new THREE.AmbientLight(0xffffff); // soft white light
-scene.add(light);
 
 /*************************** SKYBOX *********************************/
 
