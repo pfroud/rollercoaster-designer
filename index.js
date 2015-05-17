@@ -36,8 +36,8 @@ const RAIL_HEIGHT = 3;
 
 var mat = new THREE.MeshBasicMaterial({color: 0x00cc33, side: THREE.DoubleSide});
 var bottomPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, SEGMENT_WIDTH, 1, 1), mat);
-//var rail = new THREE.mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT), mat);
-bottomPlane.rotation.x = Math.PI / 2;
+var rail = new THREE.mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT), mat);
+//bottomPlane.rotation.x = Math.PI / 2;
 scene.add(bottomPlane);
 
 
