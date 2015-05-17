@@ -1,7 +1,7 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.y = 5;
+camera.position.y = 2;
 camera.lookAt(0, 0, 0);
 // setup rendered
 var renderer = new THREE.WebGLRenderer();
@@ -12,13 +12,13 @@ camera.position.z = 5;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 var light = new THREE.AmbientLight(0xffffff);
-//scene.add(light);
+scene.add(light);
 
 /*************************** CONSTANTS *********************************/
 
-const SEGMENT_WIDTH = 1;
-const SEGMENT_LENGTH = 3;
-const RAIL_HEIGHT = 0.1;
+const SEGMENT_WIDTH = 1; //width of any track segment
+const SEGMENT_LENGTH = 3; //length of any track segment
+const RAIL_HEIGHT = 0.1; //height of rails to tell which side is up
 
 /*************************** CUBE *********************************/
 
@@ -33,49 +33,38 @@ const RAIL_HEIGHT = 0.1;
  ));*/
 
 /*************************** NEW TRACK *********************************/
+var offsetX = 0;
+var materialBase = new THREE.MeshBasicMaterial({color: "green", side: THREE.DoubleSide});
+var materialRails = new THREE.MeshBasicMaterial({color: "yellow", side: THREE.DoubleSide});
 
-var mat = new THREE.MeshPhongMaterial({color: 0x00cc33, side: THREE.DoubleSide});
-
-var bottomG = new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, SEGMENT_WIDTH, 1, 1);
-var bottomM = new THREE.Mesh(bottomG, mat);
-bottomM.rotation.x = Math.PI / 2;
-scene.add(bottomM);
-
-var railG = new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1);
-var railM1 = new THREE.Mesh(railG, mat);
-railM1.position.y = RAIL_HEIGHT / 2;
-railM1.position.z = SEGMENT_WIDTH / 2;
-scene.add(railM1);
-
-var railM2 = new THREE.Mesh(railG, mat);
-railM2.position.y = RAIL_HEIGHT / 2;
-railM2.position.z = -SEGMENT_WIDTH / 2;
-scene.add(railM2);
+addSegment();
+addSegment();
+addSegment();
 
 
-var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1, 1, 1, false),
-    new THREE.MeshLambertMaterial({
-    color: '#00abb1'
+function addSegment() {
+    //bottom
+    var bottomMesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, SEGMENT_WIDTH, 1, 1), materialBase);
+    bottomMesh.rotation.x = Math.PI / 2;
+    bottomMesh.translateX(offsetX);
+    scene.add(bottomMesh);
 
-}));
-scene.add(cylinder);
+    //rail 1
+    var railMesh1 = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1), materialRails);
+    railMesh1.translateX(offsetX); //move to offset
+    railMesh1.translateY(RAIL_HEIGHT / 2); //move rail on top of bottom plane
+    railMesh1.translateZ(SEGMENT_WIDTH / 2); //move rail to side of bottom plane
+    scene.add(railMesh1);
 
+    //rail 2
+    var railMesh2 = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1), materialRails);
+    railMesh2.translateX(offsetX);
+    railMesh2.translateY(RAIL_HEIGHT / 2);
+    railMesh2.translateZ(-SEGMENT_WIDTH / 2);
+    scene.add(railMesh2);
 
-
-
-// cube
-var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1), new THREE.MeshLambertMaterial({
-    color: 'blue'
-}));
-cube.overdraw = true;
-cube.rotation.x = Math.PI * 0.1;
-scene.add(cube);
-
-var directionalLight = new THREE.DirectionalLight(0xffffff);
-directionalLight.position.set(1, 1, 1).normalize();
-scene.add(directionalLight);
-
-scene.add(new THREE.DirectionalLightHelper(directionalLight, 1));
+    offsetX += SEGMENT_LENGTH;
+}
 
 
 /*************************** OLD TRACK *********************************/
