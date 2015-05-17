@@ -1,7 +1,8 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-
+camera.position.y = 5;
+camera.lookAt(0, 0, 0);
 // setup rendered
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -12,6 +13,12 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 var light = new THREE.AmbientLight(0xffffff); // soft white light
 scene.add(light);
+
+/*************************** CONSTANTS *********************************/
+
+const SEGMENT_WIDTH = 1;
+const SEGMENT_LENGTH = 3;
+const RAIL_HEIGHT = 3;
 
 /*************************** CUBE *********************************/
 
@@ -25,35 +32,29 @@ scene.add(light);
  })
  ));*/
 
-/*************************** PLANE *********************************/
+/*************************** NEW TRACK *********************************/
 
-var planeGeo = new THREE.PlaneBufferGeometry(2, 3, 1, 1);
-var planeMat = new THREE.MeshBasicMaterial({color: 0x00cc33, side: THREE.DoubleSide});
-var planeMesh = new THREE.Mesh(planeGeo, planeMat);
-scene.add(planeMesh);
-
-
-/*************************** TRACK *********************************/
-var jsonLoader = new THREE.JSONLoader();
+var mat = new THREE.MeshBasicMaterial({color: 0x00cc33, side: THREE.DoubleSide});
+var bottomPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, SEGMENT_WIDTH, 1, 1), mat);
+//var rail = new THREE.mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT), mat);
+bottomPlane.rotation.x = Math.PI / 2;
+scene.add(bottomPlane);
 
 
-function addPiece(filename, x, y, z) {
-    jsonLoader.load(filename, function createScene(geometry, materials) {
-        var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-
-        mesh.scale.set(0.1, 0.1, 0.1);
-        mesh.position.x = x;
-        mesh.position.y = y;
-        mesh.position.z = z;
-        scene.add(mesh);
-    });
-
-}
-
-addPiece("modelJS/straight.js", 0, 0, 0);
-addPiece("modelJS/straight.js", 7.5, 0, 0);
-
-
+/*************************** OLD TRACK *********************************/
+/*var jsonLoader = new THREE.JSONLoader();
+ function addPiece(filename, x, y, z) {
+ jsonLoader.load(filename, function createScene(geometry, materials) {
+ var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+ mesh.scale.set(0.1, 0.1, 0.1);
+ mesh.position.x = x;
+ mesh.position.y = y;
+ mesh.position.z = z;
+ scene.add(mesh);
+ });
+ }
+ addPiece("modelJS/straight.js", 0, 0, 0);
+ addPiece("modelJS/straight.js", 7.5, 0, 0);*/
 
 
 /*************************** SKYBOX *********************************/
