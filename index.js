@@ -16,14 +16,14 @@ scene.add(light);
 /*************************** CUBE *********************************/
 
 /*scene.add(new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
-    new THREE.MeshNormalMaterial({
-        color: 0xffff33,
-        specular: 0x009900,
-        shininess: 30,
-        shading: THREE.FlatShading
-    })
-));*/
+ new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
+ new THREE.MeshNormalMaterial({
+ color: 0xffff33,
+ specular: 0x009900,
+ shininess: 30,
+ shading: THREE.FlatShading
+ })
+ ));*/
 
 /*************************** PLANE *********************************/
 
@@ -31,6 +31,28 @@ var planeGeo = new THREE.PlaneBufferGeometry(2, 3, 1, 1);
 var planeMat = new THREE.MeshBasicMaterial({color: 0x00cc33, side: THREE.DoubleSide});
 var planeMesh = new THREE.Mesh(planeGeo, planeMat);
 scene.add(planeMesh);
+
+
+/*************************** TRACK *********************************/
+
+var jsonLoader = new THREE.JSONLoader();
+jsonLoader.load("modelJS/turn.js", createScene);
+jsonLoader.load("modelJS/straight.js", createScene);
+//jsonLoader.load("modelJS/station.js", createScene);
+jsonLoader.load("modelJS/slopeDown.js", createScene);
+jsonLoader.load("modelJS/rampUp.js", createScene);
+jsonLoader.load("modelJS/rampDown.js", createScene);
+jsonLoader.load("modelJS/banked.js", createScene);
+
+function createScene(geometry, materials) {
+    //var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+    mesh.scale.set(0.1, 0.1, 0.1);
+    scene.add(mesh);
+}
+
+
+
 
 
 /*************************** SKYBOX *********************************/
