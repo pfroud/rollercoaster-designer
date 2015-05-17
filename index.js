@@ -34,23 +34,24 @@ scene.add(planeMesh);
 
 
 /*************************** TRACK *********************************/
-
 var jsonLoader = new THREE.JSONLoader();
-jsonLoader.load("modelJS/turn.js", createScene);
-jsonLoader.load("modelJS/straight.js", createScene);
-//jsonLoader.load("modelJS/station.js", createScene);
-jsonLoader.load("modelJS/slopeDown.js", createScene);
-jsonLoader.load("modelJS/rampUp.js", createScene);
-jsonLoader.load("modelJS/rampDown.js", createScene);
-jsonLoader.load("modelJS/banked.js", createScene);
 
-function createScene(geometry, materials) {
-    //var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-    mesh.scale.set(0.1, 0.1, 0.1);
-    scene.add(mesh);
+
+function addPiece(filename, x, y, z) {
+    jsonLoader.load(filename, function createScene(geometry, materials) {
+        var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+
+        mesh.scale.set(0.1, 0.1, 0.1);
+        mesh.position.x = x;
+        mesh.position.y = y;
+        mesh.position.z = z;
+        scene.add(mesh);
+    });
+
 }
 
+addPiece("modelJS/straight.js", 0, 0, 0);
+addPiece("modelJS/straight.js", 7.5, 0, 0);
 
 
 
