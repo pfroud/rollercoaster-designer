@@ -68,19 +68,21 @@ function addSegment() {
 
 
 /*************************** OLD TRACK *********************************/
-/*var jsonLoader = new THREE.JSONLoader();
- function addPiece(filename, x, y, z) {
- jsonLoader.load(filename, function createScene(geometry, materials) {
- var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
- mesh.scale.set(0.1, 0.1, 0.1);
- mesh.position.x = x;
- mesh.position.y = y;
- mesh.position.z = z;
- scene.add(mesh);
- });
- }
- addPiece("modelJS/straight.js", 0, 0, 0);
- addPiece("modelJS/straight.js", 7.5, 0, 0);*/
+var jsonLoader = new THREE.JSONLoader();
+var scale = 0.01;
+
+function addPiece(filename, x, y, z) {
+    jsonLoader.load(filename, function createScene(geometry, materials) {
+        var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+        mesh.scale.set(scale, scale, scale);
+        mesh.position.x = x;
+        mesh.position.y = y;
+        mesh.position.z = z;
+        scene.add(mesh);
+    });
+}
+addPiece("modelJS/straight.js", 0, 0, 0);
+//addPiece("modelJS/straight.js", 7.5, 0, 0);
 
 
 /*************************** SKYBOX *********************************/
