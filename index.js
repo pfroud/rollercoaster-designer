@@ -14,59 +14,6 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 var light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-/*************************** CONSTANTS *********************************/
-
-const SEGMENT_WIDTH = 1; //width of any track segment
-const SEGMENT_LENGTH = 3; //length of any track segment
-const RAIL_HEIGHT = 0.1; //height of rails to tell which side is up
-
-/*************************** CUBE *********************************/
-
-/*scene.add(new THREE.Mesh(
- new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
- new THREE.MeshNormalMaterial({
- color: 0xffff33,
- specular: 0x009900,
- shininess: 30,
- shading: THREE.FlatShading
- })
- ));*/
-
-/*************************** NEW TRACK *********************************/
-var offsetX = 0;
-var materialBase = new THREE.MeshBasicMaterial({color: "green", side: THREE.DoubleSide});
-var materialRails = new THREE.MeshBasicMaterial({color: "yellow", side: THREE.DoubleSide});
-
-/*addSegment();
-addSegment();
-addSegment();*/
-
-
-function addSegment() {
-    //bottom
-    var bottomMesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, SEGMENT_WIDTH, 1, 1), materialBase);
-    bottomMesh.rotation.x = Math.PI / 2;
-    bottomMesh.translateX(offsetX);
-    scene.add(bottomMesh);
-
-    //rail 1
-    var railMesh1 = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1), materialRails);
-    railMesh1.translateX(offsetX); //move to offset
-    railMesh1.translateY(RAIL_HEIGHT / 2); //move rail on top of bottom plane
-    railMesh1.translateZ(SEGMENT_WIDTH / 2); //move rail to side of bottom plane
-    scene.add(railMesh1);
-
-    //rail 2
-    var railMesh2 = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1), materialRails);
-    railMesh2.translateX(offsetX);
-    railMesh2.translateY(RAIL_HEIGHT / 2);
-    railMesh2.translateZ(-SEGMENT_WIDTH / 2);
-    scene.add(railMesh2);
-
-    offsetX += SEGMENT_LENGTH;
-}
-
-
 /*************************** OLD TRACK *********************************/
 var jsonLoader = new THREE.JSONLoader();
 var scale = 0.01;
