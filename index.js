@@ -81,11 +81,11 @@ function addPiece(filename, x, y, z) {
         scene.add(mesh);
     });
 }
-addPiece("modelJS/straight.js", -1.4, 0, 0);
-addPiece("modelJS/straight.js", -0.7, 0, 0);
-addPiece("modelJS/straight.js", 0, 0, 0);
-addPiece("modelJS/straight.js", 0.7, 0, 0);
-addPiece("modelJS/straight.js", 1.4, 0, 0);
+addPiece("track.js", -1.4, 0, 0);
+addPiece("track.js", -0.7, 0, 0);
+addPiece("track.js", 0, 0, 0);
+addPiece("track.js", 0.7, 0, 0);
+addPiece("track.js", 1.4, 0, 0);
 
 
 /*************************** SKYBOX *********************************/
