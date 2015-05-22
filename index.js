@@ -1,11 +1,11 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.y = 2;
 camera.lookAt(0, 0, 0);
 // setup rendered
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(800, 800);
 document.body.appendChild(renderer.domElement);
 
 camera.position.z = 5;
@@ -37,9 +37,9 @@ var offsetX = 0;
 var materialBase = new THREE.MeshBasicMaterial({color: "green", side: THREE.DoubleSide});
 var materialRails = new THREE.MeshBasicMaterial({color: "yellow", side: THREE.DoubleSide});
 
+/*addSegment();
 addSegment();
-addSegment();
-addSegment();
+addSegment();*/
 
 
 function addSegment() {
@@ -81,8 +81,11 @@ function addPiece(filename, x, y, z) {
         scene.add(mesh);
     });
 }
+addPiece("modelJS/straight.js", -1.4, 0, 0);
+addPiece("modelJS/straight.js", -0.7, 0, 0);
 addPiece("modelJS/straight.js", 0, 0, 0);
-//addPiece("modelJS/straight.js", 7.5, 0, 0);
+addPiece("modelJS/straight.js", 0.7, 0, 0);
+addPiece("modelJS/straight.js", 1.4, 0, 0);
 
 
 /*************************** SKYBOX *********************************/
