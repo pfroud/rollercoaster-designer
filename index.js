@@ -1,88 +1,105 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.y = 2;
-camera.lookAt(0, 0, 0);
-// setup rendered
+var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+//camera.position.y = 2;
+camera.position.z = 5;
+//camera.lookAt(0, 0, 0);
+
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-camera.position.z = 5;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 var light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-/*************************** CONSTANTS *********************************/
+/*************************** TRACK *********************************/
 
-const SEGMENT_WIDTH = 1; //width of any track segment
-const SEGMENT_LENGTH = 3; //length of any track segment
-const RAIL_HEIGHT = 0.1; //height of rails to tell which side is up
+/*
+ in current camera:
+ +X is right, -X is left
+ +Y is up, -Y is down
+ Z is forward / back
+ */
 
-/*************************** CUBE *********************************/
+//starting coordinates of track
+var currentX = -3, //start to the left a bit
+    currentY = 0,
+    currentZ = 0;
 
-/*scene.add(new THREE.Mesh(
- new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
- new THREE.MeshNormalMaterial({
- color: 0xffff33,
- specular: 0x009900,
- shininess: 30,
- shading: THREE.FlatShading
- })
- ));*/
+//fake enum type
+var trackType = {straight: "straight", slopeFlatToUp: "slopeFlatToUp", slopeUpToFlat: "slopeUpToFlat"};
 
-/*************************** NEW TRACK *********************************/
-var offsetX = 0;
-var materialBase = new THREE.MeshBasicMaterial({color: "green", side: THREE.DoubleSide});
-var materialRails = new THREE.MeshBasicMaterial({color: "yellow", side: THREE.DoubleSide});
+var previousPiece; //needs to be global
 
-addSegment();
-addSegment();
-addSegment();
+var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
+    scale = 0.01; //how much to scale every piece by
 
+/**
+ * This is pretty terrible. The hard-coded alignment numbers work. It can probably be simplified.
+ *
+ * jsonLoader.load() calls a callback function which runs asynchronously, so jsonLoader.load() calls addPieces().
+ * Thus you only call addPieces() once and they all get added.
+ */
+function addPieces() {
+    if (pieces.length == 0) return; //recursion base case
 
-function addSegment() {
-    //bottom
-    var bottomMesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, SEGMENT_WIDTH, 1, 1), materialBase);
-    bottomMesh.rotation.x = Math.PI / 2;
-    bottomMesh.translateX(offsetX);
-    scene.add(bottomMesh);
+    var filename = "", //gets set depending on which piece you want
+    //these are used for alignment:
+        dX = 0.6, //length of every piece
+        dY = 0,
+        dZ = 0;
 
-    //rail 1
-    var railMesh1 = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1), materialRails);
-    railMesh1.translateX(offsetX); //move to offset
-    railMesh1.translateY(RAIL_HEIGHT / 2); //move rail on top of bottom plane
-    railMesh1.translateZ(SEGMENT_WIDTH / 2); //move rail to side of bottom plane
-    scene.add(railMesh1);
+    var currentPiece = pieces.shift(); //removes and returns the first element in array
 
-    //rail 2
-    var railMesh2 = new THREE.Mesh(new THREE.PlaneBufferGeometry(SEGMENT_LENGTH, RAIL_HEIGHT, 1, 1), materialRails);
-    railMesh2.translateX(offsetX);
-    railMesh2.translateY(RAIL_HEIGHT / 2);
-    railMesh2.translateZ(-SEGMENT_WIDTH / 2);
-    scene.add(railMesh2);
+    if (previousPiece == trackType.slopeUpToFlat) {
+        dX -= 0.08;
+        dY += 0.17;
+    }
 
-    offsetX += SEGMENT_LENGTH;
+    if (currentPiece == trackType.straight) {
+        filename = "modelJS/straight.js";
+
+    } else if (currentPiece == trackType.slopeFlatToUp) {
+        filename = "modelJS/slopeFlatToUp.js";
+
+    } else if (currentPiece == trackType.slopeUpToFlat) {
+        filename = "modelJS/slopeUpToFlat.js";
+        dX -= 0.08; //need extra alignment for the slope
+        dY += 0.264;
+
+    } else {
+        throw "bad track type";
+    }
+
+    previousPiece = currentPiece;
+
+    //createScene() is a callback function and is called asynchronously
+    jsonLoader.load(filename,
+        function createScene(geometry) { //argument geometry is provided by the json loader
+            var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+            mesh.scale.set(scale, scale, scale);
+            mesh.position.x = currentX += dX;
+            mesh.position.y = currentY += dY;
+            mesh.position.z = currentZ += dZ;
+            scene.add(mesh);
+            addPieces(); //recur
+        });
 }
 
+var pieces = [
+    trackType.straight,
+    trackType.straight,
+    trackType.slopeFlatToUp,
+    trackType.slopeUpToFlat,
+    trackType.straight,
+    trackType.slopeFlatToUp,
+    trackType.slopeUpToFlat,
+    trackType.straight
+];
 
-/*************************** OLD TRACK *********************************/
-var jsonLoader = new THREE.JSONLoader();
-var scale = 0.01;
-
-function addPiece(filename, x, y, z) {
-    jsonLoader.load(filename, function createScene(geometry, materials) {
-        var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-        mesh.scale.set(scale, scale, scale);
-        mesh.position.x = x;
-        mesh.position.y = y;
-        mesh.position.z = z;
-        scene.add(mesh);
-    });
-}
-addPiece("modelJS/straight.js", 0, 0, 0);
-//addPiece("modelJS/straight.js", 7.5, 0, 0);
+addPieces();
 
 
 /*************************** SKYBOX *********************************/
