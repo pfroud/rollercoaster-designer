@@ -6,12 +6,13 @@
 function doTheThing() {
     /*************************** SETUP *********************************/
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.y = 2;
+    var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.y = 5;
+    camera.position.x = -3;
     camera.lookAt(0, 0, 0);
-// setup rendered
+
     var renderer = new THREE.WebGLRenderer({canvas: document.getElementById("theCanvas")});
-    renderer.setSize(800, 800);
+    renderer.setSize(1500, 800);
     document.body.appendChild(renderer.domElement);
 
     camera.position.z = 5;
