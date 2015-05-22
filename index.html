@@ -5,14 +5,79 @@ cs160 spring 2015
 
 <html>
 	<head>
+        <script src="lib/three.js"></script>
+        <script src="lib/OrbitControls.js"></script>
+        <script src="index.js"></script>
+        <style>
+            td {
+                border-bottom: 1px solid black;
+                padding: 3px;
+            }
+        </style>
 		<title>Checkpoint</title>
 	</head>
 	<body onload="doTheThing();" style="font-family: sans-serif">
-		<script src="lib/three.js"></script>
-        <script src="lib/OrbitControls.js"></script>
-        <script src="index.js"></script>
-    <h1>hello.</h1>
-    <canvas id="theCanvas">Your browser sucks.</canvas>
 
+
+        <h1>Roller coaster designer</h1>
+        <h2>Jonathan Bridge & Peter Froud</h2>
+        <h3>Project description</h3>
+            <p>We will make an interface similar to
+                <a href="http://en.wikipedia.org/wiki/RollerCoaster_Tycoon">RollerCoaster Tycoon</a>, where the user
+                will build a 3D, voxel-based roller coaster track from track pieces.
+                They will be able to navigate using the mouse.
+            </p>
+        <h3>Original feature list</h3>
+        <table>
+            <tr style="background-color: #ccc">
+                <td>Description</td>
+                <td>Priority</td>
+            </tr>
+            <tr>
+                <td>3D grid and editor interface</td>
+                <td>Core</td>
+            </tr>
+            <tr>
+                <td>Track building and rendering</td>
+                <td>Core</td>
+            </tr>
+            <tr>
+                <td>Moving roller coaster train on track</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>Camera the rides the train on the track</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>Supports on track</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>Basic potential / kinetic energy simulation</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>Track pieces that look like real track instead of a plane or ribbon</td>
+                <td>Low</td>
+            </tr>
+            <tr>
+                <td>Load/save track to file</td>
+                <td>Low</td>
+            </tr>
+            <tr>
+                <td>Loops, corkscrews, etc.</td>
+                <td>Low</td>
+            </tr>
+        </table>
+        <h3>Demo</h3>
+            <p>Orbit with the left mouse button, zoom with the mouse wheel, and pan with the right mouse button.</p>
+        <p>
+            <a href="https://3dwarehouse.sketchup.com/collection.html?id=e0bf9bb1c154d8095c9ed170ce1aefed">Track model by Adam W.</a>
+            <a href="http://www.braynzarsoft.net/vision/index.php?p=VT&texture=25&vi=y">Skybox by iedoc.</a>
+            <a href="http://threejs.org/">Made with three.js.</a>
+        </p>
+
+        <canvas id="theCanvas">Your browser sucks.</canvas>
 	</body>
 </html>
