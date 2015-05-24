@@ -135,6 +135,17 @@ var skybox = new THREE.Mesh(
 );
 scene.add(skybox);
 
+/*************************** WINDOW RESIZE FIX ********************************
+ from
+ http://stackoverflow.com/questions/20290402/three-js-resizing-canvas
+ */
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
 
 /*************************** RENDER *********************************/
 var render = function () {
