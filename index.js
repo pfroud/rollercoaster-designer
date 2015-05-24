@@ -1,6 +1,11 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+//var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+//camera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, 1, 1000);
+var a = 2;
+var aspect = window.innerWidth/window.innerHeight;
+console.log(aspect);
+camera = new THREE.OrthographicCamera(-a*aspect, a*aspect, 2, -2, 1, 10000);
 //camera.position.y = 2;
 camera.position.z = 5;
 //camera.lookAt(0, 0, 0);
@@ -314,8 +319,9 @@ var skyBoxMaterial = new THREE.ShaderMaterial({
 });
 
 // create skybox mesh
+var skyboxSize = 6; // was 1000
 var skybox = new THREE.Mesh(
-    new THREE.BoxGeometry(1000, 1000, 1000),
+    new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize),
     skyBoxMaterial
 );
 scene.add(skybox);
