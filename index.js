@@ -16,6 +16,44 @@ scene.add(light);
 
 /*************************** CONSTANTS *********************************/
 
+const size = {
+
+    flat: {
+        x: 0.5999999865889549,
+        y: 0.1679979962449521,
+        z: 0.40799499088060115
+    },
+
+    //---------------------------
+
+    //SAME SIZE
+    downToFlat: {
+        x: 0.6433779856193811,
+        y: 0.38746599133946,
+        z: 0.4079999908804893
+    },
+    flatToUp: {
+        x: 0.6433779856193811,
+        y: 0.38746599133946,
+        z: 0.4079999908804893
+    },
+
+    //---------------------------D
+
+    //SAME SIZE
+    flatToDown: {
+        x: 0.5245829882746562,
+        y: 0.3382589924393222,
+        z: 0.4079999908804893
+    },
+    upToFlat: {
+        x: 0.5245829882746562,
+        y: 0.3382589924393222,
+        z: 0.4079999908804893
+    }
+};
+
+
 function doPreCorrections(piece) {
     switch (piece) {
         case slope.flat:
@@ -24,23 +62,24 @@ function doPreCorrections(piece) {
             break;
 
         case slope.flatToDown:
+            currentY -= size.flat.y + 0.002; //move down a tiny bit extra
+            break;
         case slope.upToFlat:
-            console.log("correcting c");
             currentX -= 0.1188; //left
             currentY -= 0.1188; //down
-            //currentZ += 0.4079999908804893;
             break;
         default:
             throw "- bad track type \"" + piece + "\"";
     }
+
+    if (mirror) {
+        currentZ -= size.flatToDown.z;
+        currentX += size.flatToDown.x;
+    }
+
 }
 
 
-
-
-/*
- DO NOT CHANGE THESE NUMBERS
- */
 /*
  downToFlat is flatToUp mirrored.
  flatToDown is upToFlat mirrored.
@@ -48,33 +87,26 @@ function doPreCorrections(piece) {
 function advanceCurrent(piece) {
     switch (piece) {
         case slope.flat:
-            console.log("a");
-            currentX += 0.5999999865889549;
-            //currentY += 0.1679979962449521;
-            //currentZ += 0.40799499088060115;
+            currentX += size.flat.x;
             break;
 
         case slope.downToFlat:
         case slope.flatToUp:
-            console.log("b");
-            currentX += 0.6433779856193811;
-            currentY += 0.38746599133946;
-            //currentZ += 0.4079999908804893;
+            currentX += size.downToFlat.x;
+            currentY += size.downToFlat.y;
             break;
 
         case slope.flatToDown:
         case slope.upToFlat:
-            console.log("c");
-            currentX += 0.5245829882746562;
-            currentY += 0.3382589924393222;
-            //currentZ += 0.4079999908804893;
+            currentX += size.flatToDown.x;
+            currentY += size.flatToDown.y;
             break;
         default:
             throw "- bad track type \"" + piece + "\"";
     }
 
-    if(prevPiece == slope.upToFlat) {
-        currentY -= 0.1679979962449521; //Y size of flat
+    if (prevPiece == slope.upToFlat) {
+        currentY -= size.flat.y;
     }
 }
 
@@ -103,6 +135,7 @@ var slope = {
 };
 
 var prevPiece, currentPiece; //needs to be global?
+var mirror = false;
 
 var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
     scale = 0.01; //how much to scale every piece by
@@ -118,7 +151,7 @@ function addPieces() {
 
     var filename = ""; //gets set depending on which piece you want
     currentPiece = pieces.shift(); //removes and returns the first element in array
-    var mirror = false;
+
 
     /*
      +X is right, -X is left
@@ -164,11 +197,11 @@ function addPieces() {
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
 
             if (mirror) {
-                console.log("MIRROR");
                 var mat = (new THREE.Matrix4()).identity();
                 mat.elements[10] = -1;
                 mesh.applyMatrix(mat);
             }
+
 
             doPreCorrections(currentPiece);
 
@@ -188,10 +221,10 @@ function addPieces() {
 
 var pieces = [
     slope.flat,
-    slope.flat,
     slope.flatToUp,
     slope.upToFlat,
-    slope.flat
+    slope.flat,
+    slope.flatToDown
 ];
 
 
