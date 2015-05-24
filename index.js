@@ -29,11 +29,13 @@ var currentX = -3, //start to the left a bit
     currentZ = 0;
 
 //fake enum type
-var slope = {flat: "flat",
+var slope = {
+    flat: "flat",
     flatToUp: "flatToUp",
     upToFlat: "upToFlat",
     flatToDown: "flatToDown",
-    downToFlat: "downToFlat"};
+    downToFlat: "downToFlat"
+};
 
 var previousPiece; //needs to be global
 
@@ -62,24 +64,34 @@ function addPieces() {
         dY += 0.17;
     }
 
-    switch(currentPiece){
+    var mirror = false;
+
+
+    /*
+    downToFlat is flatToUp mirrored.
+    flatToDown is upToFlat mirrored.
+     */
+    switch (currentPiece) {
         case slope.flat:
             filename = "modelJS/straight.js";
             break;
+        case slope.downToFlat:
+            mirror = true;
+        //INTENTIONAL FALL-THROUGH (no break)
         case slope.flatToUp:
             filename = "modelJS/slopeFlatToUp.js";
             break;
-        case slope.downToFlat:
-            break;
+        case slope.flatToDown:
+            mirror = true;
+            //INTENTIONAL FALL-THROUGH (no break)
         case slope.upToFlat:
             filename = "modelJS/slopeUpToFlat.js";
             dX -= 0.08; //need extra alignment for the slope
             dY += 0.264;
             break;
         default:
-            throw "bad track type";
+            throw "- bad track type \"" + currentPiece + "\"";
     }
-
 
 
     previousPiece = currentPiece;
@@ -88,10 +100,18 @@ function addPieces() {
     jsonLoader.load(filename,
         function createScene(geometry) { //argument geometry is provided by the json loader
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+            if (mirror) {
+                console.log("mirrored a thing");
+                var mat = (new THREE.Matrix4()).identity();
+                mat.elements[10] = -1; //mirror the mesh
+                mesh.applyMatrix(mat);
+            }
             mesh.scale.set(scale, scale, scale);
             mesh.position.x = currentX += dX;
             mesh.position.y = currentY += dY;
             mesh.position.z = currentZ += dZ;
+
+
             scene.add(mesh);
             addPieces(); //recur
         });
@@ -99,12 +119,10 @@ function addPieces() {
 
 var pieces = [
     slope.flat,
-    slope.flat,
     slope.flatToUp,
     slope.upToFlat,
-    slope.flat,
-    slope.flatToUp,
-    slope.upToFlat,
+    slope.flatToDown,
+    slope.downToFlat,
     slope.flat
 ];
 
