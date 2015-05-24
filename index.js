@@ -1,6 +1,6 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
 //camera.position.y = 2;
 camera.position.z = 5;
 //camera.lookAt(0, 0, 0);
@@ -16,6 +16,7 @@ scene.add(light);
 
 /*************************** CONSTANTS *********************************/
 
+// http://stackoverflow.com/questions/23859512/how-to-get-the-width-height-length-of-a-mesh-in-three-js
 const size = {
 
     flat: {
@@ -38,7 +39,7 @@ const size = {
         z: 0.4079999908804893
     },
 
-    //---------------------------D
+    //---------------------------
 
     //SAME SIZE
     flatToDown: {
@@ -50,23 +51,49 @@ const size = {
         x: 0.5245829882746562,
         y: 0.3382589924393222,
         z: 0.4079999908804893
+    },
+
+    //---------------------------
+
+    //SAME SIZE
+    up: {
+        x: 0.5430565758606418,
+        y: 0.5430565758606419,
+        z: 0.40799499088060115
+    },
+    down: {
+        x: 0.5430565758606418,
+        y: 0.5430565758606419,
+        z: 0.40799499088060115
     }
+
 };
 
-
+/*
+ in current camera:
+ +X is right, -X is left
+ +Y is up, -Y is down
+ Z is forward / back
+ */
 function doPreCorrections(piece) {
     switch (piece) {
         case slope.flat:
+        case slope.down:
         case slope.downToFlat:
         case slope.flatToUp:
+            break;
+
+        case slope.up:
+            //currentY -= 0.12;
+            //currentX -= 0.001;
             break;
 
         case slope.flatToDown:
             currentY -= size.flat.y + 0.002; //move down a tiny bit extra
             break;
         case slope.upToFlat:
-            currentX -= 0.1188; //left
-            currentY -= 0.1188; //down
+            //currentX -= 0.1188; //left
+            //currentY -= 0.1188; //down
             break;
         default:
             throw "- bad track type \"" + piece + "\"";
@@ -79,6 +106,12 @@ function doPreCorrections(piece) {
 
 }
 
+/*
+ in current camera:
+ +X is right, -X is left
+ +Y is up, -Y is down
+ Z is forward / back
+ */
 
 /*
  downToFlat is flatToUp mirrored.
@@ -86,17 +119,26 @@ function doPreCorrections(piece) {
  */
 function advanceCurrent(piece) {
     switch (piece) {
+        case slope.down:
+        case slope.up:
+            currentX += size.up.x - 0.1188;
+            currentY += size.up.y - 0.1188;
+            break;
+
         case slope.flat:
             currentX += size.flat.x;
             break;
 
         case slope.downToFlat:
         case slope.flatToUp:
-            currentX += size.downToFlat.x;
-            currentY += size.downToFlat.y;
+            currentX += size.downToFlat.x - 0.001;
+            currentY += size.downToFlat.y - 0.12;
             break;
 
         case slope.flatToDown:
+            currentX += size.flatToDown.x;
+            currentY -= size.flatToDown.y;
+            break;
         case slope.upToFlat:
             currentX += size.flatToDown.x;
             currentY += size.flatToDown.y;
@@ -113,15 +155,10 @@ function advanceCurrent(piece) {
 
 /*************************** TRACK *********************************/
 
-/*
- in current camera:
- +X is right, -X is left
- +Y is up, -Y is down
- Z is forward / back
- */
+
 
 //starting coordinates of track
-var currentX = -1.7, //start to the left a bit
+var currentX = -1, //start to the left a bit
     currentY = -0.5,
     currentZ = 0;
 
@@ -131,11 +168,13 @@ var slope = {
     flatToUp: "flatToUp",
     upToFlat: "upToFlat",
     flatToDown: "flatToDown",
-    downToFlat: "downToFlat"
+    downToFlat: "downToFlat",
+    down: "down",
+    up: "up"
 };
 
 var prevPiece, currentPiece; //needs to be global?
-var mirror = false;
+var mirror = false, down = false, up = false;
 
 var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
     scale = 0.01; //how much to scale every piece by
@@ -152,6 +191,7 @@ function addPieces() {
     var filename = ""; //gets set depending on which piece you want
     currentPiece = pieces.shift(); //removes and returns the first element in array
 
+    mirror = false, down = false, up = false;
 
     /*
      +X is right, -X is left
@@ -165,6 +205,16 @@ function addPieces() {
      */
 
     switch (currentPiece) {
+        case slope.down:
+            down = true;
+            filename = "modelJS/straight.js";
+            break;
+
+        case slope.up:
+            up = true;
+            filename = "modelJS/straight.js";
+            break;
+
         case slope.flat:
             filename = "modelJS/straight.js";
             break;
@@ -202,6 +252,13 @@ function addPieces() {
                 mesh.applyMatrix(mat);
             }
 
+            if (down) {
+                mesh.rotateOnAxis(new THREE.Vector3(0, 0, 1), Math.PI / 4);
+            }
+            if (up) {
+                mesh.rotateOnAxis(new THREE.Vector3(0, 0, 1), Math.PI / 4);
+            }
+
 
             doPreCorrections(currentPiece);
 
@@ -212,8 +269,8 @@ function addPieces() {
 
             advanceCurrent(currentPiece);
 
-
             scene.add(mesh);
+            scene.add(new THREE.BoxHelper(mesh));
             addPieces(); //recur
         });
 }
@@ -222,9 +279,8 @@ function addPieces() {
 var pieces = [
     slope.flat,
     slope.flatToUp,
-    slope.upToFlat,
-    slope.flat,
-    slope.flatToDown
+    slope.up,
+    slope.upToFlat
 ];
 
 
