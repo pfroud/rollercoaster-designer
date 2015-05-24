@@ -1,6 +1,6 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 0.1, 1000);
 //camera.position.y = 2;
 camera.position.z = 5;
 //camera.lookAt(0, 0, 0);
@@ -14,6 +14,71 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 var light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
+/*************************** CONSTANTS *********************************/
+
+function doPreCorrections(piece) {
+    switch (piece) {
+        case slope.flat:
+        case slope.downToFlat:
+        case slope.flatToUp:
+            break;
+
+        case slope.flatToDown:
+        case slope.upToFlat:
+            console.log("correcting c");
+            currentX -= 0.1188; //left
+            currentY -= 0.1188; //down
+            //currentZ += 0.4079999908804893;
+            break;
+        default:
+            throw "- bad track type \"" + piece + "\"";
+    }
+}
+
+
+
+
+/*
+ DO NOT CHANGE THESE NUMBERS
+ */
+/*
+ downToFlat is flatToUp mirrored.
+ flatToDown is upToFlat mirrored.
+ */
+function advanceCurrent(piece) {
+    switch (piece) {
+        case slope.flat:
+            console.log("a");
+            currentX += 0.5999999865889549;
+            //currentY += 0.1679979962449521;
+            //currentZ += 0.40799499088060115;
+            break;
+
+        case slope.downToFlat:
+        case slope.flatToUp:
+            console.log("b");
+            currentX += 0.6433779856193811;
+            currentY += 0.38746599133946;
+            //currentZ += 0.4079999908804893;
+            break;
+
+        case slope.flatToDown:
+        case slope.upToFlat:
+            console.log("c");
+            currentX += 0.5245829882746562;
+            currentY += 0.3382589924393222;
+            //currentZ += 0.4079999908804893;
+            break;
+        default:
+            throw "- bad track type \"" + piece + "\"";
+    }
+
+    if(prevPiece == slope.upToFlat) {
+        currentY -= 0.1679979962449521; //Y size of flat
+    }
+}
+
+
 /*************************** TRACK *********************************/
 
 /*
@@ -24,8 +89,8 @@ scene.add(light);
  */
 
 //starting coordinates of track
-var currentX = -3, //start to the left a bit
-    currentY = 0,
+var currentX = -1.7, //start to the left a bit
+    currentY = -0.5,
     currentZ = 0;
 
 //fake enum type
@@ -37,7 +102,7 @@ var slope = {
     downToFlat: "downToFlat"
 };
 
-var previousPiece; //needs to be global
+var prevPiece, currentPiece; //needs to be global?
 
 var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
     scale = 0.01; //how much to scale every piece by
@@ -51,65 +116,68 @@ var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
 function addPieces() {
     if (pieces.length == 0) return; //recursion base case
 
-    var filename = "", //gets set depending on which piece you want
-    //these are used for alignment:
-        dX = 0.6, //length of every piece
-        dY = 0,
-        dZ = 0;
-
-    var currentPiece = pieces.shift(); //removes and returns the first element in array
-
-    if (previousPiece == slope.upToFlat) {
-        dX -= 0.08;
-        dY += 0.17;
-    }
-
+    var filename = ""; //gets set depending on which piece you want
+    currentPiece = pieces.shift(); //removes and returns the first element in array
     var mirror = false;
 
+    /*
+     +X is right, -X is left
+     +Y is up, -Y is down
+     +Z is forward, -Z is back
+     */
 
     /*
-    downToFlat is flatToUp mirrored.
-    flatToDown is upToFlat mirrored.
+     downToFlat is flatToUp mirrored.
+     flatToDown is upToFlat mirrored.
      */
+
     switch (currentPiece) {
         case slope.flat:
             filename = "modelJS/straight.js";
             break;
+
         case slope.downToFlat:
             mirror = true;
-        //INTENTIONAL FALL-THROUGH (no break)
+        //intentional fall-through (no break)
+
         case slope.flatToUp:
             filename = "modelJS/slopeFlatToUp.js";
             break;
+
         case slope.flatToDown:
             mirror = true;
-            //INTENTIONAL FALL-THROUGH (no break)
+        //intentional fall-through (no break)
+
         case slope.upToFlat:
             filename = "modelJS/slopeUpToFlat.js";
-            dX -= 0.08; //need extra alignment for the slope
-            dY += 0.264;
             break;
+
         default:
             throw "- bad track type \"" + currentPiece + "\"";
     }
 
-
-    previousPiece = currentPiece;
+    prevPiece = currentPiece;
 
     //createScene() is a callback function and is called asynchronously
     jsonLoader.load(filename,
         function createScene(geometry) { //argument geometry is provided by the json loader
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+
             if (mirror) {
-                console.log("mirrored a thing");
+                console.log("MIRROR");
                 var mat = (new THREE.Matrix4()).identity();
-                mat.elements[10] = -1; //mirror the mesh
+                mat.elements[10] = -1;
                 mesh.applyMatrix(mat);
             }
+
+            doPreCorrections(currentPiece);
+
+            mesh.position.x = currentX;
+            mesh.position.y = currentY;
+            mesh.position.z = currentZ;
             mesh.scale.set(scale, scale, scale);
-            mesh.position.x = currentX += dX;
-            mesh.position.y = currentY += dY;
-            mesh.position.z = currentZ += dZ;
+
+            advanceCurrent(currentPiece);
 
 
             scene.add(mesh);
@@ -117,14 +185,15 @@ function addPieces() {
         });
 }
 
+
 var pieces = [
+    slope.flat,
     slope.flat,
     slope.flatToUp,
     slope.upToFlat,
-    slope.flatToDown,
-    slope.downToFlat,
     slope.flat
 ];
+
 
 addPieces();
 
