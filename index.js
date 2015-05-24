@@ -29,7 +29,11 @@ var currentX = -3, //start to the left a bit
     currentZ = 0;
 
 //fake enum type
-var trackType = {straight: "straight", slopeFlatToUp: "slopeFlatToUp", slopeUpToFlat: "slopeUpToFlat"};
+var slope = {flat: "flat",
+    flatToUp: "flatToUp",
+    upToFlat: "upToFlat",
+    flatToDown: "flatToDown",
+    downToFlat: "downToFlat"};
 
 var previousPiece; //needs to be global
 
@@ -53,25 +57,30 @@ function addPieces() {
 
     var currentPiece = pieces.shift(); //removes and returns the first element in array
 
-    if (previousPiece == trackType.slopeUpToFlat) {
+    if (previousPiece == slope.upToFlat) {
         dX -= 0.08;
         dY += 0.17;
     }
 
-    if (currentPiece == trackType.straight) {
-        filename = "modelJS/straight.js";
-
-    } else if (currentPiece == trackType.slopeFlatToUp) {
-        filename = "modelJS/slopeFlatToUp.js";
-
-    } else if (currentPiece == trackType.slopeUpToFlat) {
-        filename = "modelJS/slopeUpToFlat.js";
-        dX -= 0.08; //need extra alignment for the slope
-        dY += 0.264;
-
-    } else {
-        throw "bad track type";
+    switch(currentPiece){
+        case slope.flat:
+            filename = "modelJS/straight.js";
+            break;
+        case slope.flatToUp:
+            filename = "modelJS/slopeFlatToUp.js";
+            break;
+        case slope.downToFlat:
+            break;
+        case slope.upToFlat:
+            filename = "modelJS/slopeUpToFlat.js";
+            dX -= 0.08; //need extra alignment for the slope
+            dY += 0.264;
+            break;
+        default:
+            throw "bad track type";
     }
+
+
 
     previousPiece = currentPiece;
 
@@ -89,14 +98,14 @@ function addPieces() {
 }
 
 var pieces = [
-    trackType.straight,
-    trackType.straight,
-    trackType.slopeFlatToUp,
-    trackType.slopeUpToFlat,
-    trackType.straight,
-    trackType.slopeFlatToUp,
-    trackType.slopeUpToFlat,
-    trackType.straight
+    slope.flat,
+    slope.flat,
+    slope.flatToUp,
+    slope.upToFlat,
+    slope.flat,
+    slope.flatToUp,
+    slope.upToFlat,
+    slope.flat
 ];
 
 addPieces();
