@@ -35,7 +35,7 @@ if (typeof PARAMS == 'undefined') {
  * Here the variable is declared. Later it will be initialized with the
  * operation new DAT.GUI
  */
-var gui = new dat.GUI();
+//var gui = new dat.GUI();
 
 // ====================================================================
 // GuiMenu class for gui ===========================================

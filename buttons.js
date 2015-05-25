@@ -1,39 +1,44 @@
 "use strict";
 
-window.onload = function () {
 
-    document.getElementById("flat").onclick = function () {
-        pieces = [slope.flat];
-        addPieces();
-    };
+var pieceAdder = new dat.GUI();
 
-    document.getElementById("flatToUp").onclick = function () {
-        pieces = [slope.flatToUp];
-        addPieces();
-    };
 
-    document.getElementById("up").onclick = function () {
-        pieces = [slope.up];
-        addPieces();
-    };
-
-    document.getElementById("upToFlat").onclick = function () {
-        pieces = [slope.upToFlat];
-        addPieces();
-    };
-
-    document.getElementById("flatToDown").onclick = function () {
-        pieces = [slope.flatToDown];
-        addPieces();
-    };
-
-    document.getElementById("down").onclick = function () {
-        pieces = [slope.down];
-        addPieces();
-    };
-
-    document.getElementById("downToFlat").onclick = function () {
-        pieces = [slope.downToFlat];
-        addPieces();
-    };
+var buttonJson= {
+    Flat: function(){
+        addPiece(slope.flat);
+    },
+    FlatToUp:function(){
+        addPiece(slope.flatToUp);
+    },
+    Up: function(){
+        addPiece(slope.up);
+    },
+    UpToFlat: function(){
+        addPiece(slope.upToFlat);
+    },
+    FlatToDown: function(){
+        addPiece(slope.flatToDown);
+    },
+    Down: function(){
+        addPiece(slope.down);
+    },
+    DownToFlat: function(){
+        addPiece(slope.downToFlat);
+    }
 };
+
+
+pieceAdder.add(buttonJson, "Flat");
+pieceAdder.add(buttonJson, "FlatToUp");
+pieceAdder.add(buttonJson, "Up");
+pieceAdder.add(buttonJson, "UpToFlat");
+pieceAdder.add(buttonJson, "FlatToDown");
+pieceAdder.add(buttonJson, "Down");
+pieceAdder.add(buttonJson, "DownToFlat");
+
+
+function addPiece(piece){
+    pieces = [piece];
+    addPieces();
+}
