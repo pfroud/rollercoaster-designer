@@ -2,7 +2,6 @@
 function stuff() {
 
     document.getElementById("flat").onclick = function () {
-        console.log("clicked on flat");
         pieces = [slope.flat];
         addPieces();
     };

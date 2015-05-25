@@ -1,9 +1,9 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-/*var viewSize = 1;
+//var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+var viewSize = 3;
 var aspect = window.innerWidth / window.innerHeight;
-camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);*/
+camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 //camera.position.y = 2;
 camera.position.z = 5;
 //camera.lookAt(0, 0, 0);
@@ -69,6 +69,34 @@ const size = {
         x: 0.5430565758606418,
         y: 0.5430565758606419,
         z: 0.40799499088060115
+    },
+
+    //---------------------------
+
+    //SAME SIZE
+    turnLeftBig: {
+        x: 1.8599999584257603,
+        y: 0.16799999624490738,
+        z: 1.9125699572507293
+    },
+    turnRightBig: {
+        x: 1.8599999584257603,
+        y: 0.16799999624490738,
+        z: 1.9125699572507293
+    },
+
+    //---------------------------
+
+    //SAME SIZE
+    turnLeftSmall: {
+        x: 1.1399999745190144,
+        y: 0.16799999624490738,
+        z: 1.123539974886924
+    },
+    turnRightSmall: {
+        x: 1.1399999745190144,
+        y: 0.16799999624490738,
+        z: 1.123539974886924
     }
 
 };
@@ -131,15 +159,13 @@ function advanceCurrent(piece) {
             break;
 
 
-        case slope.flatToDown: ////////// start going down
+        case slope.flatToDown:
             currentX += size.flatToDown.x - 0.12;
-            //currentY -= size.flatToDown.y;// - 0.12; //intead of this, move the next piece down by its own height
             break;
-        case slope.down: //////// down
+        case slope.down:
             currentX += size.down.x - 0.1188;
-            //currentY += size.down.y - 0.1188;
             break;
-        case slope.downToFlat: ////// back to flat
+        case slope.downToFlat:
             currentX += size.downToFlat.x;
             break;
 
@@ -168,7 +194,11 @@ var slope = {
     flatToDown: "flatToDown",
     downToFlat: "downToFlat",
     down: "down",
-    up: "up"
+    up: "up",
+    turnLeftBig: "turnLeftBig",
+    turnLeftSmall: "turnLeftSmall",
+    turnRightBig: "turnRightBig",
+    turnRightSmall: "turnRightSmall"
 };
 
 var prevPiece, currentPiece; //needs to be global?
@@ -217,6 +247,18 @@ function addPieces() {
         case slope.upToFlat:
             filename = "modelJS/slopeUpToFlat.js";
             break;
+        case slope.turnLeftBig:
+            filename = "modelJS/turnLeftBig.js";
+            break;
+        case slope.turnLeftSmall:
+            filename = "modelJS/turnLeftSmall.js";
+            break;
+        case slope.turnRightBig:
+            filename = "modelJS/turnRightBig.js";
+            break;
+        case slope.turnRightSmall:
+            filename = "modelJS/turnRightSmall.js";
+            break;
         default:
             throw "- bad track type \"" + currentPiece + "\"";
     }
@@ -228,7 +270,7 @@ function addPieces() {
         function createScene(geometry) { //argument geometry is provided by the json loader
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
 
-            doPreCorrections(currentPiece);
+            //doPreCorrections(currentPiece);
 
             mesh.position.x = currentX;
             mesh.position.y = currentY;
@@ -238,15 +280,18 @@ function addPieces() {
             advanceCurrent(currentPiece);
 
             scene.add(mesh);
-            //scene.add(new THREE.BoxHelper(mesh));
+            scene.add(new THREE.BoxHelper(mesh));
+            //console.log(new THREE.Box3().setFromObject(mesh).size());
             addPieces(); //recur
         });
 }
 
 
-var pieces = [];
+var pieces = [
+    slope.turnLeftSmall
+];
 
-//addPieces();
+addPieces();
 
 
 /*************************** SKYBOX *********************************/
@@ -276,7 +321,7 @@ var skyBoxMaterial = new THREE.ShaderMaterial({
 });
 
 // create skybox mesh
-var skyboxSize = 1000; // was 1000
+var skyboxSize = 5; // was 1000
 var skybox = new THREE.Mesh(
     new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize),
     skyBoxMaterial
