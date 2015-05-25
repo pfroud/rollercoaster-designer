@@ -6,7 +6,7 @@ var scene = new THREE.Scene();
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////// uncomment to use orthographic camera ////////////////////////
-var viewSize = 1;
+var viewSize = 3;
 var aspect = window.innerWidth / window.innerHeight;
 camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 var camDist = 2;
@@ -16,8 +16,7 @@ camera.lookAt(0, 0, 0);
 
 
 var renderer = new THREE.WebGLRenderer();
-//renderer.setSize(window.innerWidth, window.innerHeight); //make canvas take up whole screen
-renderer.setSize(1700, 900); //make canvas not take up whole screen
+renderer.setSize(window.innerWidth, window.innerHeight); //make canvas take up whole screen
 document.body.appendChild(renderer.domElement);
 
 controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -25,14 +24,14 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 var light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-scene.add(new THREE.AxisHelper(0.5)); //draws red, green, and blue lines for axis at the origin
+//scene.add(new THREE.AxisHelper(0.5)); //draws red, green, and blue lines for axis at the origin
 
 //ground plane                                               5 units square
-var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
+/*var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
     new THREE.MeshBasicMaterial({color: 0x999999}));
 groundPlane.rotateX(Math.PI/-2); //rotate so it's horozontal
 groundPlane.translateZ(-0.001); //move down a tiny bit so track and axis helper draw on top of it
-scene.add(groundPlane);
+scene.add(groundPlane);*/
 
 /*************************** WINDOW RESIZE FIX ********************************
  from
