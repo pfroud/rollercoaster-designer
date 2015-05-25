@@ -1,6 +1,6 @@
 "use strict";
 
-
+// dat.gui object (menu in the top)
 var pieceAdder = new dat.GUI();
 
 // Json telling dat.GUI what each button does
@@ -28,10 +28,12 @@ var buttonJson= {
     }
 };
 
+// add button to GUI
 for (var key in buttonJson){
     pieceAdder.add(buttonJson, key.toString());
 }
 
+// quick little function for adding pieces to make JSON more readable
 function addPiece(piece){
     pieces = [piece];
     addPieces();
