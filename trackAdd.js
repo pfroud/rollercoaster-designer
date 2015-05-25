@@ -60,18 +60,11 @@ function addPieces() {
 
 
 var pieces = [
-<<<<<<< HEAD
     slope.flat, //uncomment to start with some tracks
     slope.flatToUp,
     slope.up,
     slope.upToFlat
-=======
-    /*    slope.flat, //uncomment to start with some tracks
-     slope.turnLeftSmall,
-     slope.turnLeftSmall,
-     slope.flat,
-     slope.flat*/
->>>>>>> jonathans_branch
+
 ];
 
 addPieces();
