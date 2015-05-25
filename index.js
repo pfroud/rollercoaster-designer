@@ -97,7 +97,7 @@ function doPreCorrections(piece) {
     }
 
     if (mirrorTransitional) {
-        currentZ -= size.flatToDown.z;
+        if(piece == slope.flatToDown) currentZ -= size.flatToDown.z;
         currentX += size.flatToDown.x;
     }
 
@@ -141,8 +141,7 @@ function advanceCurrent(piece) {
             break;
 
         case slope.flatToDown:
-            currentX -= 0.12;
-            currentY += 0.12;
+            currentY -= size.flatToDown.y - 0.075; //WTF??
             break;
         case slope.upToFlat:
             currentX += size.upToFlat.x;
@@ -286,7 +285,9 @@ var pieces = [
     slope.upToFlat,
     slope.flat,
     slope.flatToDown,
-    slope.down
+    //slope.down,
+    slope.down,
+    slope.downToFlat
 ];
 
 
