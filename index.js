@@ -81,6 +81,7 @@ const size = {
 function doPreCorrections(piece) {
     switch (piece) {
         case slope.flat:
+            break;
         case slope.down:
             currentY -= size.down.y - 0.12;
             break;
