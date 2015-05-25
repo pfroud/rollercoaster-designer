@@ -1,16 +1,17 @@
 "use strict";
 
 //starting coordinates of track
-var currentX = -1, //start to the left a bit
+var currentX = -1,
     currentY = 0,
     currentZ = 1;
 
-var prevPiece, currentPiece; //needs to be global?
-var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
+var prevPiece, currentPiece;
+var jsonLoader = new THREE.JSONLoader(),
     scale = 0.01; //how much to scale every piece by
-var filename = "";
 
-var direction = 0;
+var filename = ""; //gets set to the javascript file with the model in setFilename()
+
+var direction = 0; //IN PROGRESS
 
 /**
  * This is pretty terrible. The hard-coded alignment numbers work. It can probably be simplified.
@@ -21,7 +22,7 @@ var direction = 0;
 function addPieces() {
     if (pieces.length == 0) return; //recursion base case
 
-    filename = ""; //gets set depending on which piece you want
+    filename = "";
     currentPiece = pieces.shift(); //removes and returns the first element in array
 
     setFilename();
@@ -33,19 +34,19 @@ function addPieces() {
         function createScene(geometry) { //argument geometry is provided by the json loader
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
 
-            doPreCorrections(currentPiece);
+            doPreCorrections(currentPiece); //moves where the current piece will go
 
+            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * direction); //IN PROGREESS
             mesh.position.x = currentX;
             mesh.position.y = currentY;
             mesh.position.z = currentZ;
             mesh.scale.set(scale, scale, scale);
-            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * direction);
 
-            advanceCurrent(currentPiece);
+            advanceCurrent(currentPiece); //moves where the next pece will go
 
             scene.add(mesh);
-            scene.add(new THREE.BoxHelper(mesh));
-            //console.log(new THREE.Box3().setFromObject(mesh).size());
+            scene.add(new THREE.BoxHelper(mesh)); //draws the yellow bounding boxes
+            //console.log(new THREE.Box3().setFromObject(mesh).size()); //use this to measure the size of each mesh
             addPieces(); //recur
         });
 
@@ -54,9 +55,11 @@ function addPieces() {
 
 
 var pieces = [
-    slope.flat,
+/*    slope.flat, //uncomment to start with some tracks
     slope.turnLeftSmall,
-    slope.flat
+    slope.turnLeftSmall,
+    slope.flat,
+    slope.flat*/
 ];
 
 addPieces();

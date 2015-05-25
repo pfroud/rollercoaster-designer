@@ -1,5 +1,6 @@
 "use strict";
-function stuff() {
+
+window.onload = function () {
 
     document.getElementById("flat").onclick = function () {
         pieces = [slope.flat];
@@ -26,7 +27,7 @@ function stuff() {
         addPieces();
     };
 
-    document.getElementById("down").onclick = function() {
+    document.getElementById("down").onclick = function () {
         pieces = [slope.down];
         addPieces();
     };
@@ -35,4 +36,4 @@ function stuff() {
         pieces = [slope.downToFlat];
         addPieces();
     };
-}
+};

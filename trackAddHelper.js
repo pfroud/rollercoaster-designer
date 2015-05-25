@@ -7,6 +7,10 @@
  +Y is up, -Y is down
  Z is forward / back
  */
+/**
+ * sets where the current piece goes
+ * @param piece
+ */
 function doPreCorrections(piece) {
     switch (piece) {
         case slope.flatToUp:
@@ -38,6 +42,10 @@ function doPreCorrections(piece) {
  +Y is up, -Y is down
  Z is forward / back
  */
+/**
+ * sets where the next piece will go
+ * @param piece
+ */
 function advanceCurrent(piece) {
     switch (piece) {
         case slope.up:
@@ -45,7 +53,11 @@ function advanceCurrent(piece) {
             currentY += size.up.y - 0.1188;
             break;
         case slope.flat:
-            currentX += size.flat.x;
+            if (direction == 0) { //IN PROGRESS
+                currentX += size.flat.x;
+            } else if (direction == 1) {
+                currentZ -= size.flat.x; //move on the Z direction by the x size of the piece
+            }
             break;
         case slope.flatToUp:
             currentX += size.flatToUp.x - 0.12;
