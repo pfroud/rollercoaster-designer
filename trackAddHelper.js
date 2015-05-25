@@ -67,6 +67,7 @@ function advanceCurrent(piece) {
         case slope.turnLeftSmall:
             currentX += size.turnLeftSmall.x;
             currentZ -= size.turnLeftSmall.z;
+            direction = 1;
             break;
 
         default:

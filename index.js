@@ -1,7 +1,7 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
 //var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-var viewSize = 1;
+var viewSize = 3;
 var aspect = window.innerWidth / window.innerHeight;
 camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 var camDist = 2;
@@ -17,6 +17,14 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 var light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
+
+scene.add(new THREE.AxisHelper(0.5));
+
+
+var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1), new THREE.MeshBasicMaterial({color: 0xaaaaaa}));
+groundPlane.rotateX(Math.PI/-2);
+groundPlane.translateZ(-0.001); //move down a tiny bit so other stuff goes on top of the plane
+scene.add(groundPlane);
 
 
 /*************************** WINDOW RESIZE FIX ********************************

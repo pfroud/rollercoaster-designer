@@ -1,14 +1,16 @@
 "use strict";
 
 //starting coordinates of track
-var currentX = -2, //start to the left a bit
-    currentY = -1,
-    currentZ = 0;
+var currentX = -1, //start to the left a bit
+    currentY = 0,
+    currentZ = 1;
 
 var prevPiece, currentPiece; //needs to be global?
 var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
     scale = 0.01; //how much to scale every piece by
 var filename = "";
+
+var direction = 0;
 
 /**
  * This is pretty terrible. The hard-coded alignment numbers work. It can probably be simplified.
@@ -37,6 +39,7 @@ function addPieces() {
             mesh.position.y = currentY;
             mesh.position.z = currentZ;
             mesh.scale.set(scale, scale, scale);
+            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * direction);
 
             advanceCurrent(currentPiece);
 
