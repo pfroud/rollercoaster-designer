@@ -7,6 +7,11 @@ window.onload = function () {
         addPieces();
     };
 
+    document.getElementById("delete").onclick = function () {
+        scene.remove(allTracks.pop());
+        scene.remove(allBoundingBoxes.pop());
+    };
+
     document.getElementById("flatToUp").onclick = function () {
         pieces = [slope.flatToUp];
         addPieces();

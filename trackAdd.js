@@ -5,6 +5,9 @@ var currentX = -1,
     currentY = 0,
     currentZ = 1;
 
+var allTracks = [];
+var allBoundingBoxes = [];
+
 var prevPiece, currentPiece;
 var jsonLoader = new THREE.JSONLoader(),
     scale = 0.01; //how much to scale every piece by
@@ -45,7 +48,10 @@ function addPieces() {
             advanceCurrent(currentPiece); //moves where the next pece will go
 
             scene.add(mesh);
-            scene.add(new THREE.BoxHelper(mesh)); //draws the yellow bounding boxes
+            allTracks.push(mesh);
+            var bbox = new THREE.BoxHelper(mesh);
+            allBoundingBoxes.push(bbox);
+            scene.add(bbox); //draws the yellow bounding boxes
             //console.log(new THREE.Box3().setFromObject(mesh).size()); //use this to measure the size of each mesh
             addPieces(); //recur
         });
@@ -55,11 +61,10 @@ function addPieces() {
 
 
 var pieces = [
-/*    slope.flat, //uncomment to start with some tracks
-    slope.turnLeftSmall,
-    slope.turnLeftSmall,
-    slope.flat,
-    slope.flat*/
+    slope.flat, //uncomment to start with some tracks
+    slope.flatToUp,
+    slope.up,
+    slope.upToFlat
 ];
 
 addPieces();
