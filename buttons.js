@@ -3,7 +3,7 @@
 
 var pieceAdder = new dat.GUI();
 
-
+// Json telling dat.GUI what each button does
 var buttonJson= {
     Flat: function(){
         addPiece(slope.flat);
@@ -28,15 +28,9 @@ var buttonJson= {
     }
 };
 
-
-pieceAdder.add(buttonJson, "Flat");
-pieceAdder.add(buttonJson, "FlatToUp");
-pieceAdder.add(buttonJson, "Up");
-pieceAdder.add(buttonJson, "UpToFlat");
-pieceAdder.add(buttonJson, "FlatToDown");
-pieceAdder.add(buttonJson, "Down");
-pieceAdder.add(buttonJson, "DownToFlat");
-
+for (var key in buttonJson){
+    pieceAdder.add(buttonJson, key.toString());
+}
 
 function addPiece(piece){
     pieces = [piece];
