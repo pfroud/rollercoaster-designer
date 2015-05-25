@@ -1,0 +1,40 @@
+/* generated with the help of enjoycss.com */
+
+.inset-text-effect{
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    float: none;
+    z-index: auto;
+    width: auto;
+    height: auto;
+    position: static;
+    cursor: default;
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    font: normal 70px/1 "Droid Sans", Helvetica, sans-serif;
+    color: rgba(48,48,48,1);
+    text-align: center;
+    text-transform: normal;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    white-space: pre;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: 1px 1px 0 rgba(140,140,140,0.6) , -1px -1px 1px rgba(0,0,0,0.67) ;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+    -webkit-transform-origin: 50% 50% 0;
+    transform-origin: 50% 50% 0;
+}

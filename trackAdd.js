@@ -54,17 +54,24 @@ function addPieces() {
             scene.add(bbox); //draws the yellow bounding boxes
             //console.log(new THREE.Box3().setFromObject(mesh).size()); //use this to measure the size of each mesh
             addPieces(); //recur
-        });
-
-
+        }
+    );
 }
 
 
 var pieces = [
+<<<<<<< HEAD
     slope.flat, //uncomment to start with some tracks
     slope.flatToUp,
     slope.up,
     slope.upToFlat
+=======
+    /*    slope.flat, //uncomment to start with some tracks
+     slope.turnLeftSmall,
+     slope.turnLeftSmall,
+     slope.flat,
+     slope.flat*/
+>>>>>>> jonathans_branch
 ];
 
 addPieces();
@@ -112,5 +119,140 @@ function setFilename() {
             break;
         default:
             throw "- bad track type \"" + currentPiece + "\"";
+    }
+}
+
+function advanceCurrent(piece) {
+    switch (piece) {
+        case slope.up:
+            currentX += size.up.x - 0.1188;
+            currentY += size.up.y - 0.1188;
+            break;
+        case slope.flat:
+            if (direction == 0) { //IN PROGRESS
+                currentX += size.flat.x;
+            } else if (direction == 1) {
+                currentZ -= size.flat.x; //move on the Z direction by the x size of the piece
+            }
+            break;
+        case slope.flatToUp:
+            currentX += size.flatToUp.x - 0.12;
+            currentY += size.flatToUp.y - 0.12;
+            break;
+        case slope.upToFlat:
+            currentX += size.upToFlat.x;
+            currentY += size.upToFlat.y;
+            break;
+        case slope.flatToDown:
+            currentX += size.flatToDown.x - 0.12;
+            break;
+        case slope.down:
+            currentX += size.down.x - 0.1188;
+            break;
+        case slope.downToFlat:
+            currentX += size.downToFlat.x;
+            break;
+        case slope.turnLeftSmall:
+            currentX += size.turnLeftSmall.x;
+            currentZ -= size.turnLeftSmall.z;
+            direction = 1;
+            break;
+
+        default:
+            throw "- bad track type \"" + piece + "\"";
+    }
+
+    if (prevPiece == slope.upToFlat) {
+        currentY -= size.flat.y;
+    }
+}
+
+/*
+ in current camera:
+ +X is right, -X is left
+ +Y is up, -Y is down
+ Z is forward / back
+ */
+/**
+ * sets where the current piece goes
+ * @param piece
+ */
+function doPreCorrections(piece) {
+    switch (piece) {
+        case slope.flatToUp:
+        case slope.upToFlat:
+        case slope.up:
+        case slope.flat:
+        case slope.turnLeftSmall:
+            break;
+
+        case slope.down:
+            currentY -= size.down.y - 0.12;
+            break;
+        case slope.downToFlat:
+            currentY -= size.downToFlat.y - 0.12;
+            break;
+        case slope.flatToDown:
+            //moves the top of flatToDown to the top of flat. you can uncomment to see why needed
+            currentY -= size.flat.y + 0.002;
+            break;
+        default:
+            throw "- bad track type \"" + piece + "\"";
+    }
+
+}
+
+/*
+ in current camera:
+ +X is right, -X is left
+ +Y is up, -Y is down
+ Z is forward / back
+ */
+/**
+ * sets where the next piece will go
+ * @param piece
+ */
+function advanceCurrent(piece) {
+    switch (piece) {
+        case slope.up:
+            currentX += size.up.x - 0.1188;
+            currentY += size.up.y - 0.1188;
+            break;
+        case slope.flat:
+            if (direction == 0) { //IN PROGRESS
+                currentX += size.flat.x;
+            } else if (direction == 1) {
+                currentZ -= size.flat.x; //move on the Z direction by the x size of the piece
+            }
+            break;
+        case slope.flatToUp:
+            currentX += size.flatToUp.x - 0.12;
+            currentY += size.flatToUp.y - 0.12;
+            break;
+        case slope.upToFlat:
+            currentX += size.upToFlat.x;
+            currentY += size.upToFlat.y;
+            break;
+        case slope.flatToDown:
+            currentX += size.flatToDown.x - 0.12;
+            break;
+        case slope.down:
+            currentX += size.down.x - 0.1188;
+            break;
+        case slope.downToFlat:
+            currentX += size.downToFlat.x;
+            break;
+        case slope.turnLeftSmall:
+            currentX += size.turnLeftSmall.x;
+            currentZ -= size.turnLeftSmall.z;
+            direction = 1;
+            break;
+
+        default:
+            throw "- bad track type \"" + piece + "\"";
+    }
+
+    if (prevPiece == slope.upToFlat) {
+        currentY -= size.flat.y;
     }
 }
