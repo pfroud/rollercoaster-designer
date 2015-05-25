@@ -177,44 +177,4 @@ Bar.prototype.addSlider = function(name, min, max, step) {
 // TEST CODE ==========================================================
 // ====================================================================
 
-/**
-
-var bars = 3;
-
-gui = new dat.GUI({
-    height: (bars + 1) * 32 - 1
-});
-
-var params = {
-    intention: 5000,
-    x:2,
-    y:1.0,
-    z:1,
-    w:1,
-    width:1.0,
-    height:1.0,
-    depth:1.0
-};
-
-gui.add(params, 'intention').onFinishChange(function(){
-    console.log("it changed!");
-});
-
-// HOW TO MAKE A BUTTON
-gui.add({ scale: function () {
-    planeMesh.scale(params.width, params.height, params.depth);
-} }, "scale");
-
-
-gui.add(params, 'intention').onFinishChange(function () {
-    // TODO: lol
-});
-
-var width = gui.add(params, 'width').min(0.0).max(2.0).step(0.1);
-width.onFinishChange(function (){
-    var tmp = params.width;
-    Math.round(tmp * 10);
-    params.width = (tmp / 10);
-});
-*/
 
