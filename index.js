@@ -1,15 +1,16 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
-//var camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
-var viewSize = 1;
+var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+/*var viewSize = 1;
 var aspect = window.innerWidth / window.innerHeight;
-camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
+camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);*/
 //camera.position.y = 2;
 camera.position.z = 5;
 //camera.lookAt(0, 0, 0);
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+//renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(1700, 900);
 document.body.appendChild(renderer.domElement);
 
 controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -139,8 +140,7 @@ function advanceCurrent(piece) {
             //currentY += size.down.y - 0.1188;
             break;
         case slope.downToFlat: ////// back to flat
-            currentX += size.downToFlat.x - 0.12;
-            currentY -= size.downToFlat.y - 0.12;
+            currentX += size.downToFlat.x;
             break;
 
         default:
@@ -154,8 +154,6 @@ function advanceCurrent(piece) {
 
 
 /*************************** TRACK *********************************/
-
-
 
 //starting coordinates of track
 var currentX = -1, //start to the left a bit
@@ -240,27 +238,15 @@ function addPieces() {
             advanceCurrent(currentPiece);
 
             scene.add(mesh);
-            scene.add(new THREE.BoxHelper(mesh));
+            //scene.add(new THREE.BoxHelper(mesh));
             addPieces(); //recur
         });
 }
 
 
-var pieces = [
-    slope.flat,
-    slope.flatToUp,
-    //slope.up,
-    slope.upToFlat,
-    slope.flat,
-    slope.flatToDown,
-    //slope.down,
-    slope.downToFlat,
-    slope.flat
+var pieces = [];
 
-];
-
-
-addPieces();
+//addPieces();
 
 
 /*************************** SKYBOX *********************************/
@@ -290,7 +276,7 @@ var skyBoxMaterial = new THREE.ShaderMaterial({
 });
 
 // create skybox mesh
-var skyboxSize = 5; // was 1000
+var skyboxSize = 1000; // was 1000
 var skybox = new THREE.Mesh(
     new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize),
     skyBoxMaterial

@@ -6,11 +6,23 @@
 			canvas { width: 100%; height: 100% }
 		</style>
 	</head>
-	<body>
+	<body onload="stuff();">
 		<script src="lib/three.js"></script>
         <script src="lib/OrbitControls.js"></script>
         <script src="index.js"></script>
+        <script src="buttons.js"></script>
 
 	</body>
+    <br>
+    <!-- see button.js -->
+    <button id="flat">flat</button>
+    <br>
+    <button id="flatToUp">flat to up</button>
+    <button id="up">up</button>
+    <button id="upToFlat">up to flat</button>
+    <br>
+    <button id="flatToDown">flat to down</button>
+    <button id="down">down</button>
+    <button id="downToFlat">down to flat</button>
 	<!-- script src="World.js"></script -->
 </html>
