@@ -82,7 +82,11 @@ function doPreCorrections(piece) {
     switch (piece) {
         case slope.flat:
         case slope.down:
+            currentY -= size.down.y - 0.12;
+            break;
         case slope.downToFlat:
+            currentY -= size.downToFlat.y - 0.12;
+            break;
         case slope.flatToUp:
         case slope.upToFlat:
         case slope.up:
@@ -90,7 +94,8 @@ function doPreCorrections(piece) {
 
         case slope.flatToDown:
             //moves the top of flatToDown to the top of flat. you can uncomment to see why needed
-            currentY -= size.flat.y + 0.002; //move down a tiny bit extra
+            // YES THIS IS ACTUALLY NEEDED
+            currentY -= size.flat.y + 0.002;
             break;
         default:
             throw "- bad track type \"" + piece + "\"";
@@ -107,32 +112,36 @@ function doPreCorrections(piece) {
 
 function advanceCurrent(piece) {
     switch (piece) {
-        case slope.down:
         case slope.up:
             currentX += size.up.x - 0.1188;
             currentY += size.up.y - 0.1188;
             break;
-
         case slope.flat:
             currentX += size.flat.x;
-            break;
-
-        case slope.downToFlat:
-            currentX += size.downToFlat.x - 0.12;
-            currentY -= size.downToFlat.y - 0.12;
             break;
         case slope.flatToUp:
             currentX += size.flatToUp.x - 0.12;
             currentY += size.flatToUp.y - 0.12;
             break;
-
-        case slope.flatToDown:
-            currentY -= size.flatToDown.y - 0.075; //WTF??
-            break;
         case slope.upToFlat:
             currentX += size.upToFlat.x;
             currentY += size.upToFlat.y;
             break;
+
+
+        case slope.flatToDown: ////////// start going down
+            currentX += size.flatToDown.x - 0.12;
+            //currentY -= size.flatToDown.y;// - 0.12; //intead of this, move the next piece down by its own height
+            break;
+        case slope.down: //////// down
+            currentX += size.down.x - 0.1188;
+            //currentY += size.down.y - 0.1188;
+            break;
+        case slope.downToFlat: ////// back to flat
+            currentX += size.downToFlat.x - 0.12;
+            currentY -= size.downToFlat.y - 0.12;
+            break;
+
         default:
             throw "- bad track type \"" + piece + "\"";
     }
@@ -148,8 +157,8 @@ function advanceCurrent(piece) {
 
 
 //starting coordinates of track
-var currentX = -3, //start to the left a bit
-    currentY = -0.5,
+var currentX = -1, //start to the left a bit
+    currentY = 0,
     currentZ = 0;
 
 //fake enum type
@@ -239,13 +248,14 @@ function addPieces() {
 var pieces = [
     slope.flat,
     slope.flatToUp,
-    slope.up,
+    //slope.up,
     slope.upToFlat,
     slope.flat,
     slope.flatToDown,
     //slope.down,
-    slope.down,
-    slope.downToFlat
+    slope.downToFlat,
+    slope.flat
+
 ];
 
 
