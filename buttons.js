@@ -26,6 +26,14 @@ var buttonJson= {
     },
     DownToFlat: function(){
         addPiece(slope.downToFlat);
+    },
+    DELETE: function(){
+        if (allTracks.length > 0) {
+            scene.remove(allTracks.pop());
+        }
+        if (allBoundingBoxes.length > 0){
+            scene.remove(allBoundingBoxes.pop());
+        }
     }
 };
 
@@ -39,3 +47,4 @@ function addPiece(piece){
     pieces = [piece];
     addPieces();
 }
+
