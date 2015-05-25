@@ -96,16 +96,6 @@ function doPreCorrections(piece) {
             throw "- bad track type \"" + piece + "\"";
     }
 
-    if (mirrorTransitional) {
-        if(piece == slope.flatToDown) currentZ -= size.flatToDown.z;
-        currentX += size.flatToDown.x;
-    }
-
-    if(mirrorDown) {
-        currentX += size.down.x;
-        currentY -= size.down.y;
-    }
-
 }
 
 /*
@@ -115,10 +105,6 @@ function doPreCorrections(piece) {
  Z is forward / back
  */
 
-/*
- downToFlat is flatToUp mirrored.
- flatToDown is upToFlat mirrored.
- */
 function advanceCurrent(piece) {
     switch (piece) {
         case slope.down:
@@ -178,8 +164,6 @@ var slope = {
 };
 
 var prevPiece, currentPiece; //needs to be global?
-var mirrorTransitional = false;
-var mirrorDown = false;
 
 var jsonLoader = new THREE.JSONLoader(), //does the heavy lifting
     scale = 0.01; //how much to scale every piece by
@@ -196,7 +180,6 @@ function addPieces() {
     var filename = ""; //gets set depending on which piece you want
     currentPiece = pieces.shift(); //removes and returns the first element in array
 
-    mirrorTransitional = false;
 
     /*
      +X is right, -X is left
@@ -204,41 +187,28 @@ function addPieces() {
      +Z is forward, -Z is back
      */
 
-    /*
-     downToFlat is flatToUp mirrored.
-     flatToDown is upToFlat mirrored.
-     */
-
     switch (currentPiece) {
         case slope.down:
-            mirrorDown = true;
-            filename = "modelJS/straight_45deg.js";
+            filename = "modelJS/down.js";
             break;
-
         case slope.up:
-            filename = "modelJS/straight_45deg.js";
+            filename = "modelJS/up.js";
             break;
-
         case slope.flat:
             filename = "modelJS/straight.js";
             break;
-
         case slope.downToFlat:
-            mirrorTransitional = true;
-        //intentional fall-through (no break)
-
+            filename = "modelJS/slopeDownToFlat.js";
+            break;
         case slope.flatToUp:
             filename = "modelJS/slopeFlatToUp.js";
             break;
-
         case slope.flatToDown:
-            mirrorTransitional = true;
-        //intentional fall-through (no break)
-
+            filename = "modelJS/slopeFlatToDown.js";
+            break;
         case slope.upToFlat:
             filename = "modelJS/slopeUpToFlat.js";
             break;
-
         default:
             throw "- bad track type \"" + currentPiece + "\"";
     }
@@ -249,18 +219,6 @@ function addPieces() {
     jsonLoader.load(filename,
         function createScene(geometry) { //argument geometry is provided by the json loader
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-
-            if (mirrorTransitional) {
-                var mat = (new THREE.Matrix4()).identity();
-                mat.elements[10] = -1;
-                mesh.applyMatrix(mat);
-            }
-
-
-            if (mirrorDown) {
-                mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
-            }
-
 
             doPreCorrections(currentPiece);
 
