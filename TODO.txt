@@ -4,15 +4,22 @@ Choose JSON parser/format
    jquery stuff of course
 
 Peter
-Three.js track pieces
-Find models and export from blender
+Try supports???
+Ground???
+Try to get car model
+Better material for tracks
+Find good favicon.
+
+Make orthographic camera scale with window.
+
 
 Jonathan
 Make UI stuff - editor 2D interface
    has buttons to execute functions
+Up/down pieces. Piece guarding.
+Direction???
 
 
-Function to put track piece into three.js world
 Function to move track piece in three.js world
 
 These functions don't need to work yet!!!!
