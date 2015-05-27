@@ -35,7 +35,12 @@ function insertTrack(piece) {
 
     LOADER.load(piece.filename,
         function createScene(geometry) {
-            var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+
+            //var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+
+
+            scene.add(new THREE.Mesh(new THREE.BoxGeometry(Math.random(), Math.random(), Math.random(), 1, 1, 1), new THREE.MeshNormalMaterial({wireframe: true})));
+            return;
 
             TRACK.doPreCorrections(currentPiece); //moves where the current piece will go
 
@@ -49,7 +54,7 @@ function insertTrack(piece) {
 
             TRACK.advanceCurrent(currentPiece); //moves where the next piece will go
 
-            scene.add(mesh);
+
             TRACK.trackMeshes.push(mesh);
             /*var bbox = new THREE.BoxHelper(mesh);
             TRACK.boundingBoxes.push(bbox);

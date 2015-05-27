@@ -35,7 +35,12 @@ function addPieces() {
     //createScene() is a callback function and is called asynchronously
     jsonLoader.load(filename,
         function createScene(geometry) { //argument geometry is provided by the json loader
-            var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+
+            //var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+
+            scene.add(new THREE.Mesh(new THREE.BoxGeometry(Math.random(), Math.random(), Math.random(), 1, 1, 1), new THREE.MeshNormalMaterial({wireframe: true})));
+            return;
+
 
             doPreCorrections(currentPiece); //moves where the current piece will go
 
