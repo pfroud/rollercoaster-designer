@@ -57,4 +57,4 @@ render();
 
     // iterators
 var i, n, j, t = 0;
-var SCALE = 0.02;
+var SCALE = 0.01;
