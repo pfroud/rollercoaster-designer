@@ -14,8 +14,8 @@ function Track() {
     var prevPiece = null;
     var currPiece = null;
 
-    var jsonLoader = new THREE.JSONLoader();
-    var SCALE = 0.01
+    //var jsonLoader = new THREE.JSONLoader();
+    var SCALE = 0.01;
 
     var currFileName ="";
     var direction = 0;
@@ -24,15 +24,7 @@ function Track() {
 
 // TODO
 function insertTrack(piece) {
-    // this.counter++;
-    // piece.key = this.counter;
-    // this.trackArray[String(this.counter)] = piece;
-/*
-    if (piece == undefined){
-        return;
-    }
-*/
-    if (TRACK.currPiece != null){
+    if (TRACK.currPiece != undefined){
         TRACK.prevPiece = TRACK.currPiece;
         TRACK.currpiece = piece;
     } else {
@@ -57,35 +49,14 @@ function insertTrack(piece) {
 
             scene.add(mesh);
             TRACK.trackMeshes.push(mesh);
-            var bbox = new THREE.BoxHelper(mesh);
+            /*var bbox = new THREE.BoxHelper(mesh);
             TRACK.boundingBoxes.push(bbox);
-            scene.add(bbox); //draws the yellow bounding boxes
-            // insertTrack();
+            scene.add(bbox); //draws the yellow bounding boxes*/
         }
     );
 }
 
-Track.prototype.createTrack = function(geometry){
-    var mesh = new THREE.mesh(geometry, new THREE.MeshNormalMaterial());
 
-    TRACK.doPreCorrections(currentPiece); //moves where the current piece will go
-
-    mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
-    mesh.position.x = TRACK.currentX;
-    mesh.position.y = TRACK.currentY;
-    mesh.position.z = TRACK.currentZ;
-    mesh.scale.set(SCALE, SCALE, SCALE);
-
-    piece.mesh = mesh;
-
-    TRACK.advanceCurrent(currentPiece); //moves where the next piece will go
-
-    scene.add(mesh);
-    TRACK.trackMeshes.push(mesh);
-    var bbox = new THREE.BoxHelper(mesh);
-    TRACK.boundingBoxes.push(bbox);
-    scene.add(bbox); //draws the yellow bounding boxes
-};
 
 Track.prototype.advanceCurrent = function(){
     console.log("advance Current!");
@@ -260,7 +231,7 @@ function Piece (type){
 
     TRACK.trackArray.push(this);
     insertTrack(this);
-}
+};
 
 Piece.prototype.doPreCorrections = function(){
     TRACK.currentX -= this.preOffset;
@@ -274,10 +245,10 @@ Piece.prototype.insert = function(){
 };
 
 // Global variable for the track
-var TRACK = new Track();
+  var TRACK = new Track();
 
-var tmpPiece = new Piece(TRACKTYPES.FLAT);
-insertTrack(tmpPiece);
+//var tmpPiece = new Piece(TRACKTYPES.FLAT);
+//insertTrack(tmpPiece);
 
 // =============================================================================
 // TESTING GUI FOR CODE ========================================================
