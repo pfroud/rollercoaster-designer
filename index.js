@@ -52,3 +52,9 @@ var render = function () {
     controls.update();
 };
 render();
+
+/*************************** OTHER GLOBAL VARIABLES ******************/
+
+    // iterators
+var i, n, j, t = 0;
+var SCALE = 0.02;
