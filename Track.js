@@ -156,7 +156,7 @@ Track.prototype.delete = function () {
  */
 Track.prototype.updatePosition = function (){
     // if there are no pieces in the track, just set it to the default values
-    if (pieces.length == 0){
+    if (this.pieces.length == 0){
         this.currentX = this.START_X;
         this.currentY = this.START_Y;
         this.currentZ = this.START_Z;
@@ -201,14 +201,18 @@ var testingFolder = mainMenu.addFolder("New Track code");
 
 var testingButtonJson = {
     Flat: function(){
-      new Piece(TRACKTYPES.FLAT);
+      new Piece(TRACK_TYPES.FLAT);
     },
     Delete: function(){
         TRACK.delete();
+    },
+    DeleteAll: function(){
+        TRACK.deleteAll();
     }
 };
 
 
 testingFolder.add(testingButtonJson,"Flat");
 testingFolder.add(testingButtonJson, "Delete");
+testingFolder.add(testingButtonJson, "DeleteAll");
 testingFolder.open();

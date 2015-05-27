@@ -4,7 +4,9 @@
 
 /**
  * Function to generate a track piece.
- * @param: must be a JSON, or a string of the type
+ * @param: must be a JSON, or a string of the type piece. Appropriate values
+ * are in TRACK_TYPES
+ * @see constant.js
  */
 function Piece (type){
     // making the fields so that WebStorm will not complain that they don't exist
@@ -20,7 +22,7 @@ function Piece (type){
 
     // copy all fields in JSON to the piece
     if (typeof(type) == "string"){ // error handling
-        var JSONType = TRACKTYPES[type];
+        var JSONType = TRACK_TYPES[type];
         for (var key in JSONType){
             this[key.toString()] = JSONType[key.toString()];
         }
@@ -31,7 +33,6 @@ function Piece (type){
     }
 
 
-    // TODO: implement position for pieces
     this.x;
     this.y;
     this.z;

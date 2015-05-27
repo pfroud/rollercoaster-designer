@@ -98,7 +98,7 @@ const slope = {
 
 
 // json template for track pieces
-var TRACKTYPES = {
+var TRACK_TYPES = {
     FLAT: {
         name: "flat",
         filename: "modelJS/straight.js",
