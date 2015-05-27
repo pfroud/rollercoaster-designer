@@ -1,61 +1,42 @@
 "use strict";
 
 
-var mainMenu = new dat.GUI();
 
-// dat.gui object (menu in the top)
-var piecesFolder = mainMenu.addFolder("Pieces");
+// TEMP GUI FOR TESTING ========================================================
+var MAIN_MENU = new dat.GUI();
 
-// Json telling dat.GUI what each button does
-var buttonJson= {
-    Pieces: 1,
-    Flat: function(){
-        addPiece(slope.flat);
-    },
-    FlatToUp:function(){
-        addPiece(slope.flatToUp);
-    },
-    Up: function(){
-        addPiece(slope.up);
-    },
-    UpToFlat: function(){
-        addPiece(slope.upToFlat);
-    },
-    FlatToDown: function(){
-        addPiece(slope.flatToDown);
-    },
-    Down: function(){
-        addPiece(slope.down);
-    },
-    DownToFlat: function(){
-        addPiece(slope.downToFlat);
+var debugFolder = MAIN_MENU.gui.addFolder("Debug");
+
+debugFolder.close();
+
+
+var debugJSON = {
+    ToggleBoxes: function(){
+
     }
-
 };
 
 
+var testingFolder = MAIN_MENU.addFolder("New Track code");
 
-// add buttons to GUI
-for (var key in buttonJson){
-    piecesFolder.add(buttonJson, key.toString());
-}
-
-// Add delete button
-mainMenu.add({DELETE: function(){
-    if (allTracks.length > 0) {
-        scene.remove(allTracks.pop());
+var testingButtonJson = {
+    Flat: function(){
+        new Piece(TRACK_TYPES.FLAT);
+    },
+    Delete: function(){
+        TRACK.delete();
+    },
+    DeleteAll: function(){
+        TRACK.deleteAll();
+    },
+    ToggleBoxes: function(){
+        TRACK.toggleBoxes();
     }
-    if (allBoundingBoxes.length > 0){
-        scene.remove(allBoundingBoxes.pop());
-    }
-}}, "DELETE");
+};
 
 
-// quick little function for adding pieces to make JSON more readable
-function addPiece(piece){
-    pieces = [piece];
-    addPieces();
-}
-
-piecesFolder.close();
-
+testingFolder.add(testingButtonJson,"Flat");
+testingFolder.add(testingButtonJson, "Delete");
+testingFolder.add(testingButtonJson, "DeleteAll");
+testingFolder.add(testingButtonJson, "ToggleBoxes");
+testingFolder.open();

@@ -11,12 +11,6 @@ var TRACK = new Track();
  * @member pieces: list of all track pieces. Must be of class type Piece
  * @see Piece.js
  *
- * @member trackMeshes: list of all the meshes of the track. May also be
- * accessed through pieces[pieceIndex].mesh
- *
- * @private boundingBoxes: list of all the bounding boxes of the pieces. May also
- * be accessed through pieces[pieceIndex].boundingBox
- *
  * @member currentX currentY currentZ: the current position in the scene of the
  * end of the track
  *
@@ -134,7 +128,7 @@ Track.prototype.advanceCurrent = function(){
  */
 Track.prototype.doPreCorrections = function (){
     console.log("precorrections!");
-
+    this.currentX -= this.currPiece.preOffset;
 };
 
 /**
@@ -178,41 +172,14 @@ Track.prototype.deleteAll = function () {
 };
 
 Track.prototype.toggleBoxes = function(){
-    var numBoxes = this.boundingBoxes.length;
-    if (numBoxes == 0) {
-        for (i = 0; i < this.trackMeshes.length; i++){
-            var bbox = new THREE.BoxHelper(this.trackMeshes[i]);
-            this.boundingBoxes.push(bbox);
-            scene.add(bbox);
-        }
-        return;
+    for (i = 0; i < this.pieces.length; i++){
+        this.pieces[i].boundingBox.visible =
+            !this.pieces[i].boundingBox.visible;
     }
-    for (i = 0; i < numBoxes; i++){
-        scene.remove(this.boundingBoxes.pop());
-    }
-
 };
 
 
 // =============================================================================
 // TESTING GUI FOR CODE ========================================================
 // =============================================================================
-var testingFolder = mainMenu.addFolder("New Track code");
 
-var testingButtonJson = {
-    Flat: function(){
-      new Piece(TRACK_TYPES.FLAT);
-    },
-    Delete: function(){
-        TRACK.delete();
-    },
-    DeleteAll: function(){
-        TRACK.deleteAll();
-    }
-};
-
-
-testingFolder.add(testingButtonJson,"Flat");
-testingFolder.add(testingButtonJson, "Delete");
-testingFolder.add(testingButtonJson, "DeleteAll");
-testingFolder.open();
