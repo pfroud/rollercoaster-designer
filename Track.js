@@ -11,60 +11,53 @@ function Track() {
     this.currentY = 0;
     this.currentZ = 1;
 
-    var prevPiece = null;
-    var currPiece = null;
+    this.prevPiece = null;
+    this.currPiece = null;
 
-    //var jsonLoader = new THREE.JSONLoader();
-    var SCALE = 0.01;
+    this.jsonLoader = new THREE.JSONLoader();
+    this.SCALE = 0.01;
 
-    var currFileName ="";
-    var direction = 0;
+    this.currFileName ="";
+    this.direction = 0;
 }
 
 
-// TODO
-function insertTrack(piece) {
-    if (TRACK.currPiece != undefined){
+
+Track.prototype.insertTrack = function(piece){
+    if (TRACK.currPiece != null){
         TRACK.prevPiece = TRACK.currPiece;
         TRACK.currpiece = piece;
     } else {
         TRACK.currPiece = piece;
     }
 
-
-
     LOADER.load(piece.filename,
         function createScene(geometry) {
 
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-            console.log(TRACK.direction); //PROBLEM FOUND - trying to rotate by undefined.
             mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
             mesh.position.x = TRACK.currentX;
             mesh.position.y = TRACK.currentY;
             mesh.position.z = TRACK.currentZ;
-            mesh.scale.set(0.1, 0.1, 0.1);
+            mesh.scale.set(SCALE, SCALE, SCALE);
             scene.add(mesh);
-
-
-            //scene.add(new THREE.Mesh(new THREE.BoxGeometry(Math.random(), Math.random(), Math.random(), 1, 1, 1), new THREE.MeshNormalMaterial({wireframe: true})));
-            return;
-
-            TRACK.doPreCorrections(currentPiece); //moves where the current piece will go
+            
+            TRACK.doPreCorrections(); //moves where the current piece will go
 
 
 
             piece.mesh = mesh;
 
-            TRACK.advanceCurrent(currentPiece); //moves where the next piece will go
+            TRACK.advanceCurrent(); //moves where the next piece will go
 
 
             TRACK.trackMeshes.push(mesh);
-            /*var bbox = new THREE.BoxHelper(mesh);
+            var bbox = new THREE.BoxHelper(mesh);
             TRACK.boundingBoxes.push(bbox);
-            scene.add(bbox); //draws the yellow bounding boxes*/
+            scene.add(bbox);
         }
     );
-}
+};
 
 
 
@@ -118,35 +111,21 @@ Track.prototype.toggleBoxes = function(){
     }
 
 };
-
-// Example code!
-/*
-var aTrack;
-
-//this track is valid
-aTrack = [Segment.preset.straight_N(0, 0), Segment.preset.straight_N(0, 1), Segment.preset.straight_N(0, 2)];
-console.log(Track.validate(aTrack));
-
-//this track is invalid
-aTrack = [Segment.preset.straight_N(0, 0), Segment.preset.straight_E(0, 1), Segment.preset.straight_N(6, 9)];
-console.log(Track.validate(aTrack));*/
-
-
 /**
  * Function to generate a track piece.
  * @param: must be a JSON, or a string of the type
  */
 function Piece (type){
     // making the fields so that WebStorm will not complain that they don't exist
-    var name;
-    var filename;
-    var size = {
+    this.name;
+    this.filename;
+    this.size = {
         x: 0.0,
         y: 0.0,
         z: 0.0
     };
-    var preOffset;
-    var postOffset;
+    this.preOffset;
+    this.postOffset;
 
     // copy all fields in JSON to the piece
     if (typeof(type) == "string"){ // error handling
@@ -162,18 +141,16 @@ function Piece (type){
 
 
     // TODO: implement position for pieces
-    var x;
-    var y;
-    var z;
+    this.x;
+    this.y;
+    this.z;
 
 
-    var mesh;
-    var boundingBox;
-
-    // TODO: ask Peter if he wants pieces to auto insert themselves
+    this.mesh;
+    this.boundingBox;
 
     TRACK.trackArray.push(this);
-    insertTrack(this);
+    TRACK.insertTrack(this);
 }
 
 Piece.prototype.doPreCorrections = function(){
@@ -200,7 +177,7 @@ var testingFolder = mainMenu.addFolder("New Track code");
 
 var testingButtonJson = {
   Flat: function(){
-      var tempPiece = new Piece(TRACKTYPES.FLAT);
+      new Piece(TRACKTYPES.FLAT);
   }
 };
 
