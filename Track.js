@@ -1,7 +1,7 @@
 "use strict";
 
 // GLOBAL VARIABLES ============================================================
-var TRACK = new Track();
+var TRACK = new Track(); // TODO: make unnecessary
 
 /**
  * @summary Track object, referred to by global variable TRACK
@@ -50,6 +50,8 @@ function Track() {
     this.scale = SCALE;
 
     this.direction = 0;
+
+    this.boxes = true;
 }
 
 
@@ -97,6 +99,8 @@ Track.prototype.insertPiece = function (piece){
             var bbox = new THREE.BoxHelper(mesh);
             piece.boundingBox = bbox;
             scene.add(bbox);
+            // makes them visible or not as appropriate
+            bbox.visible = track.boxes;
             track.advanceCurrent(); //moves where the next piece will go
         }
     );
@@ -172,14 +176,10 @@ Track.prototype.deleteAll = function () {
 };
 
 Track.prototype.toggleBoxes = function(){
+
+    this.boxes = !this.boxes;
+
     for (i = 0; i < this.pieces.length; i++){
-        this.pieces[i].boundingBox.visible =
-            !this.pieces[i].boundingBox.visible;
+        this.pieces[i].boundingBox.visible = this.boxes;
     }
 };
-
-
-// =============================================================================
-// TESTING GUI FOR CODE ========================================================
-// =============================================================================
-
