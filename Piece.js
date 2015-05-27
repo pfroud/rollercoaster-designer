@@ -32,15 +32,17 @@ function Piece (type){
         }
     }
 
-
+    // X, Y, and Z positions
     this.x;
     this.y;
     this.z;
 
-
+    // references to meshes and bounding boxes
     this.mesh;
     this.boundingBox;
 
+    // reference to the track it is a part of
+    this.track;
 
     TRACK.pieces.push(this);
     TRACK.insertPiece(this);
