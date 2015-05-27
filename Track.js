@@ -31,6 +31,8 @@ function insertTrack(piece) {
         TRACK.currPiece = piece;
     }
 
+
+
     LOADER.load(piece.filename,
         function createScene(geometry) {
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
@@ -164,7 +166,7 @@ function Piece (type){
 
     TRACK.trackArray.push(this);
     insertTrack(this);
-};
+}
 
 Piece.prototype.doPreCorrections = function(){
     TRACK.currentX -= this.preOffset;
@@ -197,5 +199,3 @@ var testingButtonJson = {
 
 testingFolder.add(testingButtonJson,"Flat");
 testingFolder.open();
-
-

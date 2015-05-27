@@ -64,7 +64,6 @@ var pieces = [
     slope.flatToUp,
     slope.up,
     slope.upToFlat
-
 ];
 
 // addPieces();
