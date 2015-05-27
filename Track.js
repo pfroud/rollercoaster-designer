@@ -24,15 +24,7 @@ function Track() {
 
 // TODO
 function insertTrack(piece) {
-    // this.counter++;
-    // piece.key = this.counter;
-    // this.trackArray[String(this.counter)] = piece;
-/*
-    if (piece == undefined){
-        return;
-    }
-*/
-    if (TRACK.currPiece != null){
+    if (TRACK.currPiece != undefined){
         TRACK.prevPiece = TRACK.currPiece;
         TRACK.currpiece = piece;
     } else {
@@ -64,28 +56,6 @@ function insertTrack(piece) {
         }
     );
 }
-
-Track.prototype.createTrack = function(geometry){
-    var mesh = new THREE.mesh(geometry, new THREE.MeshNormalMaterial());
-
-    TRACK.doPreCorrections(currentPiece); //moves where the current piece will go
-
-    mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
-    mesh.position.x = TRACK.currentX;
-    mesh.position.y = TRACK.currentY;
-    mesh.position.z = TRACK.currentZ;
-    mesh.scale.set(SCALE, SCALE, SCALE);
-
-    piece.mesh = mesh;
-
-    TRACK.advanceCurrent(currentPiece); //moves where the next piece will go
-
-    scene.add(mesh);
-    TRACK.trackMeshes.push(mesh);
-    var bbox = new THREE.BoxHelper(mesh);
-    TRACK.boundingBoxes.push(bbox);
-    scene.add(bbox); //draws the yellow bounding boxes
-};
 
 Track.prototype.advanceCurrent = function(){
     console.log("advance Current!");
@@ -138,73 +108,6 @@ Track.prototype.toggleBoxes = function(){
 
 };
 
-/**
- * Checks integrity of a track.
- * Iterates over all the track pieces and makes sure the out properties
- * of piece n equal the in properties of piece n+1.
- *
- * @returns {boolean} True if the track is valid.
- */
-Track.prototype.validate = function () {
-    if (this.this.trackArray.length == 1) return true;
-
-    var currentPiece;
-
-    //for loop starts at 1, this is initial stuff to compare with
-    var xOut_prev = this.trackArray[0].xOut;
-    var yOut_prev = this.trackArray[0].yOut;
-    var zOut_prev = this.trackArray[0].zOut;
-    var slopeOut_prev = this.trackArray[0].slopeOut;
-    var dirOut_prev = this.trackArray[0].dirOut;
-
-    //these get set in the fop loop
-    var xIn_curr;
-    var yIn_curr;
-    var zIn_curr;
-    var slopeIn_curr;
-    var dirIn_curr;
-
-    for (var i = 1; i < this.trackArray.length; i++) {
-        currentPiece = this.trackArray[i];
-
-        xIn_curr = currentPiece.xIn;
-        yIn_curr = currentPiece.yIn;
-        zIn_curr = currentPiece.zIn;
-        slopeIn_curr = currentPiece.slopeIn;
-        dirIn_curr = currentPiece.dirIn;
-
-        if (xOut_prev != xIn_curr) {
-            throw "Track.validate(): at index " + i + ": xOut_prev=" +
-            xOut_prev + " but xIn_curr=" + xIn_curr;
-        }
-        if (yOut_prev != yIn_curr) {
-            throw "Track.validate(): at index " + i + ": yOut_prev=" +
-            yOut_prev + " but yIn_curr=" + yIn_curr;
-        }
-        if (zOut_prev != zIn_curr) {
-            throw "Track.validate(): at index " + i + ": zOut_prev=" +
-            zOut_prev + " but zIn_curr=" + zIn_curr;
-        }
-        if (slopeOut_prev != slopeIn_curr) {
-            throw "Track.validate(): at index " + i +
-            ": slopeOut_prev=" + slopeOut_prev +
-            " but slopeIn_curr=" + slopeIn_curr;
-        }
-        if (dirOut_prev != dirIn_curr) {
-            throw "Track.validate(): at index " + i + ": dirOut_prev=" +
-            dirOut_prev + " but dirIn_curr=" + dirIn_curr;
-        }
-
-        xOut_prev = currentPiece.xOut;
-        yOut_prev = currentPiece.yOut;
-        zOut_prev = currentPiece.zOut;
-        slopeOut_prev = currentPiece.slopeOut;
-        dirOut_prev = currentPiece.dirOut;
-    }
-    return true;
-};
-
-
 // Example code!
 /*
 var aTrack;
@@ -256,8 +159,6 @@ function Piece (type){
     var mesh;
     var boundingBox;
 
-    // TODO: ask Peter if he wants pieces to auto insert themselves
-
     TRACK.trackArray.push(this);
     insertTrack(this);
 }
@@ -286,7 +187,7 @@ var testingFolder = mainMenu.addFolder("New Track code");
 
 var testingButtonJson = {
   Flat: function(){
-      var tempPiece = new Piece(TRACKTYPES.FLAT);
+     new Piece(TRACKTYPES.FLAT);
   }
 };
 
