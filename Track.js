@@ -36,19 +36,22 @@ function insertTrack(piece) {
     LOADER.load(piece.filename,
         function createScene(geometry) {
 
-            //var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-
-
-            scene.add(new THREE.Mesh(new THREE.BoxGeometry(Math.random(), Math.random(), Math.random(), 1, 1, 1), new THREE.MeshNormalMaterial({wireframe: true})));
-            return;
-
-            TRACK.doPreCorrections(currentPiece); //moves where the current piece will go
-
+            var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
+            console.log(TRACK.direction); //PROBLEM FOUND - trying to rotate by undefined.
             mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
             mesh.position.x = TRACK.currentX;
             mesh.position.y = TRACK.currentY;
             mesh.position.z = TRACK.currentZ;
-            mesh.scale.set(TRACK.scale, TRACK.scale, TRACK.scale);
+            mesh.scale.set(0.1, 0.1, 0.1);
+            scene.add(mesh);
+
+
+            //scene.add(new THREE.Mesh(new THREE.BoxGeometry(Math.random(), Math.random(), Math.random(), 1, 1, 1), new THREE.MeshNormalMaterial({wireframe: true})));
+            return;
+
+            TRACK.doPreCorrections(currentPiece); //moves where the current piece will go
+
+
 
             piece.mesh = mesh;
 
