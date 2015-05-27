@@ -30,15 +30,24 @@ var TRACK = new Track();
  *
  * @scale: the global scale variable imported, allowed so that if we wish to
  * overload we don't need to change the global
+ *
+ * @direction: the direction of the track in degrees
+ *
+ *
  */
 
 function Track() {
     this.pieces = [];
-    this.trackMeshes = [];
-    this.boundingBoxes = [];
-    this.currentX = -1;
-    this.currentY = 0;
-    this.currentZ = 1;
+
+    // the starting positions for the track
+    this.START_X = -1;
+    this.START_Y = 0;
+    this.START_Z = 1;
+
+    // initialize current positions to the starting ones
+    this.currentX = this.START_X;
+    this.currentY = this.START_Y;
+    this.currentZ = this.START_Z;
 
     this.prevPiece = null;
     this.currPiece = null;
@@ -56,6 +65,8 @@ function Track() {
  * @see Piece.js
  */
 Track.prototype.insertPiece = function (piece){
+
+    // initialization handling
     if (this.currPiece != null){
         this.prevPiece = this.currPiece;
         this.currpiece = piece;
@@ -63,33 +74,36 @@ Track.prototype.insertPiece = function (piece){
         this.currPiece = piece;
     }
 
+    // JS sucks and doesn't let us use "this" in the inner function.
+    var track = this;
+
+    // this part creates the pieces and the box
     this.jsonLoader.load(piece.filename, /*this.createScene(geometry)*/
         function createScene(geometry) {
 
-            if (TRACK == undefined){
-                throw "ERROR: GLOBAL NOT DEFINED";
-            } else {
-                var track = TRACK;
-            }
+            // create the mesh and add it to the scene
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
             mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
-            mesh.position.x = TRACK.currentX;
-            mesh.position.y = TRACK.currentY;
-            mesh.position.z = TRACK.currentZ;
-            mesh.scale.set(SCALE, SCALE, SCALE);
+            mesh.position.x = track.currentX;
+            mesh.position.y = track.currentY;
+            mesh.position.z = track.currentZ;
+            mesh.scale.set(track.scale, track.scale, track.scale);
             scene.add(mesh);
-            
-            TRACK.doPreCorrections(); //moves where the current piece will go
 
+            // move the mesh back if necessary
+            track.doPreCorrections();
+
+            // give the made piece variable the appropriate values
             piece.mesh = mesh;
+            piece.x = track.currentX;
+            piece.y = track.currentY;
+            piece.z = track.currentZ;
 
-            TRACK.advanceCurrent(); //moves where the next piece will go
-
-
-            TRACK.trackMeshes.push(mesh);
+            // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
-            TRACK.boundingBoxes.push(bbox);
+            piece.boundingBox = bbox;
             scene.add(bbox);
+            track.advanceCurrent(); //moves where the next piece will go
         }
     );
 };
@@ -103,32 +117,6 @@ Track.prototype.insertPieces = function(pieces){
     if (pieces.length == 0) return;
     this.insertPiece(pieces.pop());
     this.insertPieces(pieces);
-};
-
-
-// UNUSED PROTOTYPE CODE
-Track.prototype.createScene = function(geometry){
-    var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-    mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
-    mesh.position.x = this.currentX;
-    mesh.position.y = this.currentY;
-    mesh.position.z = this.currentZ;
-    mesh.scale.set(SCALE, SCALE, SCALE);
-    scene.add(mesh);
-
-    this.doPreCorrections(); //moves where the current piece will go
-
-
-
-    piece.mesh = mesh;
-
-    this.advanceCurrent(); //moves where the next piece will go
-
-
-    this.trackMeshes.push(mesh);
-    var bbox = new THREE.BoxHelper(mesh);
-    this.boundingBoxes.push(bbox);
-    scene.add(bbox);
 };
 
 
@@ -150,22 +138,41 @@ Track.prototype.doPreCorrections = function (){
 };
 
 /**
- * TODO: lots of testing
+ * Deletes the last track member of the track
  */
-
 Track.prototype.delete = function () {
-    if (this.trackMeshes.length > 0){
-        scene.remove(trackMeshes.pop());
-    }
-    if (this.boundingBoxes.length > 0){
-        scene.remove(allBoundingBoxes.pop());
+    if (this.pieces.length > 0){
+        var tmp = this.pieces.pop();
+        scene.remove(tmp.mesh);
+        scene.remove(tmp.boundingBox);
+        this.updatePosition();
     }
 
 };
 
+/**
+ * Update current x, y, and z of the track to be in accordance with what it
+ * should be.
+ */
+Track.prototype.updatePosition = function (){
+    // if there are no pieces in the track, just set it to the default values
+    if (pieces.length == 0){
+        this.currentX = this.START_X;
+        this.currentY = this.START_Y;
+        this.currentZ = this.START_Z;
+        return;
+    }
+    // otherwise get the position of the last piece in the list
+    var lastPiece = this.pieces[this.pieces.length -1];
+    this.currentX = lastPiece.x;
+    this.currentY = lastPiece.y;
+    this.currentZ = lastPiece.z;
+};
+
+
 // Deletes all tracks.
 Track.prototype.deleteAll = function () {
-    for (var i = this.trackMeshes.length; i > 0; i--){
+    for (var i = this.pieces.length; i > 0; i--){
         this.delete()
     }
 };
@@ -193,11 +200,15 @@ Track.prototype.toggleBoxes = function(){
 var testingFolder = mainMenu.addFolder("New Track code");
 
 var testingButtonJson = {
-  Flat: function(){
+    Flat: function(){
       new Piece(TRACKTYPES.FLAT);
-  }
+    },
+    Delete: function(){
+        TRACK.delete();
+    }
 };
 
 
 testingFolder.add(testingButtonJson,"Flat");
+testingFolder.add(testingButtonJson, "Delete");
 testingFolder.open();
