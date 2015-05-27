@@ -67,7 +67,7 @@ var pieces = [
 
 ];
 
-addPieces();
+// addPieces();
 
 
 /*
@@ -195,57 +195,3 @@ function doPreCorrections(piece) {
 
 }
 
-/*
- in current camera:
- +X is right, -X is left
- +Y is up, -Y is down
- Z is forward / back
- */
-/**
- * sets where the next piece will go
- * @param piece
- */
-function advanceCurrent(piece) {
-    switch (piece) {
-        case slope.up:
-            currentX += size.up.x - 0.1188;
-            currentY += size.up.y - 0.1188;
-            break;
-        case slope.flat:
-            if (direction == 0) { //IN PROGRESS
-                currentX += size.flat.x;
-            } else if (direction == 1) {
-                currentZ -= size.flat.x; //move on the Z direction by the x size of the piece
-            }
-            break;
-        case slope.flatToUp:
-            currentX += size.flatToUp.x - 0.12;
-            currentY += size.flatToUp.y - 0.12;
-            break;
-        case slope.upToFlat:
-            currentX += size.upToFlat.x;
-            currentY += size.upToFlat.y;
-            break;
-        case slope.flatToDown:
-            currentX += size.flatToDown.x - 0.12;
-            break;
-        case slope.down:
-            currentX += size.down.x - 0.1188;
-            break;
-        case slope.downToFlat:
-            currentX += size.downToFlat.x;
-            break;
-        case slope.turnLeftSmall:
-            currentX += size.turnLeftSmall.x;
-            currentZ -= size.turnLeftSmall.z;
-            direction = 1;
-            break;
-
-        default:
-            throw "- bad track type \"" + piece + "\"";
-    }
-
-    if (prevPiece == slope.upToFlat) {
-        currentY -= size.flat.y;
-    }
-}

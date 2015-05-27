@@ -95,3 +95,86 @@ const slope = {
     turnRightBig: "turnRightBig",
     turnRightSmall: "turnRightSmall"
 };
+
+
+// json template for track pieces
+var TRACKTYPES = {
+    FLAT: {
+        name: "flat",
+        filename: "modelJS/straight.js",
+        size: {
+            x: 0.5999999865889549,
+            y: 0.1679979962449521,
+            z: 0.40799499088060115
+        },
+        preOffset: 0.0,
+        postOffset: 0.0
+
+    },
+    FLAT_TO_UP: {
+        name: "flat to up",
+        filename: "modelJS/slopeFlatToUp.js",
+        size: {
+            x: 0.6433779856193811,
+            y: 0.38746599133946,
+            z: 0.4079999908804893
+        },
+        preOffset: 0.0,
+        postOffset: 0.12
+    },
+    UP: {
+        name:"up",
+        filename: "modelJS/up.js",
+        size:{
+            x: 0.5430565758606418,
+            y: 0.5430565758606419,
+            z: 0.40799499088060115
+        },
+        preOffset: 0.1188,
+        postOffset: 0.1188
+    },
+    UP_TO_FLAT: {
+        name: "up to flat",
+        filename: "modelJS/slopeUpToFlat.js",
+        size: {
+            x: 0.5245829882746562,
+            y: 0.3382589924393222,
+            z: 0.4079999908804893
+        },
+        preOffset: 0.0, // TODO: check this yo
+        postOffset: 0.0 //TODO
+    },
+    FLAT_TO_DOWN: {
+        name: "flat to down",
+        filename: "modelJS/slopeFlatToDown.js",
+        size:{
+            x: 0.5245829882746562,
+            y: 0.3382589924393222,
+            z: 0.4079999908804893
+        },
+        preOffset: 0.002,// TODO: check this also
+        postOffset: 0.0
+    },
+    DOWN: {
+        name: "down",
+        filename: "",
+        size: {
+            x: 0.5430565758606418,
+            y: 0.5430565758606419,
+            z: 0.40799499088060115
+        },
+        postOffset: 0.1188,
+        preOffset: 0.12
+    },
+    DOWN_TO_FLAT: {
+        name: "Down to Flat",
+        filename: "modelJS/slopeDownToFlat.js",
+        size: {
+            x: 0.6433779856193811,
+            y: 0.38746599133946,
+            z: 0.4079999908804893
+        },
+        preOffset: 0.0,
+        postOffset: 0.12
+    }
+};
