@@ -16,14 +16,8 @@ var debugJSON = {
     }
 };
 
-debugFolder.add(debugJSON, "ToggleBoxes").name("Toggle Boxes");
-debugFolder.add(debugJSON, "TogglePerspective").name("Toggle Perspective");
-
 // REMOVE THIS LINE TO KEEP DEBUG FOLDER OPEN
 debugFolder.close();
-
-
-
 
 var testingFolder = MAIN_MENU.addFolder("New Track code");
 
@@ -36,15 +30,20 @@ var testingButtonJson = {
     },
     DeleteAll: function(){
         TRACK.deleteAll();
-    },
-    ToggleBoxes: function(){
-        TRACK.toggleBoxes();
     }
 };
 
 
-testingFolder.add(testingButtonJson,"Flat");
-testingFolder.add(testingButtonJson, "Delete");
-testingFolder.add(testingButtonJson, "DeleteAll");
-testingFolder.add(testingButtonJson, "ToggleBoxes");
+// add all buttons to the folders
+addButtonsToFolder(debugFolder, debugJSON);
+addButtonsToFolder(testingFolder, testingButtonJson);
+
 testingFolder.open(); // CHANGE THIS TO close() TO SET FOLDER CLOSED
+
+
+// lazy function to add buttons to a folder
+function addButtonsToFolder(folder, json){
+    for (var key in json){
+        folder.add(json, key.toString());
+    }
+}
