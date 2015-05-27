@@ -41,8 +41,8 @@ function Piece (type){
     this.boundingBox;
 
 
-    TRACK.trackArray.push(this);
-    TRACK.insertTrack(this);
+    TRACK.pieces.push(this);
+    TRACK.insertPiece(this);
 }
 
 Piece.prototype.doPreCorrections = function(){
