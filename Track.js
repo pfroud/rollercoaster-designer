@@ -34,7 +34,7 @@ function Track() {
     this.pieces = [];
 
     // the starting positions for the track
-    this.START_X = -2;
+    this.START_X = -2.5;
     this.START_Y = 0;
     this.START_Z = 1;
     // The X axis is red. The Y axis is green. The Z axis is blue.
@@ -55,8 +55,10 @@ function Track() {
     this.boxes = true;
 
     //supports
-    this.supportSpacing = 2;
     this.counter = 0;
+    this.supportSpacing = 2;
+    this.supportIntersect = 0.03;
+    this.supportRadius = 0.03;
 }
 
 
@@ -103,15 +105,14 @@ Track.prototype.insertPiece = function (piece) {
             //supports
             track.counter++;
             var heightDifference = track.currentY - GROUND_HEIGHT;
-            console.log("currentZ is", track.currentZ,  "and heightDifference is", heightDifference);
             if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
 
                 //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
-                //scene.add(new THREE.Mesh(THREE.CylinderGeometry(0.5, 0.5, heightDifference, 8), NORMAL_MATERIAL));
-                var support = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, heightDifference, 32), NORMAL_MATERIAL);
-                support.position.x = track.currentX + piece.size.x/2;
-                support.position.y = track.currentY - heightDifference/2;
-                support.position.z = track.currentZ - piece.size.z/2;
+                var support = new THREE.Mesh(new THREE.CylinderGeometry(track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32), NORMAL_MATERIAL);
+
+                support.position.x = track.currentX + piece.size.x / 2;
+                support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect;
+                support.position.z = track.currentZ - piece.size.z / 2;
                 scene.add(support);
             }
 
