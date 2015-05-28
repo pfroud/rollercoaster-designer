@@ -62,13 +62,9 @@ function Track() {
  */
 Track.prototype.insertPiece = function (piece){
 
-    // initialization handling
-    if (this.currPiece != null){
-        this.prevPiece = this.currPiece;
-        this.currpiece = piece;
-    } else {
-        this.currPiece = piece;
-    }
+    // our new current piece is the one we just added
+    this.currPiece = piece;
+    this.pieces.push(piece);
 
     // JS sucks and doesn't let us use "this" in the inner function.
     var track = this;
@@ -76,6 +72,9 @@ Track.prototype.insertPiece = function (piece){
     // this part creates the pieces and the box
     this.jsonLoader.load(piece.filename, /*this.createScene(geometry)*/
         function createScene(geometry) {
+
+            // move the mesh back if necessary
+            track.doPreCorrections();
 
             // create the mesh and add it to the scene
             var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
@@ -85,9 +84,6 @@ Track.prototype.insertPiece = function (piece){
             mesh.position.z = track.currentZ;
             mesh.scale.set(track.scale, track.scale, track.scale);
             scene.add(mesh);
-
-            // move the mesh back if necessary
-            track.doPreCorrections();
 
             // give the made piece variable the appropriate values
             piece.mesh = mesh;
@@ -123,7 +119,10 @@ Track.prototype.insertPieces = function(pieces){
  * TODO: rotations and the Y plane
  */
 Track.prototype.advanceCurrent = function(){
-    this.currentX += (this.currPiece.size.x * this.scale);
+    var curr = this.currPiece;// temp reference for code readability
+    this.currentX += curr.size.x * this.scale;
+    if (curr.vertChange)
+        this.currentY += curr.size.y * this.scale;
 };
 
 /**
@@ -131,21 +130,21 @@ Track.prototype.advanceCurrent = function(){
  * TODO: implement
  */
 Track.prototype.doPreCorrections = function (){
-    console.log("precorrections!");
-    this.currentX -= this.currPiece.preOffset;
+    this.currentX -= this.currPiece.offset * this.scale;
+    if (this.currPiece.vertChange)
+        this.currentY -= this.currPiece.offset * this.scale;
 };
 
 /**
  * Deletes the last track member of the track
  */
-Track.prototype.delete = function () {
+Track.prototype.deletePiece = function () {
     if (this.pieces.length > 0){
         var tmp = this.pieces.pop();
         scene.remove(tmp.mesh);
         scene.remove(tmp.boundingBox);
         this.updatePosition();
     }
-
 };
 
 /**
@@ -161,17 +160,19 @@ Track.prototype.updatePosition = function (){
         return;
     }
     // otherwise get the position of the last piece in the list
-    var lastPiece = this.pieces[this.pieces.length -1];
+    var lastPiece = this.pieces[this.pieces.length - 1];
     this.currentX = lastPiece.x;
     this.currentY = lastPiece.y;
     this.currentZ = lastPiece.z;
+    this.currPiece = lastPiece;
+    this.advanceCurrent()
 };
 
 
 // Deletes all tracks.
 Track.prototype.deleteAll = function () {
     for (var i = this.pieces.length; i > 0; i--){
-        this.delete()
+        this.deletePiece();
     }
 };
 
