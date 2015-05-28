@@ -4,10 +4,7 @@ Choose JSON parser/format
    jquery stuff of course
 
 Peter
-Try supports???
-Ground???
 Try to get car model
-Better material for tracks
 Find good favicon.
 measure sizes for un-scaled track meshes and make them scale on runtime
 
