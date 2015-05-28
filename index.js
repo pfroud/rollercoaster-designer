@@ -22,20 +22,39 @@ document.body.appendChild(renderer.domElement);
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 var light = new THREE.AmbientLight(0xffffff);
-scene.add(light);
+//scene.add(light);
 
-scene.add(new THREE.AxisHelper(0.5)); //draws red, green, and blue lines for axis at the origin
-// The X axis is red. The Y axis is green. The Z axis is blue.
+scene.add(new THREE.AxisHelper(0.5)); // The X axis is red. The Y axis is green. The Z axis is blue.
 
-var NORMAL_MATERIAL = new THREE.MeshNormalMaterial();
+
+// add subtle ambient lighting
+//var ambientLight = new THREE.AmbientLight(0x222222);
+//scene.add(ambientLight);
+
+// directional lighting
+var directionalLight = new THREE.DirectionalLight(0xffffff);
+directionalLight.position.set(1, 1, 1).normalize();
+scene.add(directionalLight);
+
+// Y height of ground plane
 var GROUND_HEIGHT = -1;
 
-//ground plane                                               5 units square
-var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x999999, side: THREE.DoubleSide}));
-groundPlane.rotateX(Math.PI/-2); //rotate so it's horozontal
-groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it
-scene.add(groundPlane);
+//ground plane
+
+var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function(){
+
+
+    var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
+        new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
+    groundPlane.rotateX(Math.PI/-2); //rotate so it's horizontal
+    groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
+//// Z is translated instead of Y because the mesh is rotated.
+    scene.add(groundPlane);
+
+
+});
+
+
 
 
 

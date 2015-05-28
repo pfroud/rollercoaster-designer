@@ -55,10 +55,15 @@ function Track() {
     this.boxes = true;
 
     //supports
-    this.counter = 0;
+    this.counter = 0; //used with supportSpacing
     this.supportSpacing = 2;
-    this.supportIntersect = 0.03;
+    this.supportIntersect = 0.03; //moved the support up slightly into the track mesh so it looks better
     this.supportRadius = 0.03;
+
+    //materials
+    //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
+    this.MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"});
+    this.MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
 }
 
 
@@ -85,7 +90,7 @@ Track.prototype.insertPiece = function (piece) {
         function createScene(geometry) {
 
             // create the mesh and add it to the scene
-            var mesh = new THREE.Mesh(geometry, NORMAL_MATERIAL);
+            var mesh = new THREE.Mesh(geometry, track.MATERIAL_TRACK);
             //mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
             mesh.position.x = track.currentX;
             mesh.position.y = track.currentY;
@@ -108,7 +113,7 @@ Track.prototype.insertPiece = function (piece) {
             if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
 
                 //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
-                var support = new THREE.Mesh(new THREE.CylinderGeometry(track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32), NORMAL_MATERIAL);
+                var support = new THREE.Mesh(new THREE.CylinderGeometry(track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32), track.MATERIAL_SUPPORT);
 
                 support.position.x = track.currentX + piece.size.x / 2;
                 support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect;
