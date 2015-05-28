@@ -2,6 +2,20 @@
 
 // http://stackoverflow.com/questions/23859512/how-to-get-the-width-height-length-of-a-mesh-in-three-js
 // json template for track pieces
+
+/**
+ * TRACK_TYPES is an object that stores all the constant types
+ *
+ * every type has the following:
+ *
+ * name: The name of the piece, used primarily for debugging
+ *
+ * size: the x, y, and z values of the size of the track types
+ *
+ * vertChange: true if the piece changes vertically, false if it does not
+ *
+ * offset: how much the piece must be offset to appear proper
+ */
 var TRACK_TYPES;
 TRACK_TYPES = {
     FLAT: {
