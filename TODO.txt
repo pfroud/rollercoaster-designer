@@ -9,6 +9,7 @@ Ground???
 Try to get car model
 Better material for tracks
 Find good favicon.
+measure sizes for un-scaled track meshes and make them scale on runtime
 
 Make orthographic camera scale with window.
 PETER: LOOK AT Buttons.js IN THE debugJSON OBJECT!!!!! <----

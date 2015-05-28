@@ -34,9 +34,10 @@ function Track() {
     this.pieces = [];
 
     // the starting positions for the track
-    this.START_X = -1;
+    this.START_X = -2;
     this.START_Y = 0;
     this.START_Z = 1;
+    // The X axis is red. The Y axis is green. The Z axis is blue.
 
     // initialize current positions to the starting ones
     this.currentX = this.START_X;
@@ -52,6 +53,10 @@ function Track() {
     this.direction = 0;
 
     this.boxes = true;
+
+    //supports
+    this.supportSpacing = 2;
+    this.counter = 0;
 }
 
 
@@ -60,10 +65,10 @@ function Track() {
  * @param piece must be an object of class type Piece
  * @see Piece.js
  */
-Track.prototype.insertPiece = function (piece){
+Track.prototype.insertPiece = function (piece) {
 
     // initialization handling
-    if (this.currPiece != null){
+    if (this.currPiece != null) {
         this.prevPiece = this.currPiece;
         this.currpiece = piece;
     } else {
@@ -78,8 +83,8 @@ Track.prototype.insertPiece = function (piece){
         function createScene(geometry) {
 
             // create the mesh and add it to the scene
-            var mesh = new THREE.Mesh(geometry, new THREE.MeshNormalMaterial());
-            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
+            var mesh = new THREE.Mesh(geometry, NORMAL_MATERIAL);
+            //mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
             mesh.position.x = track.currentX;
             mesh.position.y = track.currentY;
             mesh.position.z = track.currentZ;
@@ -94,6 +99,22 @@ Track.prototype.insertPiece = function (piece){
             piece.x = track.currentX;
             piece.y = track.currentY;
             piece.z = track.currentZ;
+
+            //supports
+            track.counter++;
+            var heightDifference = track.currentY - GROUND_HEIGHT;
+            console.log("currentZ is", track.currentZ,  "and heightDifference is", heightDifference);
+            if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
+
+                //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
+                //scene.add(new THREE.Mesh(THREE.CylinderGeometry(0.5, 0.5, heightDifference, 8), NORMAL_MATERIAL));
+                var support = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, heightDifference, 32), NORMAL_MATERIAL);
+                support.position.x = track.currentX + piece.size.x/2;
+                support.position.y = track.currentY - heightDifference/2;
+                support.position.z = track.currentZ - piece.size.z/2;
+                scene.add(support);
+            }
+
 
             // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
@@ -111,7 +132,7 @@ Track.prototype.insertPiece = function (piece){
  * Inserts multiple pieces from an array. Works recursively
  * @param pieces: an array of pieces
  */
-Track.prototype.insertPieces = function(pieces){
+Track.prototype.insertPieces = function (pieces) {
     if (pieces.length == 0) return;
     this.insertPiece(pieces.pop());
     this.insertPieces(pieces);
@@ -122,7 +143,7 @@ Track.prototype.insertPieces = function(pieces){
  * Advances currentX, CurrentY, and CurrentZ based on the new piece
  * TODO: rotations and the Y plane
  */
-Track.prototype.advanceCurrent = function(){
+Track.prototype.advanceCurrent = function () {
     this.currentX += this.currPiece.size.x;
 };
 
@@ -130,7 +151,7 @@ Track.prototype.advanceCurrent = function(){
  * Does the precorrections necessary
  * TODO: implement
  */
-Track.prototype.doPreCorrections = function (){
+Track.prototype.doPreCorrections = function () {
     console.log("precorrections!");
     this.currentX -= this.currPiece.preOffset;
 };
@@ -139,7 +160,7 @@ Track.prototype.doPreCorrections = function (){
  * Deletes the last track member of the track
  */
 Track.prototype.delete = function () {
-    if (this.pieces.length > 0){
+    if (this.pieces.length > 0) {
         var tmp = this.pieces.pop();
         scene.remove(tmp.mesh);
         scene.remove(tmp.boundingBox);
@@ -152,16 +173,16 @@ Track.prototype.delete = function () {
  * Update current x, y, and z of the track to be in accordance with what it
  * should be.
  */
-Track.prototype.updatePosition = function (){
+Track.prototype.updatePosition = function () {
     // if there are no pieces in the track, just set it to the default values
-    if (this.pieces.length == 0){
+    if (this.pieces.length == 0) {
         this.currentX = this.START_X;
         this.currentY = this.START_Y;
         this.currentZ = this.START_Z;
         return;
     }
     // otherwise get the position of the last piece in the list
-    var lastPiece = this.pieces[this.pieces.length -1];
+    var lastPiece = this.pieces[this.pieces.length - 1];
     this.currentX = lastPiece.x;
     this.currentY = lastPiece.y;
     this.currentZ = lastPiece.z;
@@ -170,16 +191,16 @@ Track.prototype.updatePosition = function (){
 
 // Deletes all tracks.
 Track.prototype.deleteAll = function () {
-    for (var i = this.pieces.length; i > 0; i--){
+    for (var i = this.pieces.length; i > 0; i--) {
         this.delete()
     }
 };
 
-Track.prototype.toggleBoxes = function(){
+Track.prototype.toggleBoxes = function () {
 
     this.boxes = !this.boxes;
 
-    for (i = 0; i < this.pieces.length; i++){
+    for (i = 0; i < this.pieces.length; i++) {
         this.pieces[i].boundingBox.visible = this.boxes;
     }
 };

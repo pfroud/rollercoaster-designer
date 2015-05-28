@@ -2,6 +2,8 @@
  *
  */
 
+"use strict";
+
 /**
  * Function to generate a track piece.
  * @param: must be a JSON, or a string of the type piece. Appropriate values

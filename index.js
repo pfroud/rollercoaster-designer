@@ -24,14 +24,20 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 var light = new THREE.AmbientLight(0xffffff);
 scene.add(light);
 
-//scene.add(new THREE.AxisHelper(0.5)); //draws red, green, and blue lines for axis at the origin
+scene.add(new THREE.AxisHelper(0.5)); //draws red, green, and blue lines for axis at the origin
+// The X axis is red. The Y axis is green. The Z axis is blue.
+
+var NORMAL_MATERIAL = new THREE.MeshNormalMaterial();
+var GROUND_HEIGHT = -1;
 
 //ground plane                                               5 units square
-/*var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x999999}));
+var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x999999, side: THREE.DoubleSide}));
 groundPlane.rotateX(Math.PI/-2); //rotate so it's horozontal
-groundPlane.translateZ(-0.001); //move down a tiny bit so track and axis helper draw on top of it
-scene.add(groundPlane);*/
+groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it
+scene.add(groundPlane);
+
+
 
 /*************************** WINDOW RESIZE FIX ********************************
  from
