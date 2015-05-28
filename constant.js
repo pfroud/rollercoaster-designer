@@ -178,3 +178,11 @@ var TRACK_TYPES = {
         postOffset: 0.12
     }
 };
+
+
+// super hacky way to correct all our silly variables
+for (var key in TRACK_TYPES){
+    TRACK_TYPES[key].size.x = (TRACK_TYPES[key].size.x) /(0.01);
+    TRACK_TYPES[key].size.y = (TRACK_TYPES[key].size.y) /(0.01);
+    TRACK_TYPES[key].size.z = (TRACK_TYPES[key].size.z) /(0.01);
+}

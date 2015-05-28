@@ -123,7 +123,7 @@ Track.prototype.insertPieces = function(pieces){
  * TODO: rotations and the Y plane
  */
 Track.prototype.advanceCurrent = function(){
-    this.currentX += this.currPiece.size.x;
+    this.currentX += (this.currPiece.size.x * this.scale);
 };
 
 /**
