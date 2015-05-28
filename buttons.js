@@ -25,14 +25,19 @@ var testingButtonJson = {
     Flat: function(){
         new Piece(TRACK_TYPES.FLAT);
     },
+    FlatUp: function(){
+        new Piece(TRACK_TYPES.FLAT_TO_UP);
+    },
+    Up: function(){
+        new Piece(TRACK_TYPES.UP);
+    },
     Delete: function(){
-        TRACK.delete();
+        TRACK.deletePiece();
     },
     DeleteAll: function(){
         TRACK.deleteAll();
     }
 };
-
 
 // add all buttons to the folders
 addButtonsToFolder(debugFolder, debugJSON);
