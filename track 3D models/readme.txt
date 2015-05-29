@@ -8,9 +8,9 @@ rotate and/or mirror if needed
 export .obj
 
 convert_obj_three.py:
-.obj -> .js
+.obj -> .json
 
-.js file used by three.js.
+.json file used by three.js.
 
 
 Autodesk Inventor is thousands of dollars, but free for students:
