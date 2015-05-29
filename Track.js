@@ -43,7 +43,6 @@ function Track() {
     this.currentY = this.START_Y;
     this.currentZ = this.START_Z;
 
-    this.prevPiece = null;
     this.currPiece = null;
 
     this.jsonLoader = new THREE.JSONLoader();
@@ -130,9 +129,8 @@ Track.prototype.advanceCurrent = function(){
  * TODO: implement
  */
 Track.prototype.doPreCorrections = function (){
-    this.currentX -= this.currPiece.offset * this.scale;
-    if (this.currPiece.vertChange)
-        this.currentY -= this.currPiece.offset * this.scale;
+    this.currentX -= this.currPiece.offset.x * this.scale;
+    this.currentY -= this.currPiece.offset.y * this.scale;
 };
 
 /**
@@ -164,8 +162,9 @@ Track.prototype.updatePosition = function (){
     this.currentX = lastPiece.x;
     this.currentY = lastPiece.y;
     this.currentZ = lastPiece.z;
+    // make the current piece the correct one
     this.currPiece = lastPiece;
-    this.advanceCurrent()
+    this.advanceCurrent();// advance it properly to catch up.
 };
 
 
