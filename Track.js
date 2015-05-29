@@ -151,6 +151,7 @@ Track.prototype.insertPiece = function (piece) {
             // makes them visible or not as appropriate
             bbox.visible = track.boxes;
             track.advanceCurrent(); //moves where the next piece will go
+            // recursive call to place the next piece of the array
             if (recur){
                 track.insertPiece(piece);
             }
@@ -180,18 +181,24 @@ Track.prototype.insertPieces = function (pieces) {
 /**
  * Advances currentX, CurrentY, and CurrentZ based on the new piece
  * TODO: rotations and the Y plane
+ * How it works: makes the current X position of the track
  */
 Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
 
     //special case
-    if(curr.type == TRACK_TYPES.UP_TO_FLAT){
+    /*if(curr.type == TRACK_TYPES.UP_TO_FLAT){
         this.currentY += curr.outOffset.y;
-    }
+    }*/
 
-    this.currentX += curr.size.x;// * this.scale;
-    if (curr.vertChange)
-        this.currentY += curr.size.y;// * this.scale;
+    var x = curr.size.x * curr.direction.x + curr.outOffset.x;
+    var y = curr.size.y * curr.direction.y + curr.outOffset.y;
+    var z = curr.size.z * curr.direction.z + curr.outOffset.z;
+
+    this.currentX += x;// * this.scale;
+    this.currentY += y;
+    this.currentZ += z;
+
 };
 
 /**
@@ -206,8 +213,8 @@ Track.prototype.doPreCorrections = function (){
         this.currentY += curr.outOffset.y;
     }
 
-    this.currentX -= curr.inOffset.x;// * this.scale;
-    this.currentY -= curr.inOffset.y;// * this.scale;
+    this.currentX -= curr.in.x;// * this.scale;
+    this.currentY -= curr.in.y;// * this.scale;
 };
 
 /**

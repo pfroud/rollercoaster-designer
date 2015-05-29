@@ -13,23 +13,28 @@
 function Piece (type){
     // copying values from JSON
     this.type = type; // reference to the type of it
-    this.name = type.name;
+    this.name = type.name; // reference to name, could be redundant with type
     this.filename = type.filename;
     this.size = {
         x: type.size.x,
         y: type.size.y,
         z: type.size.z
     };
-    this.inOffset = {
-        x: type.inOffset.x,
-        y: type.inOffset.y,
-        z: type.inOffset.z
+    this.in = {
+        x: type.in.x,
+        y: type.in.y,
+        z: type.in.z
     };
     this.outOffset = {
         x: type.outOffset.x,
         y: type.outOffset.y,
         z: type.outOffset.z
     };
+    this.direction = {
+        x: type.direction.x,
+        y: type.direction.y,
+        z: type.direction.z
+    }
 
     this.vertChange = type.vertChange;
 

@@ -14,7 +14,11 @@
  *
  * vertChange: true if the piece changes vertically, false if it does not
  *
- * inOffset: how much the piece must be inOffset to appear proper in x, y, z;
+ * in: how much the piece must be in to appear proper in x, y, z
+ *
+ * direction: how much the piece must advance the trackin x, y, z. The number
+ * is a value of size going from -1 to 1 with 0 being not at all, and 1 being
+ * the whole thing, and -1 being the whole thing down.
  */
 const TRACK_TYPES = {
     FLAT: {
@@ -25,7 +29,7 @@ const TRACK_TYPES = {
             y: 0.1679979962449521,
             z: 0.40799499088060115
         },
-        inOffset: {
+        in: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -35,7 +39,12 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        vertChange: false
+        vertChange: false,
+        direction:{
+            x: 1,
+            y: 0,
+            z: 0
+        }
     },
     FLAT_TO_UP: {
         name: "flat to up",
@@ -51,10 +60,15 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        inOffset: {
+        in: {
             x: 0.0,
             y: 0.0,
             z: 0.0
+        },
+        direction:{
+            x: 1,
+            y: 1,
+            z: 0
         }
     },
     UP: {
@@ -71,10 +85,15 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        inOffset: {
+        in: {
             x: 0.1188,
             y: 0.1188,
             z: 0.0
+        },
+        direction: {
+            x: 1,
+            y: 1,
+            z: 0
         }
     },
     UP_TO_FLAT: {
@@ -91,11 +110,16 @@ const TRACK_TYPES = {
             y: 0.1679979962449521, //this is the Y size of flat. You can't do TRACK_TYPES.FLAT.size.y here which sucks.
             z: 0.0
         },
-        inOffset: {
+        in: {
             x: 0.1188,
             y: 0.1188,
             z: 0.0
-        }// TODO: check this yo
+        },// TODO: check this yo
+        direction: {
+            x: 1,
+            y: 0, // TODO: test
+            z: 0
+        }
 
     },
     FLAT_TO_DOWN: {
@@ -112,11 +136,17 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        inOffset: {
+        in: {
             x: 0.002,// TODO: check this also
             y: 0.1679979962449521,
             z: 0.0
+        },
+        direction: {
+            x: 1,
+            y: -1,
+            z: 0
         }
+
     },
     DOWN: {
         name: "down",
@@ -132,10 +162,15 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        inOffset: {
+        in: {
             x: -0.1188,
             y: -0.1188,
             z: 0.0
+        },
+        direction: {
+            x: 1,
+            y: -1, // negative denotes down
+            z: 0
         }
     },
     DOWN_TO_FLAT: {
@@ -152,21 +187,27 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        inOffset:{
+        in:{
             x:0.12,
             y:0.12,
             z: 0.0
+        },
+        direction: {
+            x: 1,
+            y: 0,
+            z: 0
         }
     }
 };
 
+TRACK_TYPES.UP_TO_FLAT.outOffset.y = TRACK_TYPES.UP_TO_FLAT.size.y - TRACK_TYPES.FLAT.size.y;
 
 // super hacky way to correct all our silly variables
 /*for (var key in TRACK_TYPES){
     TRACK_TYPES[key].size.x = (TRACK_TYPES[key].size.x) /(0.01);
     TRACK_TYPES[key].size.y = (TRACK_TYPES[key].size.y) /(0.01);
     TRACK_TYPES[key].size.z = (TRACK_TYPES[key].size.z) /(0.01);
-    TRACK_TYPES[key].inOffset.x = (TRACK_TYPES[key].inOffset.x) /(0.01);
-    TRACK_TYPES[key].inOffset.y = (TRACK_TYPES[key].inOffset.y) /(0.01);
-    TRACK_TYPES[key].inOffset.z = (TRACK_TYPES[key].inOffset.z) /(0.01);
+    TRACK_TYPES[key].in.x = (TRACK_TYPES[key].in.x) /(0.01);
+    TRACK_TYPES[key].in.y = (TRACK_TYPES[key].in.y) /(0.01);
+    TRACK_TYPES[key].in.z = (TRACK_TYPES[key].in.z) /(0.01);
 }*/
