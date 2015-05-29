@@ -16,8 +16,7 @@
  *
  * inOffset: how much the piece must be inOffset to appear proper in x, y, z;
  */
-var TRACK_TYPES;
-TRACK_TYPES = {
+const TRACK_TYPES = {
     FLAT: {
         name: "flat",
         filename: "modelJS/straight.json",
@@ -89,7 +88,7 @@ TRACK_TYPES = {
         vertChange: false,
         outOffset: {
             x: 0.0,
-            y: 0.1679979962449521, //Y size of flat
+            y: 0.1679979962449521, //this is the Y size of flat. You can't do TRACK_TYPES.FLAT.size.y here which sucks.
             z: 0.0
         },
         inOffset: {
@@ -108,9 +107,14 @@ TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: true,
+        outOffset: {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
+        },
         inOffset: {
             x: 0.002,// TODO: check this also
-            y: 0.0,
+            y: 0.1679979962449521,
             z: 0.0
         }
     },

@@ -51,7 +51,7 @@ function Track() {
 
     this.direction = 0;
 
-    this.boxes = true;
+    this.boxes = false;
 
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
@@ -152,11 +152,10 @@ Track.prototype.insertPieces = function (pieces) {
 Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
 
+    //special case
     if(curr.type == TRACK_TYPES.UP_TO_FLAT){
-        console.log("thing");
         this.currentY += curr.outOffset.y;
     }
-
 
     this.currentX += curr.size.x;// * this.scale;
     if (curr.vertChange)
@@ -168,8 +167,15 @@ Track.prototype.advanceCurrent = function(){
  * TODO: implement
  */
 Track.prototype.doPreCorrections = function (){
-    this.currentX -= this.currPiece.inOffset.x;// * this.scale;
-    this.currentY -= this.currPiece.inOffset.y;// * this.scale;
+    var curr = this.currPiece;// temp reference for code readability
+
+    //special case
+    if(curr.type == TRACK_TYPES.FLAT_TO_DOWN){
+        this.currentY += curr.outOffset.y;
+    }
+
+    this.currentX -= curr.inOffset.x;// * this.scale;
+    this.currentY -= curr.inOffset.y;// * this.scale;
 };
 
 /**
