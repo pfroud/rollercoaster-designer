@@ -51,7 +51,7 @@ function Track() {
 
     this.direction = 0;
 
-    this.boxes = false;
+    this.boxes = true;
 
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
@@ -135,7 +135,10 @@ Track.prototype.insertPiece = function (piece) {
 
 
 /**
- * Inserts multiple pieces from an array. Works recursively
+ * Inserts multiple pieces from an array. Works recursively.
+ *
+ * This function does not work. The pieces are added out of order. Try code below.
+ *
  * @param pieces: an array of pieces
  */
 Track.prototype.insertPieces = function (pieces) {
@@ -143,6 +146,15 @@ Track.prototype.insertPieces = function (pieces) {
     this.insertPiece(pieces.pop());
     this.insertPieces(pieces);
 };
+/*TRACK.insertPieces([
+    TRACK_TYPES.FLAT,
+    TRACK_TYPES.FLAT_TO_UP,
+    TRACK_TYPES.UP,
+    TRACK_TYPES.UP_TO_FLAT,
+    TRACK_TYPES.FLAT,
+    TRACK_TYPES.FLAT_TO_DOWN,
+    TRACK_TYPES.DOWN
+]);*/
 
 
 /**
@@ -224,3 +236,4 @@ Track.prototype.toggleBoxes = function () {
     this.boxes = !this.boxes;
     for (i = 0; i < this.pieces.length; i++) this.pieces[i].boundingBox.visible = this.boxes;
 };
+
