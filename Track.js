@@ -129,8 +129,8 @@ Track.prototype.advanceCurrent = function(){
  * TODO: implement
  */
 Track.prototype.doPreCorrections = function (){
-    this.currentX -= this.currPiece.offset.x * this.scale;
-    this.currentY -= this.currPiece.offset.y * this.scale;
+    this.currentX -= this.currPiece.inOffset.x * this.scale;
+    this.currentY -= this.currPiece.inOffset.y * this.scale;
 };
 
 /**

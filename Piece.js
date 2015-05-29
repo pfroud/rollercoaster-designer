@@ -17,10 +17,10 @@ function Piece (type){
         y: type.size.y,
         z: type.size.z
     };
-    this.offset = {
-        x: type.offset.x,
-        y: type.offset.y,
-        z: type.offset.z
+    this.inOffset = {
+        x: type.inOffset.x,
+        y: type.inOffset.y,
+        z: type.inOffset.z
     };
 
     this.vertChange = type.vertChange;
