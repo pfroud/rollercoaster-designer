@@ -31,6 +31,18 @@ var testingButtonJson = {
     Up: function(){
         new Piece(TRACK_TYPES.UP);
     },
+    UpFlat: function(){
+        new Piece(TRACK_TYPES.UP_TO_FLAT);
+    },
+    FlatDown: function(){
+        new Piece(TRACK_TYPES.FLAT_TO_DOWN);
+    },
+    Down: function(){
+        new Piece(TRACK_TYPES.DOWN);
+    },
+    DownFlat: function(){
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT);
+    },
     Delete: function(){
         TRACK.deletePiece();
     },
