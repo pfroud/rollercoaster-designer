@@ -1,18 +1,18 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
 
-///////////////// uncomment to use perspective camera ////////////////////////
-//var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-///////////////////////////////////////////////////////////////////////////////
+var CAMERA_PERSPECTIVE = false;
 
-///////////////// uncomment to use orthographic camera ////////////////////////
-var viewSize = 3;
-var aspect = window.innerWidth / window.innerHeight;
-camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
-var camDist = 2;
-camera.position.x = camera.position.y = camera.position.z = camDist;
-camera.lookAt(0, 0, 0);
-///////////////////////////////////////////////////////////////////////////////
+if (CAMERA_PERSPECTIVE) {
+    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+} else {
+    var viewSize = 3;
+    var aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
+    var camDist = 2;
+    camera.position.x = camera.position.y = camera.position.z = camDist;
+    camera.lookAt(0, 0, 0);
+}
 
 
 var renderer = new THREE.WebGLRenderer();
@@ -41,12 +41,12 @@ var GROUND_HEIGHT = -1;
 
 //ground plane
 
-var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function(){
+var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function () {
 
 
     var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
         new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
-    groundPlane.rotateX(Math.PI/-2); //rotate so it's horizontal
+    groundPlane.rotateX(Math.PI / -2); //rotate so it's horizontal
     groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
 //// Z is translated instead of Y because the mesh is rotated.
     scene.add(groundPlane);
@@ -55,18 +55,26 @@ var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function(){
 });
 
 
-
-
-
 /*************************** WINDOW RESIZE FIX ********************************
  from
  http://stackoverflow.com/questions/20290402/three-js-resizing-canvas
  */
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    if (CAMERA_PERSPECTIVE) {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    } else {
+        var viewSize = 3;
+        var aspect = window.innerWidth / window.innerHeight;
+        camera.left = -viewSize * aspect;
+        camera.right = viewSize * aspect;
+        camera.top = viewSize;
+        camera.bottom = -viewSize;
+        camera.updateProjectionMatrix();
+    }
     renderer.setSize(window.innerWidth, window.innerHeight);
+
 }
 
 
