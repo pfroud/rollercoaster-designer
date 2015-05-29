@@ -20,7 +20,7 @@ var TRACK_TYPES;
 TRACK_TYPES = {
     FLAT: {
         name: "flat",
-        filename: "modelJS/straight.js",
+        filename: "modelJS/straight.json",
         size: {
             x: 0.5999999865889549,
             y: 0.1679979962449521,
@@ -39,7 +39,7 @@ TRACK_TYPES = {
     },
     FLAT_TO_UP: {
         name: "flat to up",
-        filename: "modelJS/slopeFlatToUp.js",
+        filename: "modelJS/slopeFlatToUp.json",
         size: {
             x: 0.6433779856193811,
             y: 0.38746599133946,
@@ -59,7 +59,7 @@ TRACK_TYPES = {
     },
     UP: {
         name: "up",
-        filename: "modelJS/up.js",
+        filename: "modelJS/up.json",
         size: {
             x: 0.5430565758606418,
             y: 0.5430565758606419,
@@ -79,7 +79,7 @@ TRACK_TYPES = {
     },
     UP_TO_FLAT: {
         name: "up to flat",
-        filename: "modelJS/slopeUpToFlat.js",
+        filename: "modelJS/slopeUpToFlat.json",
         size: {
             x: 0.5245829882746562,
             y: 0.3382589924393222,
@@ -100,7 +100,7 @@ TRACK_TYPES = {
     },
     FLAT_TO_DOWN: {
         name: "flat to down",
-        filename: "modelJS/slopeFlatToDown.js",
+        filename: "modelJS/slopeFlatToDown.json",
         size: {
             x: 0.5245829882746562,
             y: 0.3382589924393222,
@@ -135,7 +135,7 @@ TRACK_TYPES = {
     },
     DOWN_TO_FLAT: {
         name: "Down to Flat",
-        filename: "modelJS/slopeDownToFlat.js",
+        filename: "modelJS/slopeDownToFlat.json",
         size: {
             x: 0.6433779856193811,
             y: 0.38746599133946,
