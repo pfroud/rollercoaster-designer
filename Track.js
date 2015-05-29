@@ -104,7 +104,9 @@ Track.prototype.insertPiece = function (piece) {
             //supports
             track.counter++;
             var heightDifference = track.currentY - GROUND_HEIGHT;
+
             if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
+                console.log("this if happens");
 
                 //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
                 var support = new THREE.Mesh(new THREE.CylinderGeometry(track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32), track.MATERIAL_SUPPORT);
@@ -112,6 +114,10 @@ Track.prototype.insertPiece = function (piece) {
                 support.position.x = track.currentX + piece.size.x / 2;
                 support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect;
                 support.position.z = track.currentZ - piece.size.z / 2;
+                console.log(track.currentX + piece.size.x / 2);
+                console.log(track.currentY - heightDifference / 2 + track.supportIntersect);
+                console.log(track.currentZ - piece.size.z / 2);
+
                 scene.add(support);
             }
 

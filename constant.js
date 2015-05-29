@@ -157,11 +157,11 @@ TRACK_TYPES = {
 
 
 // super hacky way to correct all our silly variables
-for (var key in TRACK_TYPES){
+/*for (var key in TRACK_TYPES){
     TRACK_TYPES[key].size.x = (TRACK_TYPES[key].size.x) /(0.01);
     TRACK_TYPES[key].size.y = (TRACK_TYPES[key].size.y) /(0.01);
     TRACK_TYPES[key].size.z = (TRACK_TYPES[key].size.z) /(0.01);
     TRACK_TYPES[key].inOffset.x = (TRACK_TYPES[key].inOffset.x) /(0.01);
     TRACK_TYPES[key].inOffset.y = (TRACK_TYPES[key].inOffset.y) /(0.01);
     TRACK_TYPES[key].inOffset.z = (TRACK_TYPES[key].inOffset.z) /(0.01);
-}
+}*/
