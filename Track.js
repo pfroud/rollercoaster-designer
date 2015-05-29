@@ -72,20 +72,9 @@ function Track() {
  * @see Piece.js
  */
 Track.prototype.insertPiece = function (piece) {
-
-<<<<<<< HEAD
     // our new current piece is the one we just added
     this.currPiece = piece;
     this.pieces.push(piece);
-=======
-    // initialization handling
-    if (this.currPiece != null) {
-        this.prevPiece = this.currPiece;
-        this.currpiece = piece;
-    } else {
-        this.currPiece = piece;
-    }
->>>>>>> origin/peters_branch
 
     // JS sucks and doesn't let us use "this" in the inner function.
     var track = this;
@@ -174,7 +163,7 @@ Track.prototype.doPreCorrections = function (){
  * Deletes the last track member of the track
  */
 Track.prototype.deletePiece = function () {
-    if (this.pieces.length > 0){
+    if (this.pieces.length > 0) {
         var tmp = this.pieces.pop();
         scene.remove(tmp.mesh);
         scene.remove(tmp.boundingBox);
@@ -213,10 +202,6 @@ Track.prototype.deleteAll = function () {
 };
 
 Track.prototype.toggleBoxes = function () {
-
     this.boxes = !this.boxes;
-
-    for (i = 0; i < this.pieces.length; i++) {
-        this.pieces[i].boundingBox.visible = this.boxes;
-    }
+    for (i = 0; i < this.pieces.length; i++) this.pieces[i].boundingBox.visible = this.boxes;
 };
