@@ -63,6 +63,17 @@ function Track() {
     //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
     this.MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"});
     this.MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
+
+
+    // DEBUG CODE!!!! =========================================================
+    var geometry = new THREE.SphereGeometry(.1, 32, 32);
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var sphere = new THREE.Mesh(geometry, material);
+    sphere.position.x = this.currentX;
+    sphere.position.y = this.currentY;
+    sphere.position.z = this.currentZ;
+    this.debugSphere = sphere;
+    // scene.add(this.debugSphere);
 }
 
 
@@ -99,6 +110,7 @@ Track.prototype.insertPiece = function (piece) {
     // give a reference to the track of the piece with this
     this.currPiece.track = this;
 
+
     // this part creates the pieces and the box
     this.jsonLoader.load(this.currPiece.filename, /*this.createScene(geometry)*/
         function createScene(geometry) {
@@ -109,6 +121,8 @@ Track.prototype.insertPiece = function (piece) {
             // create the mesh and add it to the scene
             var mesh = new THREE.Mesh(geometry, track.MATERIAL_TRACK);
             //mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
+
+
             mesh.position.x = track.currentX;
             mesh.position.y = track.currentY;
             mesh.position.z = track.currentZ;
@@ -120,6 +134,7 @@ Track.prototype.insertPiece = function (piece) {
             track.currPiece.x = track.currentX;
             track.currPiece.y = track.currentY;
             track.currPiece.z = track.currentZ;
+
 
             //supports
             track.counter++;
@@ -151,6 +166,13 @@ Track.prototype.insertPiece = function (piece) {
             // makes them visible or not as appropriate
             bbox.visible = track.boxes;
             track.advanceCurrent(); //moves where the next piece will go
+
+            // DEBUG CODE!!!! ==================================================
+            track.debugSphere.position.x = track.currentX;
+            track.debugSphere.position.y = track.currentY;
+            track.debugSphere.position.z = track.currentZ;
+            // DEBUG CODE!!!! ==================================================
+
             // recursive call to place the next piece of the array
             if (recur){
                 track.insertPiece(piece);
@@ -186,18 +208,15 @@ Track.prototype.insertPieces = function (pieces) {
 Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
 
-    //special case
-    /*if(curr.type == TRACK_TYPES.UP_TO_FLAT){
-        this.currentY += curr.outOffset.y;
-    }*/
+    // the change in x, y, and z relatively
+    var dx = (curr.size.x * curr.direction.x) + curr.outOffset.x;
+    var dy = (curr.size.y * curr.direction.y) + curr.outOffset.y;
+    var dz = (curr.size.z * curr.direction.z) + curr.outOffset.z;
 
-    var x = curr.size.x * curr.direction.x + curr.outOffset.x;
-    var y = curr.size.y * curr.direction.y + curr.outOffset.y;
-    var z = curr.size.z * curr.direction.z + curr.outOffset.z;
-
-    this.currentX += x;// * this.scale;
-    this.currentY += y;
-    this.currentZ += z;
+    // adding the changes to the track
+    this.currentX += dx;// * this.scale;
+    this.currentY += dy;
+    this.currentZ += dz;
 
 };
 

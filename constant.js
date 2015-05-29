@@ -143,7 +143,7 @@ const TRACK_TYPES = {
         },
         direction: {
             x: 1,
-            y: -1,
+            y: 0,
             z: 0
         }
 
@@ -163,7 +163,7 @@ const TRACK_TYPES = {
             z: 0.0
         },
         in: {
-            x: -0.1188,
+            x: 0.1188,
             y: -0.1188,
             z: 0.0
         },
@@ -194,13 +194,16 @@ const TRACK_TYPES = {
         },
         direction: {
             x: 1,
-            y: 0,
+            y: -1,
             z: 0
         }
     }
 };
 
+// correcting values in the ugliest fashion
 TRACK_TYPES.UP_TO_FLAT.outOffset.y = TRACK_TYPES.UP_TO_FLAT.size.y - TRACK_TYPES.FLAT.size.y;
+TRACK_TYPES.DOWN.in.y += TRACK_TYPES.DOWN.size.y;
+TRACK_TYPES.DOWN.outOffset.y = TRACK_TYPES.DOWN.size.y;
 
 // super hacky way to correct all our silly variables
 /*for (var key in TRACK_TYPES){

@@ -13,6 +13,9 @@ var debugJSON = {
     },
     TogglePerspective: function(){
         // TODO: code goes here for perspective Peter
+    },
+    DisplayCurrPos: function (){
+        scene.add(TRACK.debugSphere);
     }
 };
 
