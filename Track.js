@@ -68,19 +68,39 @@ function Track() {
 
 /**
  * Inserts the piece into the world and appends it to the track
- * @param piece must be an object of class type Piece
+ * @param piece must be an object or array of objects of class type Piece
  * @see Piece.js
+ *
+ * This function works recursively and takes an array or a single piece as
+ * arguments. Will only be called once with a single piece, but will be called
+ * n times for an array of pieces of length n.
  */
 Track.prototype.insertPiece = function (piece) {
-    // our new current piece is the one we just added
-    this.currPiece = piece;
-    this.pieces.push(piece);
+
+    // make function recursive in order to preserve order of tracks
+    // TODO: use callbacks if we can instead
+    var recur = false;
+
+    // if the argument is an array, shift the element off and recur
+    if (Array.isArray(piece)){
+        // the arrray can be of length one, this catches that problem
+        if (piece.length > 1) recur = true;
+        this.currPiece = piece.shift();
+        this.pieces.push(this.currPiece);
+
+    } else{
+        // handles the case in which the piece is just one piece
+        this.currPiece = piece;
+        this.pieces.push(piece);
+    }
 
     // JS sucks and doesn't let us use "this" in the inner function.
     var track = this;
+    // give a reference to the track of the piece with this
+    this.currPiece.track = this;
 
     // this part creates the pieces and the box
-    this.jsonLoader.load(piece.filename, /*this.createScene(geometry)*/
+    this.jsonLoader.load(this.currPiece.filename, /*this.createScene(geometry)*/
         function createScene(geometry) {
 
             // move the mesh back if necessary
@@ -96,10 +116,10 @@ Track.prototype.insertPiece = function (piece) {
             scene.add(mesh);
 
             // give the made piece variable the appropriate values
-            piece.mesh = mesh;
-            piece.x = track.currentX;
-            piece.y = track.currentY;
-            piece.z = track.currentZ;
+            track.currPiece.mesh = mesh;
+            track.currPiece.x = track.currentX;
+            track.currPiece.y = track.currentY;
+            track.currPiece.z = track.currentZ;
 
             //supports
             track.counter++;
@@ -111,25 +131,31 @@ Track.prototype.insertPiece = function (piece) {
                     track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32),
                     track.MATERIAL_SUPPORT);
 
-                support.position.x = track.currentX + piece.size.x / 2;
+                support.position.x = track.currentX + track.currPiece.size.x / 2;
                 support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect;
-                support.position.z = track.currentZ - piece.size.z / 2;
+                support.position.z = track.currentZ - track.currPiece.size.z / 2;
                 /*console.log(track.currentX + piece.size.x / 2);
                 console.log(track.currentY - heightDifference / 2 + track.supportIntersect);
                 console.log(track.currentZ - piece.size.z / 2);*/
 
                 scene.add(support);
+                // give a reference to the support in this track
+                track.currPiece.support = support;
             }
 
 
             // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
-            piece.boundingBox = bbox;
+            track.currPiece.boundingBox = bbox;
             scene.add(bbox);
             // makes them visible or not as appropriate
             bbox.visible = track.boxes;
             track.advanceCurrent(); //moves where the next piece will go
+            if (recur){
+                track.insertPiece(piece);
+            }
         }
+
     );
 };
 
@@ -140,21 +166,15 @@ Track.prototype.insertPiece = function (piece) {
  * This function does not work. The pieces are added out of order. Try code below.
  *
  * @param pieces: an array of pieces
- */
+ *
 Track.prototype.insertPieces = function (pieces) {
     if (pieces.length == 0) return;
-    this.insertPiece(pieces.pop());
+    var insert = pieces.pop();
+    console.log("Inserting: " + insert.type);
+    this.insertPiece(insert);
     this.insertPieces(pieces);
-};
-/*TRACK.insertPieces([
-    TRACK_TYPES.FLAT,
-    TRACK_TYPES.FLAT_TO_UP,
-    TRACK_TYPES.UP,
-    TRACK_TYPES.UP_TO_FLAT,
-    TRACK_TYPES.FLAT,
-    TRACK_TYPES.FLAT_TO_DOWN,
-    TRACK_TYPES.DOWN
-]);*/
+};*/
+
 
 
 /**
@@ -237,3 +257,12 @@ Track.prototype.toggleBoxes = function () {
     for (i = 0; i < this.pieces.length; i++) this.pieces[i].boundingBox.visible = this.boxes;
 };
 
+TRACK.insertPiece([
+    new Piece(TRACK_TYPES.FLAT),
+    new Piece(TRACK_TYPES.FLAT_TO_UP),
+    new Piece(TRACK_TYPES.UP),
+    new Piece(TRACK_TYPES.UP_TO_FLAT),
+    new Piece(TRACK_TYPES.FLAT),
+    new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+    new Piece(TRACK_TYPES.DOWN)
+]);

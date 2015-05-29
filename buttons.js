@@ -23,25 +23,25 @@ var testingFolder = MAIN_MENU.addFolder("New Track code");
 
 var testingButtonJson = {
     Flat: function(){
-        new Piece(TRACK_TYPES.FLAT);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.FLAT));
     },
     FlatUp: function(){
-        new Piece(TRACK_TYPES.FLAT_TO_UP);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.FLAT_TO_UP));
     },
     Up: function(){
-        new Piece(TRACK_TYPES.UP);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.UP));
     },
     UpFlat: function(){
-        new Piece(TRACK_TYPES.UP_TO_FLAT);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.UP_TO_FLAT));
     },
     FlatDown: function(){
-        new Piece(TRACK_TYPES.FLAT_TO_DOWN);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.FLAT_TO_DOWN));
     },
     Down: function(){
-        new Piece(TRACK_TYPES.DOWN);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.DOWN));
     },
     DownFlat: function(){
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT);
+        TRACK.insertPiece(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     },
     Delete: function(){
         TRACK.deletePiece();

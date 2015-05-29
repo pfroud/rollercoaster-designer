@@ -12,7 +12,7 @@
  */
 function Piece (type){
     // copying values from JSON
-    this.type = type;
+    this.type = type; // reference to the type of it
     this.name = type.name;
     this.filename = type.filename;
     this.size = {
@@ -33,7 +33,7 @@ function Piece (type){
 
     this.vertChange = type.vertChange;
 
-    // X, Y, and Z positions
+    // X, Y, and Z positions of the piece in the world
     this.x;
     this.y;
     this.z;
@@ -50,12 +50,9 @@ function Piece (type){
 
     // reference to the track it is a part of
     this.track;
-
-    // TODO: change to be generic (for multiple tracks)
-    TRACK.insertPiece(this);
 }
 
 // aliasing piece insert to insert into the track
-Piece.prototype.insert = function(){
-    TRACK.insert(this);
+Piece.prototype.insert = function(track){
+    track.insertPiece(this);
 };
