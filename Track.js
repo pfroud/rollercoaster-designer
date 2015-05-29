@@ -225,6 +225,7 @@ Track.prototype.deletePiece = function () {
         var tmp = this.pieces.pop();
         scene.remove(tmp.mesh);
         scene.remove(tmp.boundingBox);
+        scene.remove(tmp.support);
         this.updatePosition();
     }
 };
