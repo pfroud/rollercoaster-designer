@@ -12,6 +12,7 @@
  */
 function Piece (type){
     // copying values from JSON
+    this.type = type;
     this.name = type.name;
     this.filename = type.filename;
     this.size = {
@@ -23,6 +24,11 @@ function Piece (type){
         x: type.inOffset.x,
         y: type.inOffset.y,
         z: type.inOffset.z
+    };
+    this.outOffset = {
+        x: type.outOffset.x,
+        y: type.outOffset.y,
+        z: type.outOffset.z
     };
 
     this.vertChange = type.vertChange;

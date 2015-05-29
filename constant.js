@@ -30,7 +30,8 @@ TRACK_TYPES = {
             x: 0.0,
             y: 0.0,
             z: 0.0
-        },outOffset: {
+        },
+        outOffset: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -88,7 +89,7 @@ TRACK_TYPES = {
         vertChange: false,
         outOffset: {
             x: 0.0,
-            y: 0.0,
+            y: 0.1679979962449521, //Y size of flat
             z: 0.0
         },
         inOffset: {
