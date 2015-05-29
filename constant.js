@@ -115,7 +115,7 @@ TRACK_TYPES = {
     },
     DOWN: {
         name: "down",
-        filename: "",
+        filename: "modelJS/down.json",
         size: {
             x: 0.5430565758606418,
             y: 0.5430565758606419,
