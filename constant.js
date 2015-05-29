@@ -164,10 +164,4 @@ for (var key in TRACK_TYPES){
     TRACK_TYPES[key].inOffset.x = (TRACK_TYPES[key].inOffset.x) /(0.01);
     TRACK_TYPES[key].inOffset.y = (TRACK_TYPES[key].inOffset.y) /(0.01);
     TRACK_TYPES[key].inOffset.z = (TRACK_TYPES[key].inOffset.z) /(0.01);
-
-    // Debugging execeptions
-    if (isNaN(TRACK_TYPES[key].inOffset)){
-        throw "FIX THE OFFSET YO";
-    }
-
 }
