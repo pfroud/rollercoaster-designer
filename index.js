@@ -1,18 +1,18 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
 
-///////////////// uncomment to use perspective camera ////////////////////////
-//var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-///////////////////////////////////////////////////////////////////////////////
+var CAMERA_PERSPECTIVE = false;
 
-///////////////// uncomment to use orthographic camera ////////////////////////
-var viewSize = 3;
-var aspect = window.innerWidth / window.innerHeight;
-camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
-var camDist = 2;
-camera.position.x = camera.position.y = camera.position.z = camDist;
-camera.lookAt(0, 0, 0);
-///////////////////////////////////////////////////////////////////////////////
+if (CAMERA_PERSPECTIVE) {
+    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+} else {
+    var viewSize = 3;
+    var aspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
+    var camDist = 2;
+    camera.position.x = camera.position.y = camera.position.z = camDist;
+    camera.lookAt(0, 0, 0);
+}
 
 
 var renderer = new THREE.WebGLRenderer();
@@ -22,16 +22,38 @@ document.body.appendChild(renderer.domElement);
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 var light = new THREE.AmbientLight(0xffffff);
-scene.add(light);
+//scene.add(light);
 
-//scene.add(new THREE.AxisHelper(0.5)); //draws red, green, and blue lines for axis at the origin
+//scene.add(new THREE.AxisHelper(0.5)); // The X axis is red. The Y axis is green. The Z axis is blue.
 
-//ground plane                                               5 units square
-/*var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x999999}));
-groundPlane.rotateX(Math.PI/-2); //rotate so it's horozontal
-groundPlane.translateZ(-0.001); //move down a tiny bit so track and axis helper draw on top of it
-scene.add(groundPlane);*/
+
+// add subtle ambient lighting
+//var ambientLight = new THREE.AmbientLight(0x222222);
+//scene.add(ambientLight);
+
+// directional lighting
+var directionalLight = new THREE.DirectionalLight(0xffffff);
+directionalLight.position.set(1, 1, 1).normalize();
+scene.add(directionalLight);
+
+// Y height of ground plane
+var GROUND_HEIGHT = -1;
+
+//ground plane
+
+var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function () {
+
+
+    var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
+        new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
+    groundPlane.rotateX(Math.PI / -2); //rotate so it's horizontal
+    groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
+//// Z is translated instead of Y because the mesh is rotated.
+    scene.add(groundPlane);
+
+
+});
+
 
 /*************************** WINDOW RESIZE FIX ********************************
  from
@@ -39,9 +61,20 @@ scene.add(groundPlane);*/
  */
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    if (CAMERA_PERSPECTIVE) {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    } else {
+        var viewSize = 3;
+        var aspect = window.innerWidth / window.innerHeight;
+        camera.left = -viewSize * aspect;
+        camera.right = viewSize * aspect;
+        camera.top = viewSize;
+        camera.bottom = -viewSize;
+        camera.updateProjectionMatrix();
+    }
     renderer.setSize(window.innerWidth, window.innerHeight);
+
 }
 
 
