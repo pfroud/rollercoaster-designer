@@ -35,7 +35,7 @@ TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        vertChange: false,
+        vertChange: false
     },
     FLAT_TO_UP: {
         name: "flat to up",

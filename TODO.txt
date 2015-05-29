@@ -7,6 +7,7 @@ Peter
 Try to get car model
 Find good favicon.
 measure sizes for un-scaled track meshes and make them scale on runtime
+be able to delete supports
 
 PETER: LOOK AT Buttons.js IN THE debugJSON OBJECT!!!!! <----
 

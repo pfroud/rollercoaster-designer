@@ -1,7 +1,7 @@
 /*************************** SETUP *********************************/
 var scene = new THREE.Scene();
 
-var CAMERA_PERSPECTIVE = false;
+var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase if ortho camera is used
 
 if (CAMERA_PERSPECTIVE) {
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -40,15 +40,13 @@ scene.add(directionalLight);
 var GROUND_HEIGHT = -1;
 
 //ground plane
-
+//the callback function is called when the texture is done loading
 var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function () {
-
-
     var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
         new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
     groundPlane.rotateX(Math.PI / -2); //rotate so it's horizontal
     groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
-//// Z is translated instead of Y because the mesh is rotated.
+    // Z is translated instead of Y because the mesh is rotated.
     scene.add(groundPlane);
 
 

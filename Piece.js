@@ -37,9 +37,10 @@ function Piece (type){
     this.nextY;
     this.nextZ;
 
-    // references to meshes and bounding boxes (null initially)
+    // references to meshes, bounding box, and support (null initially)
     this.mesh =  null;
     this.boundingBox = null;
+    this.support = null;
 
     // reference to the track it is a part of
     this.track;

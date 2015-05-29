@@ -54,9 +54,9 @@ function Track() {
     this.boxes = true;
 
     //supports
-    this.counter = 0; //used with supportSpacing
+    this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
     this.supportSpacing = 2;
-    this.supportIntersect = 0.03; //moved the support up slightly into the track mesh so it looks better
+    this.supportIntersect = 0.03; //move the support up slightly into the track mesh so it looks better
     this.supportRadius = 0.03;
 
     //materials
@@ -104,19 +104,20 @@ Track.prototype.insertPiece = function (piece) {
             //supports
             track.counter++;
             var heightDifference = track.currentY - GROUND_HEIGHT;
-
             if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
                 console.log("this if happens");
 
                 //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
-                var support = new THREE.Mesh(new THREE.CylinderGeometry(track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32), track.MATERIAL_SUPPORT);
+                var support = new THREE.Mesh(new THREE.CylinderGeometry(
+                    track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32),
+                    track.MATERIAL_SUPPORT);
 
                 support.position.x = track.currentX + piece.size.x / 2;
                 support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect;
                 support.position.z = track.currentZ - piece.size.z / 2;
-                console.log(track.currentX + piece.size.x / 2);
+                /*console.log(track.currentX + piece.size.x / 2);
                 console.log(track.currentY - heightDifference / 2 + track.supportIntersect);
-                console.log(track.currentZ - piece.size.z / 2);
+                console.log(track.currentZ - piece.size.z / 2);*/
 
                 scene.add(support);
             }
@@ -151,9 +152,9 @@ Track.prototype.insertPieces = function (pieces) {
  */
 Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
-    this.currentX += curr.size.x * this.scale;
+    this.currentX += curr.size.x;// * this.scale;
     if (curr.vertChange)
-        this.currentY += curr.size.y * this.scale;
+        this.currentY += curr.size.y;// * this.scale;
 };
 
 /**
@@ -161,8 +162,8 @@ Track.prototype.advanceCurrent = function(){
  * TODO: implement
  */
 Track.prototype.doPreCorrections = function (){
-    this.currentX -= this.currPiece.inOffset.x * this.scale;
-    this.currentY -= this.currPiece.inOffset.y * this.scale;
+    this.currentX -= this.currPiece.inOffset.x;// * this.scale;
+    this.currentY -= this.currPiece.inOffset.y;// * this.scale;
 };
 
 /**
