@@ -9,50 +9,42 @@
  * @see constant.js
  */
 function Piece (type){
-    // making the fields so that WebStorm will not complain that they don't exist
-    this.name;
-    this.filename;
+    // copying values from JSON
+    this.name = type.name;
+    this.filename = type.filename;
     this.size = {
-        x: 0.0,
-        y: 0.0,
-        z: 0.0
+        x: type.size.x,
+        y: type.size.y,
+        z: type.size.z
     };
-    this.preOffset;
-    this.postOffset;
+    this.offset = {
+        x: type.offset.x,
+        y: type.offset.y,
+        z: type.offset.z
+    };
 
-    // copy all fields in JSON to the piece
-    if (typeof(type) == "string"){ // error handling
-        var JSONType = TRACK_TYPES[type];
-        for (var key in JSONType){
-            this[key.toString()] = JSONType[key.toString()];
-        }
-    } else{
-        for (var key in type){
-            this[key] = type[key];
-        }
-    }
+    this.vertChange = type.vertChange;
 
     // X, Y, and Z positions
     this.x;
     this.y;
     this.z;
 
-    // references to meshes and bounding boxes
-    this.mesh;
-    this.boundingBox;
+    // TODO: implement this
+    this.nextX;
+    this.nextY;
+    this.nextZ;
+
+    // references to meshes and bounding boxes (null initially)
+    this.mesh =  null;
+    this.boundingBox = null;
 
     // reference to the track it is a part of
     this.track;
 
-    TRACK.pieces.push(this);
+    // TODO: change to be generic (for multiple tracks)
     TRACK.insertPiece(this);
 }
-
-Piece.prototype.doPreCorrections = function(){
-    TRACK.currentX -= this.preOffset;
-    TRACK.currentY -= this.preOffset;
-};
-
 
 // aliasing piece insert to insert into the track
 Piece.prototype.insert = function(){
