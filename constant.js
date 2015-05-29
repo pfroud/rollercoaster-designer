@@ -14,7 +14,7 @@
  *
  * vertChange: true if the piece changes vertically, false if it does not
  *
- * offset: how much the piece must be offset to appear proper
+ * offset: how much the piece must be offset to appear proper in x, y, z;
  */
 var TRACK_TYPES;
 TRACK_TYPES = {
@@ -26,8 +26,12 @@ TRACK_TYPES = {
             y: 0.1679979962449521,
             z: 0.40799499088060115
         },
+        offset: {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
+        },
         vertChange: false,
-        offset: 0.0
     },
     FLAT_TO_UP: {
         name: "flat to up",
@@ -38,7 +42,11 @@ TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: true,
-        offset: 0.0
+        offset: {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
+        }
     },
     UP: {
         name: "up",
@@ -49,7 +57,11 @@ TRACK_TYPES = {
             z: 0.40799499088060115
         },
         vertChange: true,
-        offset: 0.1188
+        offset: {
+            x: 0.1188,
+            y: 0.1188,
+            z: 0.0
+        }
     },
     UP_TO_FLAT: {
         name: "up to flat",
@@ -59,8 +71,12 @@ TRACK_TYPES = {
             y: 0.3382589924393222,
             z: 0.4079999908804893
         },
-        vertChange: true,
-        offset: 0.0 // TODO: check this yo
+        vertChange: false,
+        offset: {
+            x: 0.1188,
+            y: 0.1188,
+            z: 0.0
+        }// TODO: check this yo
 
     },
     FLAT_TO_DOWN: {
@@ -72,8 +88,11 @@ TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: true,
-        offset: 0.002// TODO: check this also
-
+        offset: {
+            x: 0.002,// TODO: check this also
+            y: 0.0,
+            z: 0.0
+        }
     },
     DOWN: {
         name: "down",
@@ -84,7 +103,11 @@ TRACK_TYPES = {
             z: 0.40799499088060115
         },
         vertChange: true,
-        offset: 0.1188
+        offset: {
+            x: -0.1188,
+            y: -0.1188,
+            z: 0.0
+        }
     },
     DOWN_TO_FLAT: {
         name: "Down to Flat",
@@ -95,7 +118,11 @@ TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: false,
-        offset: 0.12
+        offset:{
+            x:0.12,
+            y:0.12,
+            z: 0.0
+        }
     }
 };
 
@@ -105,5 +132,7 @@ for (var key in TRACK_TYPES){
     TRACK_TYPES[key].size.x = (TRACK_TYPES[key].size.x) /(0.01);
     TRACK_TYPES[key].size.y = (TRACK_TYPES[key].size.y) /(0.01);
     TRACK_TYPES[key].size.z = (TRACK_TYPES[key].size.z) /(0.01);
-    TRACK_TYPES[key].offset = (TRACK_TYPES[key].offset) /(0.01);
+    TRACK_TYPES[key].offset.x = (TRACK_TYPES[key].offset.x) /(0.01);
+    TRACK_TYPES[key].offset.y = (TRACK_TYPES[key].offset.y) /(0.01);
+    TRACK_TYPES[key].offset.z = (TRACK_TYPES[key].offset.z) /(0.01);
 }
