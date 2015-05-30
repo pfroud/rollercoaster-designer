@@ -10,10 +10,7 @@ if (CAMERA_PERSPECTIVE) {
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
     var camDist = 2;
-    //camera.position.x = camera.position.y = camera.position.z = camDist;
-    camera.position.z = 2;
-    camera.position.x = 0;
-    camera.position.y=0;
+    camera.position.x = camera.position.y = camera.position.z = camDist;
     camera.lookAt(0, 0, 0);
 }
 
@@ -27,7 +24,7 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 var light = new THREE.AmbientLight(0xffffff);
 //scene.add(light);
 
-scene.add(new THREE.AxisHelper(0.5)); // The X axis is red. The Y axis is green. The Z axis is blue.
+//scene.add(new THREE.AxisHelper(0.5)); // The X axis is red. The Y axis is green. The Z axis is blue.
 
 
 // add subtle ambient lighting
