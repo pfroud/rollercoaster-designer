@@ -10,17 +10,22 @@
  *
  * name: The name of the piece, used primarily for debugging
  *
- * size: the x, y, and z values of the size of the track types
+ * filename: name of the json file with the mesh
  *
- * vertChange: true if the piece changes vertically, false if it does not
+ * size: the x, y, and z values of the size of the track types
  *
  * in: how much the piece must be moved back in to appear properly.
  * 
  * out: out much current x needs to be moved back in order to appear properly
  *
+ * vertChange: true if the piece changes vertically, false if it does not
+ *
  * direction: how much the piece must advance the trackin x, y, z. The number
  * is a value of size going from -1 to 1 with 0 being not at all, and 1 being
  * the whole thing, and -1 being the whole thing down.
+ *
+ * extendSupportPastBoundingBox: supports normally end at the bottom of the bounding boxes.
+ * Add this number to the height so supports touch the track for up and down pieces.
  */
 const TRACK_TYPES = {
     FLAT: {
@@ -46,7 +51,8 @@ const TRACK_TYPES = {
             x: 1,
             y: 0,
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0
     },
     FLAT_TO_UP: {
         name: "flat to up",
@@ -71,7 +77,8 @@ const TRACK_TYPES = {
             x: 1,
             y: 1,
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0
     },
     UP: {
         name: "up",
@@ -96,7 +103,8 @@ const TRACK_TYPES = {
             x: 1,
             y: 1,
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0.15
     },
     UP_TO_FLAT: {
         name: "up to flat",
@@ -121,7 +129,8 @@ const TRACK_TYPES = {
             x: 1,
             y: 0, // TODO: test
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0.15
 
     },
     FLAT_TO_DOWN: {
@@ -147,7 +156,8 @@ const TRACK_TYPES = {
             x: 1,
             y: 0,
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0.15
 
     },
     DOWN: {
@@ -173,7 +183,8 @@ const TRACK_TYPES = {
             x: 1,
             y: -1, // negative denotes down
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0.15
     },
     DOWN_TO_FLAT: {
         name: "Down to Flat",
@@ -198,7 +209,8 @@ const TRACK_TYPES = {
             x: 1,
             y: 0,
             z: 0
-        }
+        },
+        extendSupportPastBoundingBox: 0
     }
 };
 

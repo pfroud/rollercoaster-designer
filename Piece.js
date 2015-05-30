@@ -10,7 +10,7 @@
  * are in TRACK_TYPES
  * @see constant.js
  */
-function Piece (type){
+function Piece(type) {
     // copying values from JSON
     this.type = type; // reference to the type of it
     this.name = type.name; // reference to name, could be redundant with type
@@ -34,7 +34,13 @@ function Piece (type){
         x: type.direction.x,
         y: type.direction.y,
         z: type.direction.z
-    }
+    };
+
+    /*
+     Supports normally end at the bottom of the bounding boxes.
+     Add this number to the height so supports touch the track for up and down pieces.
+     */
+    this.extraSupportHeight = type.extendSupportPastBoundingBox;
 
     this.vertChange = type.vertChange;
 
@@ -49,7 +55,7 @@ function Piece (type){
     this.nextZ;
 
     // references to meshes, bounding box, and support (null initially)
-    this.mesh =  null;
+    this.mesh = null;
     this.boundingBox = null;
     this.support = null;
 
@@ -58,6 +64,6 @@ function Piece (type){
 }
 
 // aliasing piece insert to insert into the track
-Piece.prototype.insert = function(track){
+Piece.prototype.insert = function (track) {
     track.insertPiece(this);
 };

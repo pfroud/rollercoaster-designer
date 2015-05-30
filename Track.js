@@ -59,6 +59,7 @@ function Track() {
     this.supportIntersect = 0.03; //move the support up slightly into the track mesh so it looks better
     this.supportRadius = 0.03;
 
+
     //materials
     //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
     this.MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"});
@@ -143,11 +144,13 @@ Track.prototype.insertPiece = function (piece) {
 
                 //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
                 var support = new THREE.Mesh(new THREE.CylinderGeometry(
-                    track.supportRadius, track.supportRadius, heightDifference + track.supportIntersect, 32),
+                    track.supportRadius, track.supportRadius,
+                    heightDifference + track.supportIntersect + track.currPiece.extraSupportHeight,
+                        32),
                     track.MATERIAL_SUPPORT);
 
                 support.position.x = track.currentX + track.currPiece.size.x / 2;
-                support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect;
+                support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect + track.currPiece.extraSupportHeight/2;
                 support.position.z = track.currentZ - track.currPiece.size.z / 2;
                 /*console.log(track.currentX + piece.size.x / 2);
                 console.log(track.currentY - heightDifference / 2 + track.supportIntersect);
@@ -291,7 +294,7 @@ TRACK.insertPiece([
     new Piece(TRACK_TYPES.UP),
     new Piece(TRACK_TYPES.UP_TO_FLAT),
     new Piece(TRACK_TYPES.FLAT),
-    new Piece(TRACK_TYPES.FLAT_TO_DOWN)//,
-    //new Piece(TRACK_TYPES.DOWN),
-    //new Piece(TRACK_TYPES.DOWN_TO_FLAT)
+    new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+    new Piece(TRACK_TYPES.DOWN),
+    new Piece(TRACK_TYPES.DOWN_TO_FLAT)
 ]);
