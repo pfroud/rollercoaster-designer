@@ -12,7 +12,11 @@ var debugJSON = {
         TRACK.toggleBoxes();
     },
     TogglePerspective: function(){
-        toggleCamera(); //in index.js
+        /*TODO make this do stuff. Low priority.
+         http://stackoverflow.com/questions/14061380/how-to-change-the-type-of-camera-in-three-js
+         https://github.com/mrdoob/three.js/blob/master/examples/canvas_camera_orthographic2.html
+         https://threejsdoc.appspot.com/doc/three.js/src.source/extras/cameras/CombinedCamera.js.html
+         */
     },
     DisplayCurrPos: function (){
         scene.add(TRACK.debugSphere);

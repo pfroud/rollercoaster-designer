@@ -14,7 +14,6 @@ if (CAMERA_PERSPECTIVE) {
     var viewSize = WORLD_SIZE / 2;
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
-
 }
 /* Camera distance only does anything with perspective camera.
 With ortho camera, things will get cut off if camera is too close, but otherwise there's no difference. */
@@ -82,10 +81,6 @@ function onWindowResize() {
     }
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-}
-
-function toggleCamera() {
-    console.log("camera toggle")
 }
 
 

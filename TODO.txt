@@ -6,7 +6,7 @@ Choose JSON parser/format
 Peter
 Choose which train/car model to use with Johnathan
 turned tracks?
-Make button to change camera work
+Make button to change camera work - this will be a pain and is not important
 
 PETER: LOOK AT Buttons.js IN THE debugJSON OBJECT!!!!! <----
 ^ Is this still a thing? -P
