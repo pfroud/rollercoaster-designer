@@ -14,7 +14,9 @@
  *
  * vertChange: true if the piece changes vertically, false if it does not
  *
- * in: how much the piece must be in to appear proper in x, y, z
+ * in: how much the piece must be moved back in to appear properly.
+ * 
+ * out: out much current x needs to be moved back in order to appear properly
  *
  * direction: how much the piece must advance the trackin x, y, z. The number
  * is a value of size going from -1 to 1 with 0 being not at all, and 1 being
@@ -34,7 +36,7 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -55,7 +57,7 @@ const TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: true,
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -80,7 +82,7 @@ const TRACK_TYPES = {
             z: 0.40799499088060115
         },
         vertChange: true,
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -105,7 +107,7 @@ const TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: false,
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.1679979962449521, //this is the Y size of flat. You can't do TRACK_TYPES.FLAT.size.y here which sucks.
             z: 0.0
@@ -131,7 +133,7 @@ const TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: true,
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -157,7 +159,7 @@ const TRACK_TYPES = {
             z: 0.40799499088060115
         },
         vertChange: true,
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
@@ -182,28 +184,28 @@ const TRACK_TYPES = {
             z: 0.4079999908804893
         },
         vertChange: false,
-        outOffset: {
+        out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
         },
         in:{
-            x:0.12,
-            y:0.12,
+            x: 0.12,
+            y: 0.266,
             z: 0.0
         },
         direction: {
             x: 1,
-            y: -1,
+            y: 0,
             z: 0
         }
     }
 };
 
 // correcting values in the ugliest fashion
-TRACK_TYPES.UP_TO_FLAT.outOffset.y = TRACK_TYPES.UP_TO_FLAT.size.y - TRACK_TYPES.FLAT.size.y;
+TRACK_TYPES.UP_TO_FLAT.out.y = TRACK_TYPES.UP_TO_FLAT.size.y - TRACK_TYPES.FLAT.size.y;
 TRACK_TYPES.DOWN.in.y += TRACK_TYPES.DOWN.size.y;
-TRACK_TYPES.DOWN.outOffset.y = TRACK_TYPES.DOWN.size.y;
+TRACK_TYPES.DOWN.out.y = TRACK_TYPES.DOWN.size.y;
 
 // super hacky way to correct all our silly variables
 /*for (var key in TRACK_TYPES){

@@ -196,7 +196,7 @@ Track.prototype.insertPieces = function (pieces) {
     console.log("Inserting: " + insert.type);
     this.insertPiece(insert);
     this.insertPieces(pieces);
-};*/
+};*/// NO LONGER NEEDED, BUT KEPT FOR POSTERITY
 
 
 
@@ -209,9 +209,9 @@ Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
 
     // the change in x, y, and z relatively
-    var dx = (curr.size.x * curr.direction.x) + curr.outOffset.x;
-    var dy = (curr.size.y * curr.direction.y) + curr.outOffset.y;
-    var dz = (curr.size.z * curr.direction.z) + curr.outOffset.z;
+    var dx = (curr.size.x * curr.direction.x) + curr.out.x;
+    var dy = (curr.size.y * curr.direction.y) + curr.out.y;
+    var dz = (curr.size.z * curr.direction.z) + curr.out.z;
 
     // adding the changes to the track
     this.currentX += dx;// * this.scale;
@@ -229,11 +229,11 @@ Track.prototype.doPreCorrections = function (){
 
     //special case
     if(curr.type == TRACK_TYPES.FLAT_TO_DOWN){
-        this.currentY += curr.outOffset.y;
+        this.currentY += curr.out.y;
     }
-
     this.currentX -= curr.in.x;// * this.scale;
     this.currentY -= curr.in.y;// * this.scale;
+    this.currentZ -= curr.in.z;
 };
 
 /**
@@ -291,6 +291,7 @@ TRACK.insertPiece([
     new Piece(TRACK_TYPES.UP),
     new Piece(TRACK_TYPES.UP_TO_FLAT),
     new Piece(TRACK_TYPES.FLAT),
-    new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-    new Piece(TRACK_TYPES.DOWN)
+    new Piece(TRACK_TYPES.FLAT_TO_DOWN)//,
+    //new Piece(TRACK_TYPES.DOWN),
+    //new Piece(TRACK_TYPES.DOWN_TO_FLAT)
 ]);

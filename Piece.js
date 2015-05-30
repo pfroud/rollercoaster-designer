@@ -25,10 +25,10 @@ function Piece (type){
         y: type.in.y,
         z: type.in.z
     };
-    this.outOffset = {
-        x: type.outOffset.x,
-        y: type.outOffset.y,
-        z: type.outOffset.z
+    this.out = {
+        x: type.out.x,
+        y: type.out.y,
+        z: type.out.z
     };
     this.direction = {
         x: type.direction.x,
