@@ -4,17 +4,17 @@ Choose JSON parser/format
    jquery stuff of course
 
 Peter
-Try to get car model
-measure sizes for un-scaled track meshes and make them scale on runtime
+Choose which train/car model to use with Johnathan
 turned tracks?
 
 PETER: LOOK AT Buttons.js IN THE debugJSON OBJECT!!!!! <----
+^ Is this still a thing? -P
 
 
 Jonathan
 Make UI stuff - editor 2D interface
    has buttons to execute functions
-Up/down pieces. Piece guarding.
+Piece guarding.
 Direction???
 
 Function to move track piece in three.js world

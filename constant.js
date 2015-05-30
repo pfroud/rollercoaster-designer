@@ -15,7 +15,7 @@
  * size: the x, y, and z values of the size of the track types
  *
  * in: how much the piece must be moved back in to appear properly.
- * 
+ *
  * out: out much current x needs to be moved back in order to appear properly
  *
  * vertChange: true if the piece changes vertically, false if it does not
@@ -26,6 +26,7 @@
  *
  * extendSupportPastBoundingBox: supports normally end at the bottom of the bounding boxes.
  * Add this number to the height so supports touch the track for up and down pieces.
+ * Should probably give this a less stupid name;
  */
 const TRACK_TYPES = {
     FLAT: {
@@ -35,6 +36,11 @@ const TRACK_TYPES = {
             x: 0.5999999865889549,
             y: 0.1679979962449521,
             z: 0.40799499088060115
+        },
+        size_unscaled: {
+            x: 60,
+            y: 16.7998,
+            z: 40.7995
         },
         in: {
             x: 0.0,
@@ -47,7 +53,7 @@ const TRACK_TYPES = {
             z: 0.0
         },
         vertChange: false,
-        direction:{
+        direction: {
             x: 1,
             y: 0,
             z: 0
@@ -62,6 +68,11 @@ const TRACK_TYPES = {
             y: 0.38746599133946,
             z: 0.4079999908804893
         },
+        size_unscaled: {
+            x: 64.3378,
+            y: 38.7466,
+            z: 40.8
+        },
         vertChange: true,
         out: {
             x: 0.0,
@@ -73,7 +84,7 @@ const TRACK_TYPES = {
             y: 0.0,
             z: 0.0
         },
-        direction:{
+        direction: {
             x: 1,
             y: 1,
             z: 0
@@ -87,6 +98,11 @@ const TRACK_TYPES = {
             x: 0.5430565758606418,
             y: 0.5430565758606419,
             z: 0.40799499088060115
+        },
+        size_unscaled: {
+            x: 54.3057,
+            y: 54.3057,
+            z: 40.7995
         },
         vertChange: true,
         out: {
@@ -113,6 +129,11 @@ const TRACK_TYPES = {
             x: 0.5245829882746562,
             y: 0.3382589924393222,
             z: 0.4079999908804893
+        },
+        size_unscaled: {
+            x: 52.4583,
+            y: 33.8259,
+            z: 40.8
         },
         vertChange: false,
         out: {
@@ -141,6 +162,11 @@ const TRACK_TYPES = {
             y: 0.3382589924393222,
             z: 0.4079999908804893
         },
+        size_unscaled: {
+            x: 52.4583,
+            y: 33.8259,
+            z: 40.8
+        },
         vertChange: true,
         out: {
             x: 0.0,
@@ -168,6 +194,11 @@ const TRACK_TYPES = {
             y: 0.5430565758606419,
             z: 0.40799499088060115
         },
+        size_unscaled: {
+            x: 54.3057,
+            y: 54.3057,
+            z: 40.7995
+        },
         vertChange: true,
         out: {
             x: 0.0,
@@ -194,13 +225,18 @@ const TRACK_TYPES = {
             y: 0.38746599133946,
             z: 0.4079999908804893
         },
+        size_unscaled: {
+            x: 64.3378,
+            y: 38.7466,
+            z: 40.8
+        },
         vertChange: false,
         out: {
             x: 0.0,
             y: 0.0,
             z: 0.0
         },
-        in:{
+        in: {
             x: 0.12,
             y: 0.266,
             z: 0.0
@@ -221,10 +257,10 @@ TRACK_TYPES.DOWN.out.y = TRACK_TYPES.DOWN.size.y;
 
 // super hacky way to correct all our silly variables
 /*for (var key in TRACK_TYPES){
-    TRACK_TYPES[key].size.x = (TRACK_TYPES[key].size.x) /(0.01);
-    TRACK_TYPES[key].size.y = (TRACK_TYPES[key].size.y) /(0.01);
-    TRACK_TYPES[key].size.z = (TRACK_TYPES[key].size.z) /(0.01);
-    TRACK_TYPES[key].in.x = (TRACK_TYPES[key].in.x) /(0.01);
-    TRACK_TYPES[key].in.y = (TRACK_TYPES[key].in.y) /(0.01);
-    TRACK_TYPES[key].in.z = (TRACK_TYPES[key].in.z) /(0.01);
-}*/
+ TRACK_TYPES[key].size.x = (TRACK_TYPES[key].size.x) /(0.01);
+ TRACK_TYPES[key].size.y = (TRACK_TYPES[key].size.y) /(0.01);
+ TRACK_TYPES[key].size.z = (TRACK_TYPES[key].size.z) /(0.01);
+ TRACK_TYPES[key].in.x = (TRACK_TYPES[key].in.x) /(0.01);
+ TRACK_TYPES[key].in.y = (TRACK_TYPES[key].in.y) /(0.01);
+ TRACK_TYPES[key].in.z = (TRACK_TYPES[key].in.z) /(0.01);
+ }*/

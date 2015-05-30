@@ -127,7 +127,7 @@ Track.prototype.insertPiece = function (piece) {
             mesh.position.x = track.currentX;
             mesh.position.y = track.currentY;
             mesh.position.z = track.currentZ;
-            mesh.scale.set(track.scale, track.scale, track.scale);
+            //mesh.scale.set(track.scale, track.scale, track.scale);
             scene.add(mesh);
 
             // give the made piece variable the appropriate values
@@ -150,17 +150,16 @@ Track.prototype.insertPiece = function (piece) {
                     track.MATERIAL_SUPPORT);
 
                 support.position.x = track.currentX + track.currPiece.size.x / 2;
-                support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect + track.currPiece.extraSupportHeight/2;
+                support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect
+                    + track.currPiece.extraSupportHeight/2;
                 support.position.z = track.currentZ - track.currPiece.size.z / 2;
-                /*console.log(track.currentX + piece.size.x / 2);
-                console.log(track.currentY - heightDifference / 2 + track.supportIntersect);
-                console.log(track.currentZ - piece.size.z / 2);*/
 
                 scene.add(support);
-                // give a reference to the support in this track
                 track.currPiece.support = support;
             }
 
+            console.log(new THREE.Box3().setFromObject(mesh).size());
+            return;
 
             // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
@@ -289,12 +288,12 @@ Track.prototype.toggleBoxes = function () {
 };
 
 TRACK.insertPiece([
-    new Piece(TRACK_TYPES.FLAT),
+    new Piece(TRACK_TYPES.FLAT_TO_UP)/*,
     new Piece(TRACK_TYPES.FLAT_TO_UP),
     new Piece(TRACK_TYPES.UP),
     new Piece(TRACK_TYPES.UP_TO_FLAT),
     new Piece(TRACK_TYPES.FLAT),
     new Piece(TRACK_TYPES.FLAT_TO_DOWN),
     new Piece(TRACK_TYPES.DOWN),
-    new Piece(TRACK_TYPES.DOWN_TO_FLAT)
+    new Piece(TRACK_TYPES.DOWN_TO_FLAT)*/
 ]);
