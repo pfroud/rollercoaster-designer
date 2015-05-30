@@ -47,6 +47,7 @@ function Track() {
     this.currPiece = null;
 
     this.jsonLoader = new THREE.JSONLoader();
+
     this.scale = SCALE;
 
     this.direction = 0;
@@ -76,6 +77,8 @@ function Track() {
     this.debugSphere = sphere;
     // scene.add(this.debugSphere);
 }
+
+
 
 
 /**
@@ -127,7 +130,7 @@ Track.prototype.insertPiece = function (piece) {
             mesh.position.x = track.currentX;
             mesh.position.y = track.currentY;
             mesh.position.z = track.currentZ;
-            //mesh.scale.set(track.scale, track.scale, track.scale);
+            mesh.scale.set(track.scale, track.scale, track.scale);
             scene.add(mesh);
 
             // give the made piece variable the appropriate values
@@ -157,9 +160,6 @@ Track.prototype.insertPiece = function (piece) {
                 scene.add(support);
                 track.currPiece.support = support;
             }
-
-            console.log(new THREE.Box3().setFromObject(mesh).size());
-            return;
 
             // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
@@ -288,12 +288,12 @@ Track.prototype.toggleBoxes = function () {
 };
 
 TRACK.insertPiece([
-    new Piece(TRACK_TYPES.FLAT_TO_UP)/*,
+    new Piece(TRACK_TYPES.FLAT),
     new Piece(TRACK_TYPES.FLAT_TO_UP),
     new Piece(TRACK_TYPES.UP),
     new Piece(TRACK_TYPES.UP_TO_FLAT),
     new Piece(TRACK_TYPES.FLAT),
     new Piece(TRACK_TYPES.FLAT_TO_DOWN),
     new Piece(TRACK_TYPES.DOWN),
-    new Piece(TRACK_TYPES.DOWN_TO_FLAT)*/
+    new Piece(TRACK_TYPES.DOWN_TO_FLAT)
 ]);

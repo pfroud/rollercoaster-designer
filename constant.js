@@ -14,6 +14,8 @@
  *
  * size: the x, y, and z values of the size of the track types
  *
+ * size_unscaled: size of the mesh before scaled. SCALE is set at the bottom of index.js.
+ *
  * in: how much the piece must be moved back in to appear properly.
  *
  * out: out much current x needs to be moved back in order to appear properly
@@ -28,14 +30,14 @@
  * Add this number to the height so supports touch the track for up and down pieces.
  * Should probably give this a less stupid name;
  */
-const TRACK_TYPES = {
+var TRACK_TYPES = {
     FLAT: {
         name: "flat",
         filename: "modelJS/straight.json",
         size: {
-            x: 0.5999999865889549,
-            y: 0.1679979962449521,
-            z: 0.40799499088060115
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 60,
@@ -64,9 +66,9 @@ const TRACK_TYPES = {
         name: "flat to up",
         filename: "modelJS/slopeFlatToUp.json",
         size: {
-            x: 0.6433779856193811,
-            y: 0.38746599133946,
-            z: 0.4079999908804893
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 64.3378,
@@ -95,9 +97,9 @@ const TRACK_TYPES = {
         name: "up",
         filename: "modelJS/up.json",
         size: {
-            x: 0.5430565758606418,
-            y: 0.5430565758606419,
-            z: 0.40799499088060115
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 54.3057,
@@ -126,9 +128,9 @@ const TRACK_TYPES = {
         name: "up to flat",
         filename: "modelJS/slopeUpToFlat.json",
         size: {
-            x: 0.5245829882746562,
-            y: 0.3382589924393222,
-            z: 0.4079999908804893
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 52.4583,
@@ -158,9 +160,9 @@ const TRACK_TYPES = {
         name: "flat to down",
         filename: "modelJS/slopeFlatToDown.json",
         size: {
-            x: 0.5245829882746562,
-            y: 0.3382589924393222,
-            z: 0.4079999908804893
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 52.4583,
@@ -190,9 +192,9 @@ const TRACK_TYPES = {
         name: "down",
         filename: "modelJS/down.json",
         size: {
-            x: 0.5430565758606418,
-            y: 0.5430565758606419,
-            z: 0.40799499088060115
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 54.3057,
@@ -221,9 +223,9 @@ const TRACK_TYPES = {
         name: "Down to Flat",
         filename: "modelJS/slopeDownToFlat.json",
         size: {
-            x: 0.6433779856193811,
-            y: 0.38746599133946,
-            z: 0.4079999908804893
+            x: -1,
+            y: -1,
+            z: -1
         },
         size_unscaled: {
             x: 64.3378,
