@@ -14,7 +14,7 @@
  *
  * size: the x, y, and z values of the size of the track types
  *
- * size_unscaled: size of the mesh before scaled. SCALE is set at the bottom of index.js.
+ * size: size of the mesh before scaled. SCALE is set at the bottom of index.js.
  *
  * in: how much the piece must be moved back in to appear properly.
  *
@@ -30,19 +30,14 @@
  * Add this number to the height so supports touch the track for up and down pieces.
  * Should probably give this a less stupid name;
  */
-var TRACK_TYPES = {
+const TRACK_TYPES = {
     FLAT: {
         name: "flat",
         filename: "modelJS/straight.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 60,
-            y: 16.7998,
-            z: 40.7995
+            x: 60 * SCALE,
+            y: 16.7998 * SCALE,
+            z: 40.7995 * SCALE
         },
         in: {
             x: 0.0,
@@ -66,14 +61,9 @@ var TRACK_TYPES = {
         name: "flat to up",
         filename: "modelJS/slopeFlatToUp.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 64.3378,
-            y: 38.7466,
-            z: 40.8
+            x: 64.3378 * SCALE,
+            y: 38.7466 * SCALE,
+            z: 40.8 * SCALE
         },
         vertChange: true,
         out: {
@@ -97,14 +87,9 @@ var TRACK_TYPES = {
         name: "up",
         filename: "modelJS/up.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 54.3057,
-            y: 54.3057,
-            z: 40.7995
+            x: 54.3057 * SCALE,
+            y: 54.3057 * SCALE,
+            z: 40.7995 * SCALE
         },
         vertChange: true,
         out: {
@@ -128,14 +113,9 @@ var TRACK_TYPES = {
         name: "up to flat",
         filename: "modelJS/slopeUpToFlat.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 52.4583,
-            y: 33.8259,
-            z: 40.8
+            x: 52.4583 * SCALE,
+            y: 33.8259 * SCALE,
+            z: 40.8 * SCALE
         },
         vertChange: false,
         out: {
@@ -160,14 +140,9 @@ var TRACK_TYPES = {
         name: "flat to down",
         filename: "modelJS/slopeFlatToDown.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 52.4583,
-            y: 33.8259,
-            z: 40.8
+            x: 52.4583 * SCALE,
+            y: 33.8259 * SCALE,
+            z: 40.8 * SCALE
         },
         vertChange: true,
         out: {
@@ -192,14 +167,9 @@ var TRACK_TYPES = {
         name: "down",
         filename: "modelJS/down.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 54.3057,
-            y: 54.3057,
-            z: 40.7995
+            x: 54.3057 * SCALE,
+            y: 54.3057 * SCALE,
+            z: 40.7995 * SCALE
         },
         vertChange: true,
         out: {
@@ -223,14 +193,9 @@ var TRACK_TYPES = {
         name: "Down to Flat",
         filename: "modelJS/slopeDownToFlat.json",
         size: {
-            x: -1,
-            y: -1,
-            z: -1
-        },
-        size_unscaled: {
-            x: 64.3378,
-            y: 38.7466,
-            z: 40.8
+            x: 64.3378 * SCALE,
+            y: 38.7466 * SCALE,
+            z: 40.8 * SCALE
         },
         vertChange: false,
         out: {
