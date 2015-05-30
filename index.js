@@ -6,10 +6,10 @@ var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase 
 if (CAMERA_PERSPECTIVE) {
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 } else {
-    var viewSize = 3;
+    var viewSize = 200;
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
-    var camDist = 2;
+    var camDist = 200;
     camera.position.x = camera.position.y = camera.position.z = camDist;
     camera.lookAt(0, 0, 0);
 }
@@ -37,12 +37,12 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 // Y height of ground plane
-var GROUND_HEIGHT = -1;
+var GROUND_HEIGHT = -100;
 
 //ground plane
 //the callback function is called when the texture is done loading
 var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function () {
-    var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(5, 5, 1, 1),
+    var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(500, 500, 1, 1),
         new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
     groundPlane.rotateX(Math.PI / -2); //rotate so it's horizontal
     groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
@@ -75,6 +75,10 @@ function onWindowResize() {
 
 }
 
+function toggleCamera(){
+    console.log("camera toggle")
+}
+
 
 /*************************** RENDER *********************************/
 var render = function () {
@@ -88,4 +92,4 @@ render();
 
 // iterators
 var i, n, j, t = 0;
-var SCALE = 0.01;
+var SCALE = 1;

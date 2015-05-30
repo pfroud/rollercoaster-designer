@@ -56,8 +56,8 @@ function Track() {
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
     this.supportSpacing = 2;
-    this.supportIntersect = 0.03; //move the support up slightly into the track mesh so it looks better
-    this.supportRadius = 0.03;
+    this.supportIntersect = 3 * SCALE; //move the support up slightly into the track mesh so it looks better
+    this.supportRadius = 3 * SCALE;
 
 
     //materials
@@ -232,8 +232,8 @@ Track.prototype.doPreCorrections = function (){
     if(curr.type == TRACK_TYPES.FLAT_TO_DOWN){
         this.currentY += curr.out.y;
     }
-    this.currentX -= curr.in.x;// * this.scale;
-    this.currentY -= curr.in.y;// * this.scale;
+    this.currentX -= curr.in.x;
+    this.currentY -= curr.in.y;
     this.currentZ -= curr.in.z;
 };
 
@@ -274,19 +274,25 @@ Track.prototype.updatePosition = function () {
 };
 
 
-// Deletes all tracks.
+/**
+ * Delete all track pieces
+ */
 Track.prototype.deleteAll = function () {
     for (var i = this.pieces.length; i > 0; i--){
         this.deletePiece();
     }
 };
 
+/**
+ * Toggles drawing boulding boxes
+ */
 Track.prototype.toggleBoxes = function () {
     this.boxes = !this.boxes;
     for (i = 0; i < this.pieces.length; i++) this.pieces[i].boundingBox.visible = this.boxes;
 };
 
 TRACK.insertPiece([
+    new Piece(TRACK_TYPES.FLAT),
     new Piece(TRACK_TYPES.FLAT),
     new Piece(TRACK_TYPES.FLAT_TO_UP),
     new Piece(TRACK_TYPES.UP),

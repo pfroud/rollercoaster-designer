@@ -26,7 +26,7 @@ var skyBoxMaterial = new THREE.ShaderMaterial({
 });
 
 // create skybox mesh
-var skyboxSize = 5; // was 1000
+var skyboxSize = 1000; // was 1000
 var skybox = new THREE.Mesh(
     new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize),
     skyBoxMaterial

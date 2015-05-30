@@ -98,8 +98,8 @@ const TRACK_TYPES = {
             z: 0.0
         },
         in: {
-            x: 0.1188,
-            y: 0.1188,
+            x: 11.88 * SCALE,
+            y: 11.88 * SCALE,
             z: 0.0
         },
         direction: {
@@ -107,7 +107,7 @@ const TRACK_TYPES = {
             y: 1,
             z: 0
         },
-        extendSupportPastBoundingBox: 0.15
+        extendSupportPastBoundingBox: 15 * SCALE
     },
     UP_TO_FLAT: {
         name: "up to flat",
@@ -124,8 +124,8 @@ const TRACK_TYPES = {
             z: 0.0
         },
         in: {
-            x: 0.1188,
-            y: 0.1188,
+            x: 11.88 * SCALE,
+            y: 11.88 * SCALE,
             z: 0.0
         },// TODO: check this yo
         direction: {
@@ -133,7 +133,7 @@ const TRACK_TYPES = {
             y: 0, // TODO: test
             z: 0
         },
-        extendSupportPastBoundingBox: 0.15
+        extendSupportPastBoundingBox: 15 * SCALE
 
     },
     FLAT_TO_DOWN: {
@@ -151,8 +151,8 @@ const TRACK_TYPES = {
             z: 0.0
         },
         in: {
-            x: 0.002,// TODO: check this also
-            y: 0.1679979962449521,
+            x: 0,
+            y: 16.7998 * SCALE + 0.2 * SCALE, // y-height of flat plus little alignment. because fuck you, that's why.
             z: 0.0
         },
         direction: {
@@ -160,7 +160,7 @@ const TRACK_TYPES = {
             y: 0,
             z: 0
         },
-        extendSupportPastBoundingBox: 0.15
+        extendSupportPastBoundingBox: 15 * SCALE
 
     },
     DOWN: {
@@ -178,8 +178,8 @@ const TRACK_TYPES = {
             z: 0.0
         },
         in: {
-            x: 0.1188,
-            y: -0.1188,
+            x: 11.88 * SCALE,
+            y: -11.88 * SCALE,
             z: 0.0
         },
         direction: {
@@ -187,7 +187,7 @@ const TRACK_TYPES = {
             y: -1, // negative denotes down
             z: 0
         },
-        extendSupportPastBoundingBox: 0.15
+        extendSupportPastBoundingBox: 15 * SCALE
     },
     DOWN_TO_FLAT: {
         name: "Down to Flat",
@@ -204,8 +204,8 @@ const TRACK_TYPES = {
             z: 0.0
         },
         in: {
-            x: 0.12,
-            y: 0.266,
+            x: 12 * SCALE,
+            y: 26.6 * SCALE,
             z: 0.0
         },
         direction: {

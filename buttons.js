@@ -12,7 +12,7 @@ var debugJSON = {
         TRACK.toggleBoxes();
     },
     TogglePerspective: function(){
-        // TODO: code goes here for perspective Peter
+        toggleCamera(); //in index.js
     },
     DisplayCurrPos: function (){
         scene.add(TRACK.debugSphere);
