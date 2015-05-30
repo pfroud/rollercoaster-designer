@@ -1,5 +1,5 @@
 /*************************** SETUP *********************************/
-var SCALE = 0.5;
+var SCALE = 0.01;
 var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase if ortho camera is used
 
 /*Use if changing SCALE.
