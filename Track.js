@@ -47,7 +47,6 @@ function Track() {
     this.currPiece = null;
 
     this.jsonLoader = new THREE.JSONLoader();
-
     this.scale = SCALE;
 
     this.direction = 0;

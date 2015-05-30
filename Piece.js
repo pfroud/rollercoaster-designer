@@ -15,17 +15,17 @@ function Piece(type) {
     this.type = type; // reference to the type of it
     this.name = type.name; // reference to name, could be redundant with type
     this.filename = type.filename;
+
     this.size_unscaled = {
         x: type.size_unscaled.x,
         y: type.size_unscaled.y,
         z: type.size_unscaled.z
-    },
+    };
     this.size = {
         x: this.size_unscaled.x * SCALE,
         y: this.size_unscaled.y * SCALE,
         z: this.size_unscaled.z * SCALE
     };
-
 
     this.in = {
         x: type.in.x,
