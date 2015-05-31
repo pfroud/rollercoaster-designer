@@ -8,6 +8,10 @@ var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 500);
 
 var scene = new THREE.Scene();
 
+// CombinedCamera(width, height, fov, near, far, orthonear, orthofar)
+camera = new THREE.CombinedCamera( window.innerWidth / 2, window.innerHeight / 2, 70, 1, 1000, - 500, 1000 );
+
+/*
 if (CAMERA_PERSPECTIVE) {
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 } else {
@@ -15,6 +19,8 @@ if (CAMERA_PERSPECTIVE) {
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 }
+*/
+
 /* Camera distance only does anything with perspective camera.
 With ortho camera, things will get cut off if camera is too close, but otherwise there's no difference. */
 
