@@ -1,12 +1,24 @@
 <html>
 	<head>
-		<title>Roller coaster</title>
+		<title>Roller coaster + combined camera</title>
         <!-- link rel="shortcut icon" type="image/png" href="./Favicon.png"/ -->
         <link rel="icon"          type="image/x-icon" href="rc2.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="rc2.ico" />
 		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
+			body {
+                margin: 0;
+                font-family: monospace;
+                background-color: #f0f0f0;
+                overflow: hidden;
+                color: purple;
+            }
+			canvas {
+                width: 100%;
+                height: 100%
+            }
+            a {
+                color: red;
+            }
 		</style>
 	</head>
 	<body>
@@ -20,11 +32,44 @@
         <script src="index.js"></script>
         <script src="skybox.js"></script>
         <script src="constant.js"></script>
-        <script src="Buttons.js"></script> <!-- not used, right? -->
+        <script src="buttons.js"></script>
 
         <!-- experimental code -->
         <script src="Piece.js"></script>
         <script src="Track.js"></script>
+
+
+        <div style="position: absolute; top: 10px; width: 100%; text-align: center; ">
+            <a href="http://threejs.org" target="_blank">three.js</a> - Combo Camera<br>
+            View: <a href="#" onclick="setOrthographic();return false;"> Orthographic</a> |
+            <a href="#" onclick="setPerspective();return false;">Perspective</a><br>
+            Lens: <a href="#" onclick="setLens(12);return false;">12mm</a> |
+            <a href="#" onclick="setLens(16);return false;">16mm</a> |
+            <a href="#" onclick="setLens(24);return false;">24mm</a> |
+            <a href="#" onclick="setLens(35);return false;">35mm</a> |
+            <a href="#" onclick="setLens(50);return false;">50mm</a> |
+            <a href="#" onclick="setLens(60);return false;">60mm</a> |
+            <a href="#" onclick="setLens(85);return false;">85mm</a> |
+            <a href="#" onclick="setLens(105);return false;">105mm</a><br>
+            Fov: <a href="#" onclick="setFov(30);return false;">30°</a> |
+            <a href="#" onclick="setFov(50);return false;">50°</a> |
+            <a href="#" onclick="setFov(70);return false;">70°</a> |
+            <a href="#" onclick="setFov(100);return false;">100°</a><br>
+            Zoom: <a href="#" onclick="camera.setZoom(0.5);return false;">0.5x</a> |
+            <a href="#" onclick="camera.setZoom(1);return false;">1x</a> |
+            <a href="#" onclick="camera.setZoom(2);return false;">2x</a> |
+
+            <br/>
+            Views: <a href="#" onclick="camera.toTopView();lookAtScene=false;return false;">Top view</a> |
+            <a href="#" onclick="camera.toBottomView();lookAtScene=false;return false;">Bottom view</a> |
+            <a href="#" onclick="camera.toLeftView();lookAtScene=false;return false;">Left view</a> |
+            <a href="#" onclick="camera.toRightView();lookAtScene=false;return false;">Right view</a> |
+            <a href="#" onclick="camera.toFrontView();lookAtScene=false;return false;">Front view</a> |
+            <a href="#" onclick="camera.toBackView();lookAtScene=false;return false;">Back view</a> |
+            <a href="#" onclick="lookAtScene=true;return false;">Look at Scene</a>
+            <br/>
+            <div id="fov"></div>
+        </div>
 
     </body>
 </html>
