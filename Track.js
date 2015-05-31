@@ -25,7 +25,7 @@ var TRACK = new Track(); // TODO: make unnecessary
  * @scale: the global scale variable imported, allowed so that if we wish to
  * overload we don't need to change the global
  *
- * @direction: the direction of the track in degrees
+ * @direction: the direction of the track in number of right turns taken
  *
  *
  */
@@ -123,7 +123,7 @@ Track.prototype.insertPiece = function (piece) {
 
             // create the mesh and add it to the scene
             var mesh = new THREE.Mesh(geometry, track.MATERIAL_TRACK);
-            //mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * TRACK.direction); //IN PROGREESS
+            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * -1 * TRACK.direction); //IN PROGREESS
 
 
             mesh.position.x = track.currentX;
@@ -168,22 +168,30 @@ Track.prototype.insertPiece = function (piece) {
             bbox.visible = track.boxes;
             track.advanceCurrent(); //moves where the next piece will go
 
-            // DEBUG CODE!!!! ==================================================
-            track.debugSphere.position.x = track.currentX;
-            track.debugSphere.position.y = track.currentY;
-            track.debugSphere.position.z = track.currentZ;
-            // DEBUG CODE!!!! ==================================================
-
             // recursive call to place the next piece of the array
-            if (recur){
-                track.insertPiece(piece);
-            }
+            if (recur)track.insertPiece(piece);
         }
-
     );
 };
 
+// DEBUG CODE!!!! ==================================================
+// function that updates teh debugging sphere.
+Track.prototype.updateDebug = function(){
+    this.setDebugPosition(toVec(this.currentX, this.currentY, this.currentZ));
+};
 
+// set the sphere's position
+Track.prototype.setDebugPosition = function (vec){
+
+    this.debugSphere.position.x  = vec.x;
+    this.debugSphere.position.y  = vec.y;
+    this.debugSphere.position.z  = vec.z;
+};
+
+
+function toVec(x, y, z){
+    return {x: x, y: y, z: z};
+}
 /**
  * Inserts multiple pieces from an array. Works recursively.
  *
@@ -214,10 +222,83 @@ Track.prototype.advanceCurrent = function(){
     var dy = (curr.size.y * curr.direction.y) + curr.out.y;
     var dz = (curr.size.z * curr.direction.z) + curr.out.z;
 
-    // adding the changes to the track
-    this.currentX += dx;// * this.scale;
-    this.currentY += dy;
-    this.currentZ += dz;
+
+
+    var currDir = this.getCurrentDirection(this.direction);
+    console.log ("current direction before insert: " + currDir);
+    console.log("X: " + this.currentX);
+    console.log("Y: " + this.currentY);
+    console.log("Z: " + this.currentZ);
+    switch(currDir){
+        case "forward":
+            this.currentX += dx;
+            this.currentY += dy;
+            this.currentZ += dz;
+            break;
+        case "left":
+            this.currentZ -= dx;
+            this.currentY += dy;
+            this.currentX += dz;
+            break;
+        case "right":
+            this.currentZ += dx;
+            this.currentY += dy;
+            this.currentX -= dz;
+            break;
+        case "back":
+            this.currentX -= dx;
+            this.currentY += dy;
+            this.currentZ -= dz;
+            break;
+        default: throw "ERROR: reached default case! Time to debug!"
+        }
+
+    // changing direction
+    this.direction += curr.direction.z;
+    console.log("direction after: " + this.getCurrentDirection());
+    console.log("X: " + this.currentX);
+    console.log("Y: " + this.currentY);
+    console.log("Z: " + this.currentZ);
+
+    this.updateDebug();
+
+};
+
+/**
+ * Function that returns the current direction as a string
+ * @return string of current direction
+ *
+ * will return "left", "right", "forward", or "back"
+ *
+ * the track starts facing forward.
+ *
+ * forward: axis are normal.
+ * left:
+ *
+ */
+Track.prototype.getCurrentDirection = function () {
+    // get variable for manipulation and ease of code reading
+    var dir = this.direction;
+
+    // if the direction variable is less than zero, modulus doesn't work
+    if (dir < 0){
+        dir = dir * -1; // converts dir into the number of left turns taken
+        dir = dir % 4; // four turns is a full 360, so don't count full turns
+        switch (dir){
+            case 0: return "forward"; // no left turns.
+            case 1: return "left"; // one left turn
+            case 2: return "back"; // two left turns
+            case 3: return "right"; // three left turns
+            default: throw "ERROR: invalid direction given"
+        }
+    }
+    switch (dir){
+        case 0: return "forward";
+        case 1: return "right"; // one right turn
+        case 2: return "back"; // two right turns
+        case 3: return "left"; // three right turns
+        default: throw "ERROR: invalid direction given"
+    }
 
 };
 
@@ -261,6 +342,7 @@ Track.prototype.updatePosition = function () {
         this.currentX = this.START_X;
         this.currentY = this.START_Y;
         this.currentZ = this.START_Z;
+        this.updateDebug(); // DEBUG CODE ===================
         return;
     }
     // otherwise get the position of the last piece in the list
@@ -292,13 +374,7 @@ Track.prototype.toggleBoxes = function () {
 };
 
 TRACK.insertPiece([
-    new Piece(TRACK_TYPES.FLAT),
-    new Piece(TRACK_TYPES.FLAT),
-    new Piece(TRACK_TYPES.FLAT_TO_UP),
-    new Piece(TRACK_TYPES.UP),
-    new Piece(TRACK_TYPES.UP_TO_FLAT),
-    new Piece(TRACK_TYPES.FLAT),
-    new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-    new Piece(TRACK_TYPES.DOWN),
-    new Piece(TRACK_TYPES.DOWN_TO_FLAT)
+    new Piece(TRACK_TYPES.TURN_LEFT_SMALL)
 ]);
+// FOR DEBUG
+scene.add(TRACK.debugSphere);

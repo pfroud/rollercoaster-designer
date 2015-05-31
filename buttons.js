@@ -24,7 +24,7 @@ var debugJSON = {
 };
 
 // REMOVE THIS LINE TO KEEP DEBUG FOLDER OPEN
-debugFolder.close();
+debugFolder.open();
 
 var testingFolder = MAIN_MENU.addFolder("New Track code");
 
@@ -50,6 +50,9 @@ var testingButtonJson = {
     DownFlat: function(){
         TRACK.insertPiece(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     },
+    LeftSmall: function(){
+        TRACK.insertPiece(new Piece(TRACK_TYPES.TURN_LEFT_SMALL));
+    },
     Delete: function(){
         TRACK.deletePiece();
     },
@@ -62,7 +65,7 @@ var testingButtonJson = {
 addButtonsToFolder(debugFolder, debugJSON);
 addButtonsToFolder(testingFolder, testingButtonJson);
 
-testingFolder.open(); // CHANGE THIS TO close() TO SET FOLDER CLOSED
+testingFolder.close(); // CHANGE THIS TO close() TO SET FOLDER CLOSED
 
 
 // lazy function to add buttons to a folder

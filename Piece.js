@@ -51,11 +51,6 @@ function Piece(type) {
     this.y;
     this.z;
 
-    // TODO: implement this
-    this.nextX;
-    this.nextY;
-    this.nextZ;
-
     // references to meshes, bounding box, and support (null initially)
     this.mesh = null;
     this.boundingBox = null;

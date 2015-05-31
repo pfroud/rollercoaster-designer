@@ -214,6 +214,31 @@ const TRACK_TYPES = {
             z: 0
         },
         extendSupportPastBoundingBox: 0
+    },
+    TURN_LEFT_SMALL:{
+        name:"Turn Left Small",
+        filename: "modelJS/turnLeftSmall.json",
+        size:{
+            x: 113.99999745190144 * SCALE,
+            y: 16.799999624490738 * SCALE,
+            z: 112.3539974886924 * SCALE
+        },
+        vertChange: false,
+        out: {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
+        },
+        in: {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
+        },
+        direction:{
+            x: 1.0,
+            y: 0.0,
+            z: -1.0
+        }
     }
 };
 
