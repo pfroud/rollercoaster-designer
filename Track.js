@@ -313,9 +313,35 @@ Track.prototype.doPreCorrections = function (){
     if(curr.type == TRACK_TYPES.FLAT_TO_DOWN){
         this.currentY += curr.out.y;
     }
-    this.currentX -= curr.in.x;
-    this.currentY -= curr.in.y;
-    this.currentZ -= curr.in.z;
+
+    var direction = this.getCurrentDirection();
+
+    switch(direction){
+        case "forward":
+            this.currentX -= curr.in.x;
+            this.currentY -= curr.in.y;
+            this.currentZ -= curr.in.z;
+            break;
+        case "left":
+            this.currentZ += curr.in.x;
+            this.currentY -= curr.in.y;
+            this.currentX -= curr.in.z;
+            break;
+        case "right":
+            this.currentZ -= curr.in.x;
+            this.currentY -= curr.in.y;
+            this.currentX += curr.in.z;
+            break;
+        case "back":
+            this.currentX += curr.in.x;
+            this.currentY -= curr.in.y;
+            this.currentZ += curr.in.z;
+            break;
+        default: throw "ERROR: reached default case! Time to debug!"
+    }
+    //this.currentX -= curr.in.x;
+    //this.currentY -= curr.in.y;
+    //this.currentZ -= curr.in.z;
 };
 
 /**
