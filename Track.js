@@ -123,13 +123,18 @@ Track.prototype.insertPiece = function (piece) {
 
             // create the mesh and add it to the scene
             var mesh = new THREE.Mesh(geometry, track.MATERIAL_TRACK);
-            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2 * -1 * TRACK.direction); //IN PROGREESS
+            // rotate the mesh so it faces the correct way.
+            // TODO: Make Math.PI /2 * -1 a constant
+            mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0),
+                Math.PI / 2 * -1 * TRACK.direction);
 
-
+            // place the mesh where the track currently is
             mesh.position.x = track.currentX;
             mesh.position.y = track.currentY;
             mesh.position.z = track.currentZ;
+            // scale it to fit in the world
             mesh.scale.set(track.scale, track.scale, track.scale);
+            // add it to the scene
             scene.add(mesh);
 
             // give the made piece variable the appropriate values
@@ -175,39 +180,35 @@ Track.prototype.insertPiece = function (piece) {
 };
 
 // DEBUG CODE!!!! ==================================================
-// function that updates teh debugging sphere.
+// function that updates the debugging sphere.
 Track.prototype.updateDebug = function(){
     this.setDebugPosition(toVec(this.currentX, this.currentY, this.currentZ));
 };
 
-// set the sphere's position
+/**
+ * Sets the position of the debug sphere based on an x,y,z vectr
+ *
+ * @param vec
+ * @see the helper function toVec()
+ */
 Track.prototype.setDebugPosition = function (vec){
-
     this.debugSphere.position.x  = vec.x;
     this.debugSphere.position.y  = vec.y;
     this.debugSphere.position.z  = vec.z;
 };
 
-
+/**
+ * Helper function to switch values into an object. Very simple
+ *
+ * @param x: x magnitude
+ * @param y: y magnitude
+ * @param z: z magnitude
+ * @returns {{x: *, y: *, z: *}}
+ */
 function toVec(x, y, z){
     return {x: x, y: y, z: z};
 }
-/**
- * Inserts multiple pieces from an array. Works recursively.
- *
- * This function does not work. The pieces are added out of order. Try code below.
- *
- * @param pieces: an array of pieces
- *
-Track.prototype.insertPieces = function (pieces) {
-    if (pieces.length == 0) return;
-    var insert = pieces.pop();
-    console.log("Inserting: " + insert.type);
-    this.insertPiece(insert);
-    this.insertPieces(pieces);
-};*/// NO LONGER NEEDED, BUT KEPT FOR POSTERITY
-
-
+// END OF DEBUG CODE ==================================================
 
 /**
  * Advances currentX, CurrentY, and CurrentZ based on the new piece
@@ -217,18 +218,23 @@ Track.prototype.insertPieces = function (pieces) {
 Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
 
-    // the change in x, y, and z relatively
+    // dx, dy, and dz are the change in x, y, and z RELATIVE TO THE PIECE
     var dx = (curr.size.x * curr.direction.x) + curr.out.x;
     var dy = (curr.size.y * curr.direction.y) + curr.out.y;
     var dz = (curr.size.z * curr.direction.z) + curr.out.z;
 
+    // currdir is a string that says in English which way the track is going
+    var currDir = this.getCurrentDirection();
 
-
-    var currDir = this.getCurrentDirection(this.direction);
+    // debugging logs
     console.log ("current direction before insert: " + currDir);
     console.log("X: " + this.currentX);
     console.log("Y: " + this.currentY);
     console.log("Z: " + this.currentZ);
+
+    
+     // here's where the magic happens, advances x, y, and z based on the
+     // correct direction. Note that all that changes is dx, and dz.
     switch(currDir){
         case "forward":
             this.currentX += dx;
@@ -253,13 +259,14 @@ Track.prototype.advanceCurrent = function(){
         default: throw "ERROR: reached default case! Time to debug!"
         }
 
-    // changing direction
+    // changing the track's direction to get the new one
     this.direction += curr.direction.z;
     console.log("direction after: " + this.getCurrentDirection());
     console.log("X: " + this.currentX);
     console.log("Y: " + this.currentY);
     console.log("Z: " + this.currentZ);
 
+    // debug code, updates the position of the debugging sphere
     this.updateDebug();
 
 };
@@ -273,8 +280,14 @@ Track.prototype.advanceCurrent = function(){
  * the track starts facing forward.
  *
  * forward: axis are normal.
- * left:
  *
+ * left: dx should be multiplied by -1 and added to z instead of x, dz should
+ * NOT be multiplied, and added to x instead of z
+ *
+ * right: same as left but reversed. dx is added to z instead of x AND IS NOT
+ * multiplied by -1, dz is added to x and IS multiplied by -1
+ *
+ * back: dx and dz are just multiplied by -1
  */
 Track.prototype.getCurrentDirection = function () {
     // get variable for manipulation and ease of code reading
@@ -292,6 +305,9 @@ Track.prototype.getCurrentDirection = function () {
             default: throw "ERROR: invalid direction given"
         }
     }
+    // dir is now the number of right turns taken by the coaster, modulus by 4
+    // to ignore full turns
+    dir = dir % 4;
     switch (dir){
         case 0: return "forward";
         case 1: return "right"; // one right turn
@@ -304,16 +320,20 @@ Track.prototype.getCurrentDirection = function () {
 
 /**
  * Does the precorrections necessary
- * TODO: implement
+ * precorrections are adjusting where the piece is so that it fits properly
+ * on the track.
  */
 Track.prototype.doPreCorrections = function (){
     var curr = this.currPiece;// temp reference for code readability
 
-    //special case
+    //special case, flat has a weird out TODO: implement for all pieces
     if(curr.type == TRACK_TYPES.FLAT_TO_DOWN){
         this.currentY += curr.out.y;
     }
-
+    // change the perspective based on the direction. Works the same way that
+    // advanceCurrent() does. Literally the same code, but all +'s and -'s are
+    // flipped
+    // TODO: make this into a function?
     var direction = this.getCurrentDirection();
 
     switch(direction){
@@ -339,9 +359,6 @@ Track.prototype.doPreCorrections = function (){
             break;
         default: throw "ERROR: reached default case! Time to debug!"
     }
-    //this.currentX -= curr.in.x;
-    //this.currentY -= curr.in.y;
-    //this.currentZ -= curr.in.z;
 };
 
 /**
@@ -399,8 +416,8 @@ Track.prototype.toggleBoxes = function () {
     for (i = 0; i < this.pieces.length; i++) this.pieces[i].boundingBox.visible = this.boxes;
 };
 
+// FOR DEBUG
 TRACK.insertPiece([
     new Piece(TRACK_TYPES.TURN_LEFT_SMALL)
 ]);
-// FOR DEBUG
 scene.add(TRACK.debugSphere);

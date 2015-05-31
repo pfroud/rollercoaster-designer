@@ -38,6 +38,7 @@ function Piece(type) {
         z: type.direction.z
     };
 
+    this.facing = "";
     /*
      Supports normally end at the bottom of the bounding boxes.
      Add this number to the height so supports touch the track for up and down pieces.

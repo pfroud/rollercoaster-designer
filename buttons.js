@@ -23,7 +23,8 @@ var debugJSON = {
     }
 };
 
-// REMOVE THIS LINE TO KEEP DEBUG FOLDER OPEN
+
+
 debugFolder.open();
 
 var testingFolder = MAIN_MENU.addFolder("New Track code");
