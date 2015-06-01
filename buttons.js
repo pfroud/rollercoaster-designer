@@ -54,6 +54,9 @@ var testingButtonJson = {
     LeftSmall: function(){
         TRACK.insertPiece(new Piece(TRACK_TYPES.TURN_LEFT_SMALL));
     },
+    RightSmall: function(){
+        TRACK.insertPiece(new Piece(TRACK_TYPES.TURN_RIGHT_SMALL));
+    },
     Delete: function(){
         TRACK.deletePiece();
     },

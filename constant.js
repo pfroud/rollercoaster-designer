@@ -55,6 +55,7 @@ const TRACK_TYPES = {
             y: 0,
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 0
     },
     FLAT_TO_UP: {
@@ -81,6 +82,7 @@ const TRACK_TYPES = {
             y: 1,
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 0
     },
     UP: {
@@ -107,6 +109,7 @@ const TRACK_TYPES = {
             y: 1,
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 15 * SCALE
     },
     UP_TO_FLAT: {
@@ -133,6 +136,7 @@ const TRACK_TYPES = {
             y: 0, // TODO: test
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 15 * SCALE
 
     },
@@ -160,6 +164,7 @@ const TRACK_TYPES = {
             y: 0,
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 15 * SCALE
 
     },
@@ -187,6 +192,7 @@ const TRACK_TYPES = {
             y: -1, // negative denotes down
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 15 * SCALE
     },
     DOWN_TO_FLAT: {
@@ -213,6 +219,7 @@ const TRACK_TYPES = {
             y: 0,
             z: 0
         },
+        directionChange: "none",
         extendSupportPastBoundingBox: 0
     },
     TURN_LEFT_SMALL:{
@@ -238,7 +245,34 @@ const TRACK_TYPES = {
             x: 1.0,
             y: 0.0,
             z: -1.0
-        }
+        },
+        directionChange:"left"
+    },
+    TURN_RIGHT_SMALL:{
+        name:"Turn Right Small",
+        filename: "modelJS/turnRightSmall.json",
+        size:{
+            x: 113.99999745190144 * SCALE,
+            y: 16.799999624490738 * SCALE,
+            z: 112.3539974886924 * SCALE
+        },
+        vertChange: false,
+        out: {
+            x: -40.85 * SCALE,
+            y: 0.0,
+            z: 0.0
+        },
+        in: {
+            x: 0.0,
+            y: 0.0,
+            z: -71.5 * SCALE
+        },
+        direction:{
+            x: 1.0,
+            y: 0.0,
+            z: 0.0
+        },
+        directionChange: "right"
     }
 };
 
