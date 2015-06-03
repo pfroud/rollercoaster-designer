@@ -22,20 +22,20 @@ function Piece(type) {
         z: type.size.z
     };
 
-    this.in = {
-        x: type.in.x,
-        y: type.in.y,
-        z: type.in.z
+    this.startOffset = {
+        x: type.startOffset.x,
+        y: type.startOffset.y,
+        z: type.startOffset.z
     };
-    this.out = {
-        x: type.out.x,
-        y: type.out.y,
-        z: type.out.z
+    this.endOffset = {
+        x: type.endOffset.x,
+        y: type.endOffset.y,
+        z: type.endOffset.z
     };
-    this.direction = {
-        x: type.direction.x,
-        y: type.direction.y,
-        z: type.direction.z
+    this.advanceAxis = {
+        x: type.advanceAxis.x,
+        y: type.advanceAxis.y,
+        z: type.advanceAxis.z
     };
 
     this.facing = "";
@@ -45,8 +45,6 @@ function Piece(type) {
      Add this number to the height so supports touch the track for up and down pieces.
      */
     this.extraSupportHeight = type.extendSupportPastBoundingBox;
-
-    this.vertChange = type.vertChange;
 
     // X, Y, and Z positions of the piece in the world
     this.x;

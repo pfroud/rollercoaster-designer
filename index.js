@@ -94,6 +94,3 @@ render();
 
 /*************************** OTHER GLOBAL VARIABLES ******************/
 
-// iterators
-var i, n, j, t = 0;
-

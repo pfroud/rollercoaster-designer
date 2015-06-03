@@ -99,7 +99,7 @@ Track.prototype.insertPiece = function (piece) {
     // if the argument is an array, shift the element off and recur
     if (Array.isArray(piece)){
         // the arrray can be of length one, this catches that problem
-        if (piece.length > 1) recur = true;
+        if (piece.length >= 2) recur = true;
         this.currPiece = piece.shift();
         this.pieces.push(this.currPiece);
 
@@ -148,7 +148,7 @@ Track.prototype.insertPiece = function (piece) {
 
 
             //supports
-            track.counter++;
+            /*track.counter++;
             var heightDifference = track.currentY - GROUND_HEIGHT;
             if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
 
@@ -168,10 +168,10 @@ Track.prototype.insertPiece = function (piece) {
                 support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect
                     + track.currPiece.extraSupportHeight/2;
                 support.position.z = track.currentZ - track.currPiece.size.z / 2;
-                */
+                *
                 scene.add(support);
                 track.currPiece.support = support;
-            }
+            }*/
 
             // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
@@ -204,7 +204,11 @@ Track.prototype.facingToDegrees = function (){
 // DEBUG CODE!!!! ==================================================
 // function that updates the debugging sphere.
 Track.prototype.updateDebug = function(){
-    this.setDebugPosition(toVec(this.currentX, this.currentY, this.currentZ));
+    this.setDebugPosition(toVec(
+        this.currentX,
+        this.currentY,
+        this.currentZ
+    ));
 };
 
 /**
@@ -241,9 +245,9 @@ Track.prototype.advanceCurrent = function(){
     var curr = this.currPiece;// temp reference for code readability
 
     // dx, dy, and dz are the change in x, y, and z RELATIVE TO THE PIECE
-    var dx = (curr.size.x * curr.direction.x) + curr.out.x;
-    var dy = (curr.size.y * curr.direction.y) + curr.out.y;
-    var dz = (curr.size.z * curr.direction.z) + curr.out.z;
+    var dx = (curr.size.x * curr.advanceAxis.x) + curr.endOffset.x;
+    var dy = (curr.size.y * curr.advanceAxis.y) + curr.endOffset.y;
+    var dz = (curr.size.z * curr.advanceAxis.z) + curr.endOffset.z;
 
     // debugging logs
     console.log ("current direction before advance: " + this.facing);
@@ -274,10 +278,6 @@ Track.prototype.advanceCurrent = function(){
         default: throw "ERROR: reached default case! Time to debug!"
         }
 
-    // changing the track's direction to get the new one
-    //this.direction += curr.direction.z;
-
-
     // debug code, updates the position of the debugging sphere
     this.updateDebug();
     this.updateFacing();
@@ -285,22 +285,29 @@ Track.prototype.advanceCurrent = function(){
 
 };
 
+/**
+ * Updates the facing field of the track so it knows which direction it is
+ * facing as it advances
+ */
 Track.prototype.updateFacing = function(){
+    // if there are no pieces, set it to the default
     if (this.pieces.length == 0) {
         this.facing = "forward";
         console.log("deleted last piece, now facing forward");
         return;
     }
+    // otherwise it's a case by case basis
     var change = this.currPiece.directionChange;
     switch (change){
         case "none": break;
-        case "left": this.turnLeft(); break;
+        case "left": this.turnLeft(); break; // helper functions
         case "right": this.turnRight(); break;
         default: throw "Error: reached default, time to debug!"
     }
     console.log("updateFacing() finished! Now facing: " + this.facing);
 };
 
+// helper function to update facing and advance the track
 Track.prototype.turnLeft = function(){
     switch(this.currPiece.facing){
         case "left":
@@ -315,10 +322,11 @@ Track.prototype.turnLeft = function(){
         case "back":
             this.facing = "right";
             break;
-        default: throw "effor: reached default case, time to debug!"
+        default: throw "Error: reached default case, time to debug!"
     }
 };
 
+// helper function to update facing and advance the track
 Track.prototype.turnRight = function(){
     switch(this.currPiece.facing){
         case "left":
@@ -337,55 +345,8 @@ Track.prototype.turnRight = function(){
     }
 };
 /**
- * Function that returns the current direction as a string
- * @return string of current direction
- *
- * will return "left", "right", "forward", or "back"
- *
- * the track starts facing forward.
- *
- * forward: axis are normal.
- *
- * left: dx should be multiplied by -1 and added to z instead of x, dz should
- * NOT be multiplied, and added to x instead of z
- *
- * right: same as left but reversed. dx is added to z instead of x AND IS NOT
- * multiplied by -1, dz is added to x and IS multiplied by -1
- *
- * back: dx and dz are just multiplied by -1
- *
-Track.prototype.getCurrentDirection = function () {
-    // get variable for manipulation and ease of code reading
-    var dir = this.direction;
-
-    // if the direction variable is less than zero, modulus doesn't work
-    if (dir < 0){
-        dir = dir * -1; // converts dir into the number of left turns taken
-        dir = dir % 4; // four turns is a full 360, so don't count full turns
-        switch (dir){
-            case 0: return "forward"; // no left turns.
-            case 1: return "left"; // one left turn
-            case 2: return "back"; // two left turns
-            case 3: return "right"; // three left turns
-            default: throw "ERROR: invalid direction given"
-        }
-    }
-    // dir is now the number of right turns taken by the coaster, modulus by 4
-    // to ignore full turns
-    dir = dir % 4;
-    switch (dir){
-        case 0: return "forward";
-        case 1: return "right"; // one right turn
-        case 2: return "back"; // two right turns
-        case 3: return "left"; // three right turns
-        default: throw "ERROR: invalid direction given"
-    }
-
-};
-*/
-/**
- * Does the precorrections necessary
- * precorrections are adjusting where the piece is so that it fits properly
+ * Does the pre-corrections necessary
+ * pre-corrections are adjusting where the piece is so that it fits properly
  * on the track.
  */
 Track.prototype.doPreCorrections = function (){
@@ -393,7 +354,7 @@ Track.prototype.doPreCorrections = function (){
 
     //special case, flat has a weird out TODO: implement for all pieces
     if(curr.type == TRACK_TYPES.FLAT_TO_DOWN){
-        this.currentY += curr.out.y;
+        this.currentY += curr.endOffset.y;
     }
     // change the perspective based on the direction. Works the same way that
     // advanceCurrent() does. Literally the same code, but all +'s and -'s are
@@ -403,24 +364,32 @@ Track.prototype.doPreCorrections = function (){
     console.log("correcting: " + curr.name);
     switch(facing){
         case "forward":
-            this.currentX -= curr.in.x; console.log("correcting x by "+ curr.in.x * -1);
-            this.currentY -= curr.in.y;
-            this.currentZ -= curr.in.z; console.log("correcting z by "+ curr.in.z * -1);
+            this.currentX -= curr.startOffset.x;
+            console.log("correcting x by "+ curr.startOffset.x * -1);
+            this.currentY -= curr.startOffset.y;
+            this.currentZ -= curr.startOffset.z;
+            console.log("correcting z by "+ curr.startOffset.z * -1);
             break;
         case "left":
-            this.currentZ += curr.in.x; console.log("correcting z by "+ curr.in.x);
-            this.currentY -= curr.in.y;
-            this.currentX -= curr.in.z; console.log("correcting x by "+ curr.in.z * -1);
+            this.currentZ += curr.startOffset.x;
+            console.log("correcting z by "+ curr.startOffset.x);
+            this.currentY -= curr.startOffset.y;
+            this.currentX -= curr.startOffset.z;
+            console.log("correcting x by "+ curr.startOffset.z * -1);
             break;
         case "right":
-            this.currentZ -= curr.in.x; console.log("correcting z by "+ curr.in.x * -1);
-            this.currentY -= curr.in.y;
-            this.currentX += curr.in.z; console.log("correcting x by "+ curr.in.z);
+            this.currentZ -= curr.startOffset.x;
+            console.log("correcting z by "+ curr.startOffset.x * -1);
+            this.currentY -= curr.startOffset.y;
+            this.currentX += curr.startOffset.z;
+            console.log("correcting x by "+ curr.startOffset.z);
             break;
         case "back":
-            this.currentX += curr.in.x; console.log("correcting x by "+ curr.in.x);
-            this.currentY -= curr.in.y;
-            this.currentZ += curr.in.z; console.log("correcting z by "+ curr.in.z);
+            this.currentX += curr.startOffset.x;
+            console.log("correcting x by "+ curr.startOffset.x);
+            this.currentY -= curr.startOffset.y;
+            this.currentZ += curr.startOffset.z;
+            console.log("correcting z by "+ curr.startOffset.z);
             break;
         default: throw "ERROR: reached default case! Time to debug!"
     }
@@ -436,7 +405,6 @@ Track.prototype.deletePiece = function () {
         scene.remove(tmp.boundingBox);
         scene.remove(tmp.support);
         this.counter--;
-        this.direction += tmp.direction.z;
         this.updatePosition();
     }
 };
@@ -451,7 +419,6 @@ Track.prototype.updatePosition = function () {
         this.currentX = this.START_X;
         this.currentY = this.START_Y;
         this.currentZ = this.START_Z;
-        this.direction = 0;
         this.updateDebug();
         this.updateFacing();
         return;
@@ -463,9 +430,6 @@ Track.prototype.updatePosition = function () {
     this.currentZ = lastPiece.z;
     this.facing = lastPiece.facing;
     console.log("direction before delete: " + this.facing);
-
-    // update the direction
-    //this.direction += lastPiece.direction.z;
 
     // make the current piece the correct one
     this.currPiece = lastPiece;
@@ -484,7 +448,7 @@ Track.prototype.deleteAll = function () {
 };
 
 /**
- * Toggles drawing boulding boxes
+ * Toggles drawing border boxes
  */
 Track.prototype.toggleBoxes = function () {
     this.boxes = !this.boxes;
@@ -494,6 +458,8 @@ Track.prototype.toggleBoxes = function () {
 // FOR DEBUG
 TRACK.insertPiece([
     new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-    new Piece(TRACK_TYPES.TURN_RIGHT_SMALL)
+    new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
+    new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+    new Piece(TRACK_TYPES.DOWN)
 ]);
 scene.add(TRACK.debugSphere);
