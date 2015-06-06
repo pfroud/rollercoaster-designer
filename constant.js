@@ -3,8 +3,8 @@
 // http://stackoverflow.com/questions/23859512/how-to-get-the-width-height-length-of-a-mesh-in-three-js
 // json template for track pieces
 
-var TRACK_HEIGHT = 16.7998 * SCALE;
-var TRACK_WIDTH = 40.7995 * SCALE;
+var PIECE_HEIGHT = 16.7998 * SCALE;
+var PIECE_WIDTH = 40.7995 * SCALE;
 
 // helper function to clone objects since JS passes objects by reference
 function cloneVector(object){
@@ -146,7 +146,7 @@ var i, n, j, t = 0;
             x: 11.88 * SCALE,
             y: 11.88 * SCALE,
             z: 0.0
-        },// TODO: check this yo
+        },
         direction: {
             x: 1,
             y: 0,
@@ -310,10 +310,13 @@ TRACK_TYPES.TURN_RIGHT_SMALL.out.z = (TRACK_TYPES.FLAT.size.z - TRACK_WIDTH) * -
  TRACK_TYPES[key].in.z = (TRACK_TYPES[key].in.z) /(0.01);
  }*/
 
-// NEW!!!
-
+/**
+ * TrackConst is an object which makes all of the constants. It was chosen over
+ * a regular JSON object due to it's ability to reference itself
+ * @constructor just calls itself, shouldn't be called anywhere else
+ */
 function TrackConst() {
-    // call all functions
+    // call all functions for the tracks
     this.FLAT = this.flat();
     this.FLAT_TO_UP = this.flatToUp();
     this.UP = this.up();
@@ -330,6 +333,10 @@ function TrackConst() {
     this.scale();
 }
 
+/*
+ * This is simple function to scale them all, I tried using a for loop, but it
+ * was all sorts of buggy.
+ */
 TrackConst.prototype.scale = function(){
     this.FLAT.scale();
     this.FLAT_TO_UP.scale();
@@ -342,7 +349,12 @@ TrackConst.prototype.scale = function(){
     this.TURN_RIGHT_SMALL.scale();
 };
 
-// FLAT ========================================================================
+/*
+ * These are the functions for the constants, every constant has a function
+ * which generates an object of type TrackType (see below)
+ */
+
+// FLAT type ===================================================================
 TrackConst.prototype.flat = function(){
     var flat = new TrackType();
     flat.name = "name";
@@ -359,6 +371,13 @@ TrackConst.prototype.flat = function(){
     };
     flat.name = "Flat";
     flat.directionChange = "none";
+
+    var support = new SupportDataObj();
+    support.x = flat.size.x / 2;
+    support.z = flat.size.z / 2;
+
+    flat.supportData.push(support);
+    console.log("Support data pushed:" + support);
     return flat;
 };
 
@@ -366,7 +385,7 @@ TrackConst.prototype.flat = function(){
 TrackConst.prototype.flatToUp = function() {
     var flatToUp = new TrackType();
     flatToUp.name = "flat to up";
-    flatToUp.filename = "modelJS/slopeFlatToUp.json"
+    flatToUp.filename = "modelJS/slopeFlatToUp.json";
     flatToUp.size = {
         x: 64.3378,
         y: 38.7466,
@@ -472,6 +491,7 @@ TrackConst.prototype.down = function(){
     down.directionChange = "none";
     return down;
 };
+
 // DOWN TO FLAT ================================================================
 TrackConst.prototype.downToFlat = function (){
     var downToFlat = new TrackType();
@@ -488,6 +508,7 @@ TrackConst.prototype.downToFlat = function (){
     return downToFlat;
 };
 
+// SMALL LEFT TURN =============================================================
 TrackConst.prototype.turnLeftSmall =  function() {
     var turnLeftSmall = new TrackType();
     turnLeftSmall.name = "turn left small";
@@ -506,6 +527,8 @@ TrackConst.prototype.turnLeftSmall =  function() {
     return turnLeftSmall;
 
 };
+
+// SMALL RIGHT TURN ============================================================
 TrackConst.prototype.turnRightSmall =  function() {
     var turnRightSmall = new TrackType();
 
@@ -529,33 +552,53 @@ TrackConst.prototype.turnRightSmall =  function() {
     return turnRightSmall;
 };
 
-// child object of TrackConst
+/**
+ * TrackType is a small class that has many of the fields of the class Piece,
+ * however it is only intended to generate an object to serve as children of
+ * TrackConst
+ *
+ * @constructor takes no arguments because of how specific every constant is,
+ * they're redefined in the functions of TrackConst
+ */
 function TrackType(){
-    this.name = "";
-    this.filename = "";
+    this.name = ""; // name of the piece
+    this.filename = ""; // the path to the filename of the modelJSON
+    // the size of the piece (unscaled)
     this.size = {
         x: 0.0,
         y: 0.0,
         z: 0.0
     };
+    // the offset that the piece must be moved back by in order to be in the
+    // right place. Is SUBTRACTED from Track.currentX, Y, and Z
     this.startOffset = {
         x: 0.0,
         y: 0.0,
         z: 0.0
     };
+    // Similar to end offset, positioning to
     this.endOffset = {
         x: 0.0,
         y: 0.0,
         z: 0.0
     };
+    /*
+     * Which way the track should advance for every axis relative to the piece
+     * should only be 1, -1, or 0 and never anything else
+     */
     this.advanceAxis = {
         x: 0.0,
         y: 0.0,
         z: 0.0
     };
+    // string which holds the direction the piece changes the track in english
     this.directionChange = "";
+
+    // an array of objects of type SupportDataObj see said class below for more
+    this.supportData = [];
 }
 
+// Function to scale all fields, called on generation by TrackConst.scale()
 TrackType.prototype.scale = function (){
     function scaleVector(vector) {
         var ret = {};
@@ -567,6 +610,59 @@ TrackType.prototype.scale = function (){
     this.size = scaleVector(this.size);
     this.startOffset = scaleVector(this.startOffset);
     this.endOffset = scaleVector(this.endOffset);
+
+    for (i = 0; i < this.supportData.length; i++)
+        this.supportData[i].scale();
+
 };
 
+/**
+ * This class is meant to be a child of the TrackType class. It holds the data
+ * necessary to generate supports for the pieces in constants. Every piece will
+ * use different data, and some will make more supports than others. Hence why
+ * it's in an array
+ *
+ * @constructor does not do anything, but initialize to default values. The
+ * TrackConst class will make all values correct
+ */
+function SupportDataObj() {
+
+    this.intersect = 0;
+    // how high the piece should go past the bounding box to connect with the
+    // track
+    this.heightOffset = 0.0;
+    // the x, y, and z values of the support relative to it's parent
+    this.x = 0.0;
+    this.y = 0.0;
+    this.z = 0.0;
+    // the radius of the support (it's just a cylinder)
+    this.radius = 3;
+}
+
+// another scaling function, scales all fields
+SupportDataObj.prototype.scale = function(){
+    this.intersect *= SCALE;
+    this.heightOffset *= SCALE;
+    this.x *= SCALE;
+    this.y *= SCALE;
+    this.z *= SCALE;
+    this.radius  *= SCALE;
+};
+
+/**
+ * helper function that copies all fields of the object into a new one and
+ * returns it. Implemented because of JavaScript's tendency to pass by reference
+ */
+SupportDataObj.prototype.copy = function(){
+    var ret = {};
+    ret.intersect = this.intersect;
+    ret.heightOffset = this.heightOffset;
+    ret.x = this.x;
+    ret.y = this.y;
+    ret.z = this.z;
+    ret.radius = this.radius;
+    return ret;
+};
+
+// Declaring the global variable here. Executes all code in this file.
 const TRACK_TYPES = new TrackConst();

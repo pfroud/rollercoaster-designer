@@ -3,6 +3,10 @@
 // GLOBAL VARIABLES ============================================================
 var TRACK = new Track(); // TODO: make unnecessary
 
+//play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
+const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"});
+const MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
+
 /**
  * @summary Track object, referred to by global variable TRACK
  * @constructor
@@ -26,8 +30,6 @@ var TRACK = new Track(); // TODO: make unnecessary
  * overload we don't need to change the global
  *
  * @direction: the direction of the track in number of right turns taken
- *
- *
  */
 
 function Track() {
@@ -61,12 +63,6 @@ function Track() {
     this.supportRadius = 3 * SCALE;
 
 
-    //materials
-    //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
-    this.MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"});
-    this.MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
-
-
     // DEBUG CODE!!!! =========================================================
     var geometry = new THREE.SphereGeometry(.1, 32, 32);
     var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
@@ -75,11 +71,7 @@ function Track() {
     sphere.position.y = this.currentY;
     sphere.position.z = this.currentZ;
     this.debugSphere = sphere;
-    // scene.add(this.debugSphere);
 }
-
-
-
 
 /**
  * Inserts the piece into the world and appends it to the track
@@ -116,16 +108,15 @@ Track.prototype.insertPiece = function (piece) {
 
 
     // this part creates the pieces and the box
-    this.jsonLoader.load(this.currPiece.filename, /*this.createScene(geometry)*/
+    this.jsonLoader.load(this.currPiece.filename,
         function createScene(geometry) {
 
             // move the mesh back if necessary
             track.doPreCorrections();
 
             // create the mesh and add it to the scene
-            var mesh = new THREE.Mesh(geometry, track.MATERIAL_TRACK);
+            var mesh = new THREE.Mesh(geometry, MATERIAL_TRACK);
             // rotate the mesh so it faces the correct way.
-            // TODO: Make Math.PI /2 * -1 a constant
             mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0),
                 track.facingToDegrees());
 
@@ -147,9 +138,12 @@ Track.prototype.insertPiece = function (piece) {
             track.currPiece.facing = track.facing;
 
 
-            //supports
-            /*track.counter++;
-            var heightDifference = track.currentY - GROUND_HEIGHT;
+
+            // supports
+            track.counter++;
+            //if (track.counter % track.supportSpacing == 0)
+                track.currPiece.makeSupports();
+            /*var heightDifference = track.currentY - GROUND_HEIGHT;
             if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
 
                 //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
@@ -238,7 +232,6 @@ function toVec(x, y, z){
 
 /**
  * Advances currentX, CurrentY, and CurrentZ based on the new piece
- * TODO: rotations and the Y plane
  * How it works: makes the current X position of the track
  */
 Track.prototype.advanceCurrent = function(){
@@ -249,31 +242,28 @@ Track.prototype.advanceCurrent = function(){
     var dy = (curr.size.y * curr.advanceAxis.y) + curr.endOffset.y;
     var dz = (curr.size.z * curr.advanceAxis.z) + curr.endOffset.z;
 
-    // debugging logs
-    console.log ("current direction before advance: " + this.facing);
-    
      // here's where the magic happens, advances x, y, and z based on the
      // correct direction. Note that all that changes is dx, and dz.
     switch(this.facing){
         case "forward":
-            this.currentX += dx; console.log("advancing X by "+ dx);
+            this.currentX += dx;
             this.currentY += dy;
-            this.currentZ += dz; console.log("advancing z by "+ dz);
+            this.currentZ += dz;
             break;
         case "left":
-            this.currentZ -= dx; console.log("advancing Z by "+ dx * -1);
+            this.currentZ -= dx;
             this.currentY += dy;
-            this.currentX += dz; console.log("advancing X by "+ dz);
+            this.currentX += dz;
             break;
         case "right":
-            this.currentZ += dx; console.log("advancing z by "+ dx);
+            this.currentZ += dx;
             this.currentY += dy;
-            this.currentX -= dz; console.log("advancing X by "+ dz * -1);
+            this.currentX -= dz;
             break;
         case "back":
-            this.currentX -= dx; console.log("advancing x by "+ dx * -1);
+            this.currentX -= dx;
             this.currentY += dy;
-            this.currentZ -= dz; console.log("advancing z by "+ dz * -1);
+            this.currentZ -= dz;
             break;
         default: throw "ERROR: reached default case! Time to debug!"
         }
@@ -281,8 +271,6 @@ Track.prototype.advanceCurrent = function(){
     // debug code, updates the position of the debugging sphere
     this.updateDebug();
     this.updateFacing();
-    console.log("direction after: " + this.facing);
-
 };
 
 /**
@@ -293,7 +281,6 @@ Track.prototype.updateFacing = function(){
     // if there are no pieces, set it to the default
     if (this.pieces.length == 0) {
         this.facing = "forward";
-        console.log("deleted last piece, now facing forward");
         return;
     }
     // otherwise it's a case by case basis
@@ -304,7 +291,6 @@ Track.prototype.updateFacing = function(){
         case "right": this.turnRight(); break;
         default: throw "Error: reached default, time to debug!"
     }
-    console.log("updateFacing() finished! Now facing: " + this.facing);
 };
 
 // helper function to update facing and advance the track
@@ -341,7 +327,7 @@ Track.prototype.turnRight = function(){
         case "back":
             this.facing = "left";
             break;
-        default: throw "effor: reached default case, time to debug!"
+        default: throw "error: reached default case, time to debug!"
     }
 };
 /**
@@ -361,35 +347,26 @@ Track.prototype.doPreCorrections = function (){
     // flipped
     // TODO: make this into a function?
     var facing = this.facing;
-    console.log("correcting: " + curr.name);
     switch(facing){
         case "forward":
             this.currentX -= curr.startOffset.x;
-            console.log("correcting x by "+ curr.startOffset.x * -1);
             this.currentY -= curr.startOffset.y;
             this.currentZ -= curr.startOffset.z;
-            console.log("correcting z by "+ curr.startOffset.z * -1);
             break;
         case "left":
             this.currentZ += curr.startOffset.x;
-            console.log("correcting z by "+ curr.startOffset.x);
             this.currentY -= curr.startOffset.y;
             this.currentX -= curr.startOffset.z;
-            console.log("correcting x by "+ curr.startOffset.z * -1);
             break;
         case "right":
             this.currentZ -= curr.startOffset.x;
-            console.log("correcting z by "+ curr.startOffset.x * -1);
             this.currentY -= curr.startOffset.y;
             this.currentX += curr.startOffset.z;
-            console.log("correcting x by "+ curr.startOffset.z);
             break;
         case "back":
             this.currentX += curr.startOffset.x;
-            console.log("correcting x by "+ curr.startOffset.x);
             this.currentY -= curr.startOffset.y;
             this.currentZ += curr.startOffset.z;
-            console.log("correcting z by "+ curr.startOffset.z);
             break;
         default: throw "ERROR: reached default case! Time to debug!"
     }
@@ -399,11 +376,11 @@ Track.prototype.doPreCorrections = function (){
  * Deletes the last track member of the track
  */
 Track.prototype.deletePiece = function () {
+    // only works if there happens to be a piece in existence
     if (this.pieces.length > 0) {
+        // pop off the current piece
         var tmp = this.pieces.pop();
-        scene.remove(tmp.mesh);
-        scene.remove(tmp.boundingBox);
-        scene.remove(tmp.support);
+        tmp.delete();
         this.counter--;
         this.updatePosition();
     }
@@ -429,12 +406,10 @@ Track.prototype.updatePosition = function () {
     this.currentY = lastPiece.y;
     this.currentZ = lastPiece.z;
     this.facing = lastPiece.facing;
-    console.log("direction before delete: " + this.facing);
 
     // make the current piece the correct one
     this.currPiece = lastPiece;
     this.advanceCurrent();// advance it properly to catch up.
-    console.log("direction after delete: " + this.facing);
 };
 
 
@@ -452,14 +427,37 @@ Track.prototype.deleteAll = function () {
  */
 Track.prototype.toggleBoxes = function () {
     this.boxes = !this.boxes;
-    for (i = 0; i < this.pieces.length; i++) this.pieces[i].boundingBox.visible = this.boxes;
+    for (i = 0; i < this.pieces.length; i++)
+        this.pieces[i].toggleBox();
 };
 
 // FOR DEBUG
-TRACK.insertPiece([
-    new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-    new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
-    new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-    new Piece(TRACK_TYPES.DOWN)
-]);
-scene.add(TRACK.debugSphere);
+window.onload = function (){
+    TRACK.insertPiece([
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
+        new Piece(TRACK_TYPES.FLAT)
+    ]);
+    scene.add(TRACK.debugSphere);
+};
+
+// helper function that takes an x, y, z and changes it based on the way the
+// facing string is
+// TODO: implement and fix!
+function rotate(x, y, z, facing){
+    var ret = {};
+    switch(facing){
+        case "forward":
+            ret.x = x;
+            ret.y = y;
+            ret.z = z;
+            break;
+        case "left":
+            break;
+        case "right":
+            break;
+        case "back":
+            break;
+    }
+    return ret;
+}
