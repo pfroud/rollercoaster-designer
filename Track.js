@@ -106,7 +106,6 @@ Track.prototype.insertPiece = function (piece) {
     // give a reference to the track of the piece with this
     this.currPiece.track = this;
 
-
     // this part creates the pieces and the box
     this.jsonLoader.load(this.currPiece.filename,
         function createScene(geometry) {
@@ -137,35 +136,10 @@ Track.prototype.insertPiece = function (piece) {
             // update piece's facing field
             track.currPiece.facing = track.facing;
 
-
-
             // supports
             track.counter++;
-            //if (track.counter % track.supportSpacing == 0)
+            if (track.counter % track.supportSpacing == 0)
                 track.currPiece.makeSupports();
-            /*var heightDifference = track.currentY - GROUND_HEIGHT;
-            if (track.counter % track.supportSpacing == 0 && heightDifference > 0.5) {
-
-                //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
-                var support = new THREE.Mesh(new THREE.CylinderGeometry(
-                    track.supportRadius, track.supportRadius,
-                    heightDifference + track.supportIntersect + track.currPiece.extraSupportHeight,
-                        32),
-                    track.MATERIAL_SUPPORT);
-
-                var center = track.currPiece.getCenter();
-                support.position.x = center.x;
-                support.position.y = center.y -  heightDifference / 2 + track.supportIntersect;
-                support.position.z = center.z;
-                /*
-                support.position.x = track.currentX + track.currPiece.size.x / 2;
-                support.position.y = track.currentY - heightDifference / 2 + track.supportIntersect
-                    + track.currPiece.extraSupportHeight/2;
-                support.position.z = track.currentZ - track.currPiece.size.z / 2;
-                *
-                scene.add(support);
-                track.currPiece.support = support;
-            }*/
 
             // create the bounding box of the mesh
             var bbox = new THREE.BoxHelper(mesh);
@@ -426,7 +400,6 @@ Track.prototype.deleteAll = function () {
  * Toggles drawing border boxes
  */
 Track.prototype.toggleBoxes = function () {
-    this.boxes = !this.boxes;
     for (i = 0; i < this.pieces.length; i++)
         this.pieces[i].toggleBox();
 };

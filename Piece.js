@@ -85,7 +85,7 @@ function Piece(type) {
  * support
  */
 Piece.prototype.makeSupports = function(){
-    for (i = 0; i < this.supportData.length; i++)
+    for (i = this.supportData.length; i > 0; i--)
         new Support(this.supportData.pop(), this)
 };
 

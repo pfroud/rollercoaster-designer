@@ -8,7 +8,7 @@
 function Support (data, piece){
 
     // the height of the support
-    this.height = piece.y - GROUND_HEIGHT;
+    this.height = piece.y - GROUND_HEIGHT + data.heightOffset;
 
     // the material all supports are made of
     var material = MATERIAL_SUPPORT;
