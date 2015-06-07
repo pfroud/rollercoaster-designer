@@ -50,11 +50,6 @@ function Piece(type) {
     this.facing = "";
     // string in english showing which way the track is facing
     this.directionChange = type.directionChange;
-    /*
-     Supports normally end at the bottom of the bounding boxes.
-     Add this number to the height so supports touch the track for up and down pieces.
-     */
-    this.extraSupportHeight = type.extendSupportPastBoundingBox;
 
     // X, Y, and Z positions of the piece in the world
     this.x;
@@ -85,7 +80,7 @@ function Piece(type) {
  * support
  */
 Piece.prototype.makeSupports = function(){
-    for (i = this.supportData.length; i > 0; i--)
+    for (var i = this.supportData.length; i > 0; i--)
         new Support(this.supportData.pop(), this)
 };
 
@@ -96,7 +91,7 @@ Piece.prototype.makeSupports = function(){
 Piece.prototype.delete = function(){
     scene.remove(this.mesh);
     scene.remove(this.boundingBox);
-    for (i = 0; i < this.supports.length; i++) {
+    for (var i = 0; i < this.supports.length; i++) {
         this.supports[i].delete();
     }
 };
@@ -107,7 +102,7 @@ Piece.prototype.delete = function(){
  */
 Piece.prototype.toggleBox = function(){
     this.boundingBox.visible = !this.boundingBox.visible;
-    for (i = 0; i <  this.supports.length; i++)
+    for (var i = 0; i <  this.supports.length; i++)
         this.supports[i].toggleBox();
 };
 

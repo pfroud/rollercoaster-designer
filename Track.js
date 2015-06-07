@@ -402,7 +402,7 @@ Track.prototype.deleteAll = function () {
  * Toggles drawing border boxes
  */
 Track.prototype.toggleBoxes = function () {
-    for (i = 0; i < this.pieces.length; i++)
+    for (var i = 0; i < this.pieces.length; i++)
         this.pieces[i].toggleBox();
 };
 

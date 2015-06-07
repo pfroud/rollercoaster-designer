@@ -398,7 +398,7 @@ TrackType.prototype.scale = function (){
     this.startOffset = scaleVector(this.startOffset);
     this.endOffset = scaleVector(this.endOffset);
 
-    for (i = 0; i < this.supportData.length; i++)
+    for (var i = 0; i < this.supportData.length; i++)
         this.supportData[i].scale();
 
 };
