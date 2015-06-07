@@ -417,7 +417,7 @@ window.onload = function (){
         new Piece(TRACK_TYPES.UP_TO_FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_DOWN),
         new Piece(TRACK_TYPES.DOWN),
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT)
     ]);
     scene.add(TRACK.debugSphere);
 };
