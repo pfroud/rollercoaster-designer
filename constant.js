@@ -226,6 +226,13 @@ TrackConst.prototype.down = function(){
         z: 0
     };
     down.directionChange = "none";
+
+    var support = new SupportDataObj();
+    support.x = down.size.x / 2;
+    support.z = down.size.z /2;
+    support.heightOffset = 20;
+    down.supportData.push(support);
+
     return down;
 };
 
@@ -242,6 +249,13 @@ TrackConst.prototype.downToFlat = function (){
     };
     downToFlat.advanceAxis.x = 1;
     downToFlat.directionChange = "none";
+
+    var support = new SupportDataObj();
+    support.x = downToFlat.size.x / 2;
+    support.z = downToFlat.size.z / 2;
+    support.heightOffset = 10;
+    downToFlat.supportData.push(support);
+
     return downToFlat;
 };
 

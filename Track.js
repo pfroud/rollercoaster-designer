@@ -58,7 +58,7 @@ function Track() {
 
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
-    this.supportSpacing = 2;
+    this.supportSpacing = 1;
     this.supportIntersect = 3 * SCALE; //move the support up slightly into the track mesh so it looks better
     this.supportRadius = 3 * SCALE;
 
@@ -154,6 +154,8 @@ Track.prototype.insertPiece = function (piece) {
         }
     );
 };
+
+
 
 Track.prototype.facingToDegrees = function (){
     var dir;
@@ -409,7 +411,13 @@ window.onload = function (){
     TRACK.insertPiece([
         new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
         new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
-        new Piece(TRACK_TYPES.FLAT)
+        new Piece(TRACK_TYPES.FLAT),
+        new Piece(TRACK_TYPES.FLAT_TO_UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP_TO_FLAT),
+        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
     ]);
     scene.add(TRACK.debugSphere);
 };
