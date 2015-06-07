@@ -318,6 +318,24 @@ TrackConst.prototype.turnRightSmall =  function() {
 
     turnRightSmall.directionChange = "right";
 
+    var support1 = new SupportDataObj();
+    support1.x = 6;
+    support1.z = turnRightSmall.size.z - (PIECE_WIDTH / 2);
+    support1.heightOffset = 2;
+    turnRightSmall.supportData.push(support1);
+
+    console.log("left turn support 1 pushed");
+
+    var support2 = new SupportDataObj();
+    support2.x = turnRightSmall.size.x - (PIECE_WIDTH / 2);
+    support2.z = 6;
+    support2.heightOffset = 2;
+    turnRightSmall.supportData.push(support2);
+
+    console.log("left turn support data 2 pushed");
+    console.log(turnRightSmall.supportData);
+
+
     return turnRightSmall;
 };
 
