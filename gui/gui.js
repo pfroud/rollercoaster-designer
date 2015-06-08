@@ -24,12 +24,15 @@ Gui.prototype.flatTrack = function (){
     // reference of what to insert
     var piece;
     // if we not on a flat place, make it flat
-    if (this.prevPiece.type == TRACK_TYPES.UP){
+    if (this.prevPiece.type == TRACK_TYPES.UP ||
+        this.prevPiece.type == TRACK_TYPES.FLAT_TO_UP
+    ){
         piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
         TRACK.insertPiece(piece);
         return;
     }
-    if(this.prevPiece.type == TRACK_TYPES.DOWN) {
+    if(this.prevPiece.type == TRACK_TYPES.DOWN ||
+        this.prevPiece.type == TRACK_TYPES.FLAT_TO_DOWN) {
         piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
         TRACK.insertPiece(piece);
         return;
