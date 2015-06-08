@@ -40,9 +40,10 @@ function curve() {
 
     for (var i = 0; i < ps.length; i++) {
         curr = ps[i];
+        //debugger;
         array.push(new THREE.Vector3(curr.x, curr.y, curr.z));
 
-        var point = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10));
+        var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
         point.position.x = curr.x;
         point.position.y = curr.y;
         point.position.z = curr.z;
@@ -50,7 +51,7 @@ function curve() {
     }
 
     scene.add(new THREE.Mesh(
-            new THREE.TubeGeometry(new THREE.SplineCurve3(array), 50, 0.02, 10, false),
+            new THREE.TubeGeometry(new THREE.SplineCurve3(array), 50, 0.015, 10, false),
             new THREE.MeshLambertMaterial({color: 0x0000ff}))
     );
 }

@@ -41,7 +41,6 @@ function Track() {
     this.START_Z = 3;
     // The X axis is red. The Y axis is green. The Z axis is blue.
 
-    scene.add(new THREE.AxisHelper(0.5));
 
     // initialize current positions to the starting ones
     this.currentX = this.START_X;
@@ -85,20 +84,17 @@ function Track() {
  * n times for an array of pieces of length n.
  */
 Track.prototype.insertPiece = function (piece) {
-
     // make function recursive in order to preserve order of tracks
     // TODO: use callbacks if we can instead
     var recur = false;
-    var lastOne = false;
+    var lastOne = (piece.length == 1);
 
     // if the argument is an array, shift the element off and recur
     if (Array.isArray(piece)) {
-        // the arrray can be of length one, this catches that problem
+        // the array can be of length one, this catches that problem
         if (piece.length >= 2) recur = true;
         this.currPiece = piece.shift();
         this.pieces.push(this.currPiece);
-        if (piece.length == 1) lastOne = true;
-
 
     } else {
         // handles the case in which the piece is just one piece
