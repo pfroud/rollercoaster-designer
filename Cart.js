@@ -1,5 +1,3 @@
-
-
 const MATERIAL_TRAIN = new THREE.MeshLambertMaterial({color: "#00ff00"});
 
 
@@ -26,37 +24,29 @@ var sc = 0.01;
  }
  );*/
 
+/*[
+ new THREE.Vector3(-10, 0, 10),
+ new THREE.Vector3(-5, 5, 5),
+ new THREE.Vector3(0, 0, 0),
+ new THREE.Vector3(5, -5, 5),
+ new THREE.Vector3(10, 0, 10)
+ ]*/
 
-var curve = new THREE.SplineCurve3([
-    new THREE.Vector3(-10, 0, 10),
-    new THREE.Vector3(-5, 5, 5),
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(5, -5, 5),
-    new THREE.Vector3(10, 0, 10)
-]);
+var array = [];
+var ps = TRACK.pieces;
+var curr;
 
+function curve() {
 
-/////////////////////////////////////////////////////
-THREE.Curves = {};
-THREE.Curves.TrefoilKnot = THREE.Curve.create(
-    function (s) {
-        this.scale = (s === undefined) ? 1 : s;
-    },
-    function (t) {
-        t *= Math.PI * 2;
-        var tx = (2 + Math.cos(3 * t)) * Math.cos(2 * t),
-            ty = (2 + Math.cos(3 * t)) * Math.sin(2 * t),
-            tz = Math.sin(3 * t);
-        return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+    for (var i = 0; i < ps.length; i++) {
+        //console.log("i is", i);
+        curr = ps[i];
+        //console.log(curr);
+        array.push(new THREE.Vector3(curr.x, curr.y, curr.z));
     }
-);
-var extrudePath = new THREE.Curves.TrefoilKnot();
-var tube = new THREE.TubeGeometry(extrudePath, 50, 0.1, 10, true);
 
-scene.add(new THREE.Mesh(tube, new THREE.MeshLambertMaterial({
-    color: 0x0000ff,
-
-})));
-
-
-/////////////////////////////////////////////////////
+    scene.add(new THREE.Mesh(
+            new THREE.TubeGeometry(new THREE.SplineCurve3(array), 50, 0.05, 10, true),
+            new THREE.MeshLambertMaterial({color: 0x0000ff}))
+    );
+}
