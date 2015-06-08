@@ -316,6 +316,7 @@ TrackConst.prototype.turnLeftSmall =  function() {
     };
     turnLeftSmall.directionChange = "left";
 
+
     var support1 = new SupportDataObj();
     support1.x = 6;
     support1.z = PIECE_WIDTH / 2;

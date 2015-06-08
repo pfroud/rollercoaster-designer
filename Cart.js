@@ -41,8 +41,6 @@ function curve() {
     for (var i = 0; i < ps.length; i++) {
         curr = ps[i];
 
-        console.log(curr.facing);
-
         y = curr.y + curr.centerOffset.y;
         switch (curr.facing) {
             case "forward":
@@ -67,11 +65,6 @@ function curve() {
                 throw "ERROR: reached default case! Time to debug!"
         }
 
-
-
-
-
-        //debugger;
         array.push(new THREE.Vector3(x, y, z));
 
         var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
@@ -79,6 +72,18 @@ function curve() {
         point.position.y = y;
         point.position.z = z;
         scene.add(point)
+
+        if(curr.type == TRACK_TYPES.TURN_LEFT_SMALL){
+            var x1 = x+0.75,
+                z1 = z+0;
+
+            array.push(new THREE.Vector3(x1, y, z1));
+            var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
+            point.position.x = x1;
+            point.position.y = y;
+            point.position.z = z1;
+            scene.add(point)
+        }
     }
 
     scene.add(new THREE.Mesh(
