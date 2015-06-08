@@ -4,7 +4,7 @@
 var TRACK = new Track(); // TODO: make unnecessary
 
 //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
-const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: true});
+const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: false});
 const MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
 
 /**
@@ -55,7 +55,7 @@ function Track() {
     //this.direction = 0;
     this.facing = "forward";
 
-    this.boxes = true;
+    this.boxes = false;
 
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.

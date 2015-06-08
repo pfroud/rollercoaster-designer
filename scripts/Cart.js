@@ -132,7 +132,7 @@ function generateCurve() {
     return curve;
 }
 
-animateOnCurve(generateCurve)();
+//animateOnCurve(generateCurve)();
 
 function animateOnCurve(curve) {
     var amountOfPoints = 100;
