@@ -35,18 +35,12 @@ var curve = new THREE.SplineCurve3([
     new THREE.Vector3(10, 0, 10)
 ]);
 
-var geometry = new THREE.TubeGeometry(
-    curve,  //path
-    20,    //segments
-    2,     //radius
-    8,     //radiusSegments
-    false  //closed
-);
+
 /////////////////////////////////////////////////////
 THREE.Curves = {};
 THREE.Curves.TrefoilKnot = THREE.Curve.create(
     function (s) {
-        this.scale = (s === undefined) ? 10 : s;
+        this.scale = (s === undefined) ? 1 : s;
     },
     function (t) {
         t *= Math.PI * 2;
@@ -57,25 +51,12 @@ THREE.Curves.TrefoilKnot = THREE.Curve.create(
     }
 );
 var extrudePath = new THREE.Curves.TrefoilKnot();
-var tube = new THREE.TubeGeometry(extrudePath, 50, 2, 10, true);
+var tube = new THREE.TubeGeometry(extrudePath, 50, 0.1, 10, true);
 
-//scene.add(new )
+scene.add(new THREE.Mesh(tube, new THREE.MeshLambertMaterial({
+    color: 0x0000ff,
 
-//addGeometry(tube, 0xff00ff);
+})));
 
 
-function addGeometry(geometry, color) {
-    // 3d shape
-    tubeMesh = THREE.SceneUtils.createMultiMaterialObject(geometry, [
-        new THREE.MeshLambertMaterial({
-            color: color
-        }),
-        new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            opacity: 0.3,
-            wireframe: true,
-            transparent: true
-        })]);
-    scene.add(tubeMesh);
-}
 /////////////////////////////////////////////////////
