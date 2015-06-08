@@ -51,12 +51,13 @@ function curve() {
             case "left":
                 x = curr.x + curr.centerOffset.x;
                 z = curr.z + curr.centerOffset.z;
-
                 break;
+
             case "right":
                 x = curr.x - curr.centerOffset.x;
                 z = curr.z - curr.centerOffset.z;
                 break;
+
             case "back":
                 x = curr.x - curr.centerOffset.z;
                 z = curr.z - curr.centerOffset.x;
@@ -71,19 +72,56 @@ function curve() {
         point.position.x = x;
         point.position.y = y;
         point.position.z = z;
-        scene.add(point)
+        scene.add(point);
 
-        if(curr.type == TRACK_TYPES.TURN_LEFT_SMALL){
-            var x1 = x+0.75,
-                z1 = z+0;
+        if (curr.extraPoints.length > 0) {
+            var offset;
+            for (var j = 0; j < curr.extraPoints.length; j++) {
+                offset = curr.extraPoints[j];
 
-            array.push(new THREE.Vector3(x1, y, z1));
-            var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
-            point.position.x = x1;
-            point.position.y = y;
-            point.position.z = z1;
-            scene.add(point)
+                var x1, z1;
+                switch (curr.facing) {
+                    case "forward":
+                        x1 = x + offset.x;
+                        z1 = z + offset.z;
+                        break;
+
+                    case "left":
+                        x1 = x + offset.z;
+                        z1 = z - offset.x;
+                        break;
+
+                    case "right":
+                        x1 = x - offset.z;
+                        z1 = z + offset.x;
+                        break;
+
+                    case "back":
+                        x1 = x - offset.x;
+                        z1 = z - offset.z;
+                        break;
+                    default:
+                        throw "ERROR: reached default case! Time to debug!"
+                }
+
+
+                array.push(new THREE.Vector3(x1, y, z1));
+
+                var mat;
+                if (j == 0) {
+                    mat = new THREE.MeshBasicMaterial({color: 0xff00ff});
+                } else {
+                    mat = new THREE.MeshBasicMaterial({color: 0xffff00});
+                }
+
+                point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), mat);
+                point.position.x = x1;
+                point.position.y = y;
+                point.position.z = z1;
+                scene.add(point);
+            }
         }
+
     }
 
     scene.add(new THREE.Mesh(

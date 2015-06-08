@@ -7,7 +7,7 @@ var PIECE_HEIGHT = 16.7998;
 var PIECE_WIDTH = 40.7995;
 
 // helper function to clone objects since JS passes objects by reference
-function cloneVector(object){
+function cloneVector(object) {
     return {
         x: object.x,
         y: object.y,
@@ -26,7 +26,7 @@ function TrackConst() {
     this.FLAT = this.flat();
     this.FLAT_TO_UP = this.flatToUp();
     this.UP = this.up();
-    this.UP_TO_FLAT =  this.upToFlat();
+    this.UP_TO_FLAT = this.upToFlat();
     this.FLAT_TO_DOWN = this.flatToDown();
     this.DOWN = this.down();
     this.DOWN_TO_FLAT = this.downToFlat();
@@ -45,7 +45,7 @@ function TrackConst() {
  * This is simple function to scale them all, I tried using a for loop, but it
  * was all sorts of buggy.
  */
-TrackConst.prototype.scale = function(){
+TrackConst.prototype.scale = function () {
     this.FLAT.scale();
     this.FLAT_TO_UP.scale();
     this.UP.scale();
@@ -65,7 +65,7 @@ TrackConst.prototype.scale = function(){
  */
 
 // FLAT type ===================================================================
-TrackConst.prototype.flat = function(){
+TrackConst.prototype.flat = function () {
     var flat = new TrackType();
     flat.name = "name";
     flat.filename = "modelJS/straight.json";
@@ -79,11 +79,12 @@ TrackConst.prototype.flat = function(){
         y: 0,
         z: 0
     };
-    flat.centerOffset = {
-        x: 0,
-        y: 10*SCALE,
+    flat.centerOffset = { //offset to the center of the tube of the track piece. used for the animation line.
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
+    flat.extraPoints = []; //only used for turn peices. extra points to make curve smooth.
     flat.name = "Flat";
     flat.directionChange = "none";
 
@@ -97,7 +98,7 @@ TrackConst.prototype.flat = function(){
 };
 
 // FLAT_TO_UP ==================================================================
-TrackConst.prototype.flatToUp = function() {
+TrackConst.prototype.flatToUp = function () {
     var flatToUp = new TrackType();
     flatToUp.name = "flat to up";
     flatToUp.filename = "modelJS/slopeFlatToUp.json";
@@ -112,10 +113,11 @@ TrackConst.prototype.flatToUp = function() {
         z: 0
     };
     flatToUp.centerOffset = {
-        x: 0,
-        y: 10*SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
+    flatToUp.extraPoints = [];
     flatToUp.directionChange = "none";
 
     var support = new SupportDataObj();
@@ -129,7 +131,7 @@ TrackConst.prototype.flatToUp = function() {
 };
 
 // UP ==========================================================================
-TrackConst.prototype.up = function(){
+TrackConst.prototype.up = function () {
     var up = new TrackType();
     up.filename = "modelJS/up.json";
     up.name = "Up";
@@ -150,10 +152,11 @@ TrackConst.prototype.up = function(){
         z: 0.0
     };
     up.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 0,
         z: 0
     };
+    up.extraPoints = [];
     up.advanceAxis = cloneVector(this.FLAT_TO_UP.advanceAxis);
     up.directionChange = "none";
 
@@ -167,7 +170,7 @@ TrackConst.prototype.up = function(){
 };
 
 // UP TO FLAT ==================================================================
-TrackConst.prototype.upToFlat = function(){
+TrackConst.prototype.upToFlat = function () {
 
     var upToFlat = new TrackType();
     upToFlat.name = "Up To Flat";
@@ -187,11 +190,12 @@ TrackConst.prototype.upToFlat = function(){
         z: 0
     };
     upToFlat.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 0,
         z: 0
     };
-    upToFlat.directionChange= "none";
+    upToFlat.extraPoints = [];
+    upToFlat.directionChange = "none";
 
     var support = new SupportDataObj();
     support.x = upToFlat.size.x / 2;
@@ -204,7 +208,7 @@ TrackConst.prototype.upToFlat = function(){
 
 
 // FLAT TO DOWN ================================================================
-TrackConst.prototype.flatToDown = function(){
+TrackConst.prototype.flatToDown = function () {
     var flatToDown = new TrackType();
     flatToDown.name = "flat to down";
     flatToDown.filename = "modelJS/slopeFlatToDown.json";
@@ -215,10 +219,11 @@ TrackConst.prototype.flatToDown = function(){
         z: 40.8
     };
     flatToDown.centerOffset = {
-        x: 0,
-        y: 20*SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: 20 * SCALE,
         z: 0
     };
+    flatToDown.extraPoints = [];
     flatToDown.startOffset.y = (this.FLAT.size.y + 0.2);
     flatToDown.advanceAxis.x = 1;
     flatToDown.directionChange = "none";
@@ -233,7 +238,7 @@ TrackConst.prototype.flatToDown = function(){
 };
 
 // DOWN ========================================================================
-TrackConst.prototype.down = function(){
+TrackConst.prototype.down = function () {
     var down = new TrackType();
     down.name = "down";
     down.filename = "modelJS/down.json";
@@ -251,15 +256,16 @@ TrackConst.prototype.down = function(){
         z: 0
     };
     down.centerOffset = {
-        x: 0,
-        y: 50*SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: 50 * SCALE,
         z: 0
     };
+    down.extraPoints = [];
     down.directionChange = "none";
 
     var support = new SupportDataObj();
     support.x = down.size.x / 2;
-    support.z = down.size.z /2;
+    support.z = down.size.z / 2;
     support.heightOffset = 20;
     down.supportData.push(support);
 
@@ -267,7 +273,7 @@ TrackConst.prototype.down = function(){
 };
 
 // DOWN TO FLAT ================================================================
-TrackConst.prototype.downToFlat = function (){
+TrackConst.prototype.downToFlat = function () {
     var downToFlat = new TrackType();
     downToFlat.name = "down to flat";
     downToFlat.filename = "modelJS/slopeDownToFlat.json";
@@ -278,10 +284,11 @@ TrackConst.prototype.downToFlat = function (){
         z: 0.0
     };
     downToFlat.centerOffset = {
-        x: 0,
-        y: 35*SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: 35 * SCALE,
         z: 0
     };
+    downToFlat.extraPoints = [];
     downToFlat.advanceAxis.x = 1;
     downToFlat.directionChange = "none";
 
@@ -295,7 +302,7 @@ TrackConst.prototype.downToFlat = function (){
 };
 
 // SMALL LEFT TURN =============================================================
-TrackConst.prototype.turnLeftSmall =  function() {
+TrackConst.prototype.turnLeftSmall = function () {
     var turnLeftSmall = new TrackType();
     turnLeftSmall.name = "turn left small";
     turnLeftSmall.filename = "modelJS/turnLeftSmall.json";
@@ -310,10 +317,20 @@ TrackConst.prototype.turnLeftSmall =  function() {
         z: -1.0
     };
     turnLeftSmall.centerOffset = {
-        x: 0,
-        y: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
+    turnLeftSmall.extraPoints = [
+        {
+            x: 0.4,
+            z: -0.08
+        },
+        {
+            x: 0.8,
+            z: -0.4
+        }
+    ];
     turnLeftSmall.directionChange = "left";
 
 
@@ -335,7 +352,7 @@ TrackConst.prototype.turnLeftSmall =  function() {
 };
 
 // SMALL RIGHT TURN ============================================================
-TrackConst.prototype.turnRightSmall =  function() {
+TrackConst.prototype.turnRightSmall = function () {
     var turnRightSmall = new TrackType();
 
     turnRightSmall.name = "turn right small";
@@ -345,7 +362,7 @@ TrackConst.prototype.turnRightSmall =  function() {
     turnRightSmall.size = cloneVector(this.TURN_LEFT_SMALL.size);
 
     turnRightSmall.startOffset.z = (turnRightSmall.size.z - this.FLAT.size.z) * -1;
-    turnRightSmall.endOffset.x =  this.FLAT.size.z * (-1);
+    turnRightSmall.endOffset.x = this.FLAT.size.z * (-1);
 
     turnRightSmall.advanceAxis = {
         x: 1.0,
@@ -353,10 +370,20 @@ TrackConst.prototype.turnRightSmall =  function() {
         z: 0.0
     };
     turnRightSmall.centerOffset = {
-        x: 0,
-        y: 0,
+        x: -(turnRightSmall.size.x - PIECE_WIDTH/2) * SCALE,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
+    turnRightSmall.extraPoints = [
+        {
+            x: 0.4,
+            z: 0.08
+        },
+        {
+            x: 0.8,
+            z: 0.4
+        }
+    ];
 
     turnRightSmall.directionChange = "right";
 
@@ -374,12 +401,10 @@ TrackConst.prototype.turnRightSmall =  function() {
     turnRightSmall.supportData.push(support2);
 
 
-
-
     return turnRightSmall;
 };
 
-TrackConst.prototype.turnLeftBig = function (){
+TrackConst.prototype.turnLeftBig = function () {
     var turnLeftBig = new TrackType();
     turnLeftBig.name = "turn left big";
     turnLeftBig.filename = "modelJS/turnLeftBig.json";
@@ -395,9 +420,19 @@ TrackConst.prototype.turnLeftBig = function (){
     };
     turnLeftBig.centerOffset = {
         x: 0, //NOT USED - gets set in piece constuctor
-        y: 0,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
+    turnLeftBig.extraPoints = [
+        {
+            x: 0.75,
+            z: -0.15
+        },
+        {
+            x: 1.5,
+            z: -0.9
+        }
+    ];
     turnLeftBig.directionChange = "left";
 
     var support1 = new SupportDataObj();
@@ -414,13 +449,12 @@ TrackConst.prototype.turnLeftBig = function (){
     turnLeftBig.supportData.push(support2);
 
 
-
     return turnLeftBig;
 
 
 };
 
-TrackConst.prototype.turnRightBig = function (){
+TrackConst.prototype.turnRightBig = function () {
     var turnRightBig = new TrackType();
     turnRightBig.name = "turn right big";
     turnRightBig.filename = "modelJS/turnRightBig.json";
@@ -431,7 +465,7 @@ TrackConst.prototype.turnRightBig = function (){
     };
 
     turnRightBig.startOffset.z = (turnRightBig.size.z - this.FLAT.size.z) * -1;
-    turnRightBig.endOffset.x =  this.FLAT.size.z * (-1);
+    turnRightBig.endOffset.x = this.FLAT.size.z * (-1);
 
     turnRightBig.advanceAxis = {
         x: 1.0,
@@ -439,10 +473,20 @@ TrackConst.prototype.turnRightBig = function (){
         z: 0.0
     };
     turnRightBig.centerOffset = {
-        x: 0,
-        y: 0,
+        x: -(turnRightBig.size.x - PIECE_WIDTH/2) * SCALE,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
+    turnRightBig.extraPoints = [
+        {
+            x: 0.75,
+            z: 0.15
+        },
+        {
+            x: 1.5,
+            z: 0.9
+        }
+    ];
     turnRightBig.directionChange = "right";
 
     var support1 = new SupportDataObj();
@@ -459,13 +503,10 @@ TrackConst.prototype.turnRightBig = function (){
     turnRightBig.supportData.push(support2);
 
 
-
-
     return turnRightBig;
 
 
 };
-
 
 
 /**
@@ -476,7 +517,7 @@ TrackConst.prototype.turnRightBig = function (){
  * @constructor takes no arguments because of how specific every constant is,
  * they're redefined in the functions of TrackConst
  */
-function TrackType(){
+function TrackType() {
     this.name = ""; // name of the piece
     this.filename = ""; // the path to the filename of the modelJSON
     // the size of the piece (unscaled)
@@ -515,7 +556,7 @@ function TrackType(){
 }
 
 // Function to scale all fields, called on generation by TrackConst.scale()
-TrackType.prototype.scale = function (){
+TrackType.prototype.scale = function () {
     function scaleVector(vector) {
         var ret = {};
         ret.x = vector.x * SCALE;
@@ -523,6 +564,7 @@ TrackType.prototype.scale = function (){
         ret.z = vector.z * SCALE;
         return ret;
     }
+
     this.size = scaleVector(this.size);
     this.startOffset = scaleVector(this.startOffset);
     this.endOffset = scaleVector(this.endOffset);
@@ -556,20 +598,20 @@ function SupportDataObj() {
 }
 
 // another scaling function, scales all fields
-SupportDataObj.prototype.scale = function(){
+SupportDataObj.prototype.scale = function () {
     this.intersect *= SCALE;
     this.heightOffset *= SCALE;
     this.x *= SCALE;
     this.y *= SCALE;
     this.z *= SCALE;
-    this.radius  *= SCALE;
+    this.radius *= SCALE;
 };
 
 /**
  * helper function that copies all fields of the object into a new one and
  * returns it. Implemented because of JavaScript's tendency to pass by reference
  */
-SupportDataObj.prototype.copy = function(){
+SupportDataObj.prototype.copy = function () {
     var ret = {};
     ret.intersect = this.intersect;
     ret.heightOffset = this.heightOffset;
