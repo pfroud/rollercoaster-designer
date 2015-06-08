@@ -138,18 +138,24 @@ function generateCurve() {
 var steps = 0;
 var amountOfPoints = 100;
 
-var box = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.3, 0.3), new THREE.MeshBasicMaterial({color: 0xff3388}));
+var box = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 0.2),
+    new THREE.MeshBasicMaterial({color: 0xff3388}));
+//box.matrixAutoUpdate = true;
 scene.add(box);
 
 
 function animStep() {
 
     if (steps < amountOfPoints && animReady) {
-        console.log("animStep");
+        box.rotation.x += 0.1;
+        //console.log("animStep");
         steps++;
 
         var t = curve.getUtoTmapping(steps / amountOfPoints);
-        box.position = curve.getPoint(t);
+        var pos = curve.getPoint(t);
+        box.position = pos;
+        //debugger;
+
         var rotation = curve.getTangent(t);
     }
 }
