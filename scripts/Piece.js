@@ -53,6 +53,7 @@ function Piece(type) {
         y: type.centerOffset.y,
         z: type.centerOffset.z
     };
+    this.extraPoints = type.extraPoints;
 
     // string in english showing which direction the piece is facing
     this.facing = "";

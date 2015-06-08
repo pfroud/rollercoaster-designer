@@ -71,11 +71,11 @@ function curve() {
         point.position.x = x;
         point.position.y = y;
         point.position.z = z;
-        scene.add(point)
+        scene.add(point);
 
         if(curr.type == TRACK_TYPES.TURN_LEFT_SMALL){
             var x1 = x+0.75,
-                z1 = z+0;
+                z1 = z-0.25;
 
             array.push(new THREE.Vector3(x1, y, z1));
             var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));

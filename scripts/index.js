@@ -1,6 +1,6 @@
 /*************************** SETUP *********************************/
 var SCALE = 0.01;
-var CAMERA_PERSPECTIVE = true; //true if the perspective camera is used, flase if ortho camera is used
+var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase if ortho camera is used
 
 /*Use if changing SCALE.
  Sets the size of the skybox, ground plane, and orthographic camera view size.*/
@@ -11,7 +11,7 @@ var scene = new THREE.Scene();
 if (CAMERA_PERSPECTIVE) {
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 } else {
-    var viewSize = WORLD_SIZE / 3;
+    var viewSize = WORLD_SIZE / 5;
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 }
@@ -19,7 +19,8 @@ if (CAMERA_PERSPECTIVE) {
 With ortho camera, things will get cut off if camera is too close, but otherwise there's no difference. */
 
 var camDist = WORLD_SIZE / (CAMERA_PERSPECTIVE ? 3 : 1);
-camera.position.x = camera.position.y = camera.position.z = camDist;
+//camera.position.x = camera.position.y = camera.position.z = camDist;
+camera.position.y = camDist;
 camera.lookAt(0, 0, 0);
 
 // Container for the HTML5 canvas
