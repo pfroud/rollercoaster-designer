@@ -4,7 +4,7 @@ var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase 
 
 /*Use if changing SCALE.
  Sets the size of the skybox, ground plane, and orthographic camera view size.*/
-var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 2000);
+var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 1000);
 
 var scene = new THREE.Scene();
 
@@ -40,7 +40,7 @@ var light = new THREE.AmbientLight(0xffffff);
 //scene.add(light);
 
 scene.add(new THREE.AxisHelper(0.5));
-console.log("The X axis is red.\nThe Y axis is green.\nThe Z axis is blue.");
+console.log("Red is X.\nGreen is Y.\nBlue is Z.");
 
 
 // add subtle ambient lighting

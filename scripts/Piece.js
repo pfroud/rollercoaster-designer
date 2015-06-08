@@ -49,7 +49,7 @@ function Piece(type) {
     //used for generating the line to animate on
     //the amount to move to get to the center of the track tube
     this.centerOffset = {
-        x: -PIECE_WIDTH * SCALE / 2,
+        x:type.centerOffset.x,
         y: type.centerOffset.y,
         z: type.centerOffset.z
     };

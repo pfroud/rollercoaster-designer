@@ -5,7 +5,6 @@
 // the height and width of the track. NOTE: UNSCALED
 var PIECE_HEIGHT = 16.7998;
 var PIECE_WIDTH = 40.7995;
-var PIECE_SOMETHING = 10;
 
 // helper function to clone objects since JS passes objects by reference
 function cloneVector(object) {
@@ -81,8 +80,8 @@ TrackConst.prototype.flat = function () {
         z: 0
     };
     flat.centerOffset = { //offset to the center of the tube of the track piece. used for the animation line.
-        x: 0,
-        y: PIECE_SOMETHING * SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
     flat.extraPoints = []; //only used for turn peices. extra points to make curve smooth.
@@ -114,8 +113,8 @@ TrackConst.prototype.flatToUp = function () {
         z: 0
     };
     flatToUp.centerOffset = {
-        x: 0,
-        y: PIECE_SOMETHING * SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
     flatToUp.extraPoints = [];
@@ -153,7 +152,7 @@ TrackConst.prototype.up = function () {
         z: 0.0
     };
     up.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 0,
         z: 0
     };
@@ -191,7 +190,7 @@ TrackConst.prototype.upToFlat = function () {
         z: 0
     };
     upToFlat.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 0,
         z: 0
     };
@@ -220,7 +219,7 @@ TrackConst.prototype.flatToDown = function () {
         z: 40.8
     };
     flatToDown.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 20 * SCALE,
         z: 0
     };
@@ -257,7 +256,7 @@ TrackConst.prototype.down = function () {
         z: 0
     };
     down.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 50 * SCALE,
         z: 0
     };
@@ -285,7 +284,7 @@ TrackConst.prototype.downToFlat = function () {
         z: 0.0
     };
     downToFlat.centerOffset = {
-        x: 0,
+        x: -PIECE_WIDTH * SCALE / 2,
         y: 35 * SCALE,
         z: 0
     };
@@ -318,14 +317,18 @@ TrackConst.prototype.turnLeftSmall = function () {
         z: -1.0
     };
     turnLeftSmall.centerOffset = {
-        x: 0,
-        y: PIECE_SOMETHING * SCALE,
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
     turnLeftSmall.extraPoints = [
         {
-            x: 0.75,
-            z: -0.25
+            x: 0.4,
+            z: -0.08
+        },
+        {
+            x: 0.8,
+            z: -0.4
         }
     ];
     turnLeftSmall.directionChange = "left";
@@ -367,12 +370,19 @@ TrackConst.prototype.turnRightSmall = function () {
         z: 0.0
     };
     turnRightSmall.centerOffset = {
-        x: 0,
-        y: PIECE_SOMETHING * SCALE,
-        z: 0//-turnRightSmall.size.z * SCALE
+        x: -(turnRightSmall.size.x - PIECE_WIDTH/2) * SCALE,
+        y: PIECE_HEIGHT * SCALE,
+        z: 0
     };
     turnRightSmall.extraPoints = [
-
+        {
+            x: 0.4,
+            z: 0.08
+        },
+        {
+            x: 0.8,
+            z: 0.4
+        }
     ];
 
     turnRightSmall.directionChange = "right";
@@ -410,7 +420,7 @@ TrackConst.prototype.turnLeftBig = function () {
     };
     turnLeftBig.centerOffset = {
         x: 0, //NOT USED - gets set in piece constuctor
-        y: PIECE_SOMETHING * SCALE,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
     turnLeftBig.extraPoints = [
@@ -463,18 +473,18 @@ TrackConst.prototype.turnRightBig = function () {
         z: 0.0
     };
     turnRightBig.centerOffset = {
-        x: 0,
-        y: PIECE_SOMETHING * SCALE,
+        x: -(turnRightBig.size.x - PIECE_WIDTH/2) * SCALE,
+        y: PIECE_HEIGHT * SCALE,
         z: 0
     };
     turnRightBig.extraPoints = [
         {
-            x: 0,
-            z: 0
+            x: 0.75,
+            z: 0.15
         },
         {
-            x: 0,
-            z: 0
+            x: 1.5,
+            z: 0.9
         }
     ];
     turnRightBig.directionChange = "right";

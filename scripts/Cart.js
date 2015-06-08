@@ -80,7 +80,6 @@ function curve() {
                 offset = curr.extraPoints[j];
 
                 var x1, z1;
-                console.log(curr.facing);
                 switch (curr.facing) {
                     case "forward":
                         x1 = x + offset.x;
@@ -109,7 +108,7 @@ function curve() {
                 array.push(new THREE.Vector3(x1, y, z1));
 
                 var mat;
-                if (j==0){
+                if (j == 0) {
                     mat = new THREE.MeshBasicMaterial({color: 0xff00ff});
                 } else {
                     mat = new THREE.MeshBasicMaterial({color: 0xffff00});
