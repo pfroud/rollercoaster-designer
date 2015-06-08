@@ -73,17 +73,23 @@ function curve() {
         point.position.z = z;
         scene.add(point);
 
-        if(curr.type == TRACK_TYPES.TURN_LEFT_SMALL){
-            var x1 = x+0.75,
-                z1 = z-0.25;
+        if (curr.extraPoints.length > 0) {
+            var offset;
+            for (var j = 0; j < curr.extraPoints.length; j++) {
+                offset = curr.extraPoints[j];
 
-            array.push(new THREE.Vector3(x1, y, z1));
-            var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
-            point.position.x = x1;
-            point.position.y = y;
-            point.position.z = z1;
-            scene.add(point)
+                var x1 = x + offset.x,
+                    z1 = z - offset.y;
+
+                array.push(new THREE.Vector3(x1, y, z1));
+                point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
+                point.position.x = x1;
+                point.position.y = y;
+                point.position.z = z1;
+                scene.add(point);
+            }
         }
+
     }
 
     scene.add(new THREE.Mesh(

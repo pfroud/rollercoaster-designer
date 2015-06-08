@@ -322,7 +322,12 @@ TrackConst.prototype.turnLeftSmall = function () {
         y: PIECE_SOMETHING * SCALE,
         z: 0
     };
-    turnLeftSmall.extraPoints = [];
+    turnLeftSmall.extraPoints = [
+        {
+            x: 0.75,
+            y: -0.25
+        }
+    ];
     turnLeftSmall.directionChange = "left";
 
 
@@ -366,7 +371,12 @@ TrackConst.prototype.turnRightSmall = function () {
         y: PIECE_SOMETHING * SCALE,
         z: 0
     };
-    turnRightSmall.extraPoints = [];
+    turnRightSmall.extraPoints = [
+        {
+            x: 0,
+            y: 0
+        }
+    ];
 
     turnRightSmall.directionChange = "right";
 
@@ -406,7 +416,16 @@ TrackConst.prototype.turnLeftBig = function () {
         y: PIECE_SOMETHING * SCALE,
         z: 0
     };
-    turnLeftBig.extraPoints = [];
+    turnLeftBig.extraPoints = [
+        {
+            x: 0,
+            y: 0
+        },
+        {
+            x: 0,
+            y: 0
+        }
+    ];
     turnLeftBig.directionChange = "left";
 
     var support1 = new SupportDataObj();
@@ -451,7 +470,16 @@ TrackConst.prototype.turnRightBig = function () {
         y: PIECE_SOMETHING * SCALE,
         z: 0
     };
-    turnRightBig.extraPoints = [];
+    turnRightBig.extraPoints = [
+        {
+            x: 0,
+            y: 0
+        },
+        {
+            x: 0,
+            y: 0
+        }
+    ];
     turnRightBig.directionChange = "right";
 
     var support1 = new SupportDataObj();
