@@ -325,7 +325,7 @@ TrackConst.prototype.turnLeftSmall = function () {
     turnLeftSmall.extraPoints = [
         {
             x: 0.75,
-            y: -0.25
+            z: -0.25
         }
     ];
     turnLeftSmall.directionChange = "left";
@@ -369,13 +369,10 @@ TrackConst.prototype.turnRightSmall = function () {
     turnRightSmall.centerOffset = {
         x: 0,
         y: PIECE_SOMETHING * SCALE,
-        z: 0
+        z: 0//-turnRightSmall.size.z * SCALE
     };
     turnRightSmall.extraPoints = [
-        {
-            x: 0,
-            y: 0
-        }
+
     ];
 
     turnRightSmall.directionChange = "right";
@@ -418,12 +415,12 @@ TrackConst.prototype.turnLeftBig = function () {
     };
     turnLeftBig.extraPoints = [
         {
-            x: 0,
-            y: 0
+            x: 0.75,
+            z: -0.15
         },
         {
-            x: 0,
-            y: 0
+            x: 1.5,
+            z: -0.9
         }
     ];
     turnLeftBig.directionChange = "left";
@@ -473,11 +470,11 @@ TrackConst.prototype.turnRightBig = function () {
     turnRightBig.extraPoints = [
         {
             x: 0,
-            y: 0
+            z: 0
         },
         {
             x: 0,
-            y: 0
+            z: 0
         }
     ];
     turnRightBig.directionChange = "right";

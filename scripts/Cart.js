@@ -51,12 +51,13 @@ function curve() {
             case "left":
                 x = curr.x + curr.centerOffset.x;
                 z = curr.z + curr.centerOffset.z;
-
                 break;
+
             case "right":
                 x = curr.x - curr.centerOffset.x;
                 z = curr.z - curr.centerOffset.z;
                 break;
+
             case "back":
                 x = curr.x - curr.centerOffset.z;
                 z = curr.z - curr.centerOffset.x;
@@ -78,11 +79,43 @@ function curve() {
             for (var j = 0; j < curr.extraPoints.length; j++) {
                 offset = curr.extraPoints[j];
 
-                var x1 = x + offset.x,
-                    z1 = z - offset.y;
+                var x1, z1;
+                console.log(curr.facing);
+                switch (curr.facing) {
+                    case "forward":
+                        x1 = x + offset.x;
+                        z1 = z + offset.z;
+                        break;
+
+                    case "left":
+                        x1 = x + offset.z;
+                        z1 = z - offset.x;
+                        break;
+
+                    case "right":
+                        x1 = x - offset.z;
+                        z1 = z + offset.x;
+                        break;
+
+                    case "back":
+                        x1 = x - offset.x;
+                        z1 = z - offset.z;
+                        break;
+                    default:
+                        throw "ERROR: reached default case! Time to debug!"
+                }
+
 
                 array.push(new THREE.Vector3(x1, y, z1));
-                point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
+
+                var mat;
+                if (j==0){
+                    mat = new THREE.MeshBasicMaterial({color: 0xff00ff});
+                } else {
+                    mat = new THREE.MeshBasicMaterial({color: 0xffff00});
+                }
+
+                point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), mat);
                 point.position.x = x1;
                 point.position.y = y;
                 point.position.z = z1;
