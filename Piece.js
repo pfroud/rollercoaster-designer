@@ -106,3 +106,14 @@ Piece.prototype.toggleBox = function(){
         this.supports[i].toggleBox();
 };
 
+/**
+ * function to toggle the bounding boxes of all the pieces as well as the
+ * supports
+ */
+Piece.prototype.toggleSupport = function(){
+    for (var i = 0; i <  this.supports.length; i++) {
+        this.supports[i].toggleVisibility();
+
+    }
+};
+

@@ -39,10 +39,9 @@ var curr;
 function curve() {
 
     for (var i = 0; i < ps.length; i++) {
-        //console.log("i is", i);
         curr = ps[i];
-        //console.log(curr);
         array.push(new THREE.Vector3(curr.x, curr.y, curr.z));
+
         var point = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10));
         point.position.x = curr.x;
         point.position.y = curr.y;

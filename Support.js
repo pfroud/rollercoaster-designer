@@ -29,7 +29,7 @@ function Support (data, piece){
     this.boundingBox = new THREE.BoxHelper(this.mesh);
     scene.add(this.mesh);
     scene.add(this.boundingBox);
-    this.boundingBox.visible = false;
+    this.boundingBox.visible = TRACK.boxes;
 
     piece.supports.push(this);
 }
@@ -82,4 +82,12 @@ Support.prototype.delete = function(){
  */
 Support.prototype.toggleBox =  function(){
     this.boundingBox.visible = !this.boundingBox.visible;
+};
+
+/**
+ * Toggles the bounding box the support.
+ */
+Support.prototype.toggleVisibility =  function(){
+    this.mesh.visible = !this.mesh.visible;
+    this.toggleBox();
 };

@@ -54,7 +54,7 @@ function Track() {
     //this.direction = 0;
     this.facing = "forward";
 
-    this.boxes = false;
+    this.boxes = true;
 
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
@@ -146,7 +146,7 @@ Track.prototype.insertPiece = function (piece) {
             track.currPiece.boundingBox = bbox;
             scene.add(bbox);
             // makes them visible or not as appropriate
-            bbox.visible = false;
+            bbox.visible = TRACK.boxes;
             track.advanceCurrent(); //moves where the next piece will go
 
             // recursive call to place the next piece of the array
@@ -404,6 +404,14 @@ Track.prototype.deleteAll = function () {
 Track.prototype.toggleBoxes = function () {
     for (var i = 0; i < this.pieces.length; i++)
         this.pieces[i].toggleBox();
+};
+
+/**
+ * Toggles drawing supports
+ */
+Track.prototype.toggleSupports = function () {
+    for (var i = 0; i < this.pieces.length; i++)
+        this.pieces[i].toggleSupport();
 };
 
 // FOR DEBUG
