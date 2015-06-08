@@ -32,6 +32,8 @@ var sc = 0.01;
  new THREE.Vector3(10, 0, 10)
  ]*/
 
+var curve;
+
 
 function generateCurve() {
     var array = [];
@@ -124,21 +126,30 @@ function generateCurve() {
 
     }
 
-    var curve = new THREE.SplineCurve3(array);
+    curve = new THREE.SplineCurve3(array);
     scene.add(new THREE.Mesh(
             new THREE.TubeGeometry(curve, 50, 0.015, 10, false),
             new THREE.MeshLambertMaterial({color: 0x0000ff}))
     );
-    return curve;
+    animReady = true;
 }
 
-//animateOnCurve(generateCurve)();
 
-function animateOnCurve(curve) {
-    var amountOfPoints = 100;
-    for (var i = 0; i < amountOfPoints; i += 0.5) {
-        var t = curve.getUtoTmapping(i / amountOfPoints);
-        var position = curve.getPoint(t);
+var steps = 0;
+var amountOfPoints = 100;
+
+var box = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.3, 0.3), new THREE.MeshBasicMaterial({color: 0xff3388}));
+scene.add(box);
+
+
+function animStep() {
+
+    if (steps < amountOfPoints && animReady) {
+        console.log("animStep");
+        steps++;
+
+        var t = curve.getUtoTmapping(steps / amountOfPoints);
+        box.position = curve.getPoint(t);
         var rotation = curve.getTangent(t);
     }
 }

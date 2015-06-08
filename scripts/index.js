@@ -93,7 +93,11 @@ function onWindowResize() {
 
 
 /*************************** RENDER *********************************/
+var animReady = false;
 var render = function () {
+
+    if(animReady) animStep();
+
     requestAnimationFrame(render);
     renderer.render(scene, camera);
     controls.update();
