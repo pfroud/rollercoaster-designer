@@ -29,6 +29,7 @@ function Support (data, piece){
     this.boundingBox = new THREE.BoxHelper(this.mesh);
     scene.add(this.mesh);
     scene.add(this.boundingBox);
+    this.boundingBox.visible = false;
 
     piece.supports.push(this);
 }

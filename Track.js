@@ -54,7 +54,7 @@ function Track() {
     //this.direction = 0;
     this.facing = "forward";
 
-    this.boxes = true;
+    this.boxes = false;
 
     //supports
     this.counter = 0; //this counter is advanced. (counter % supportSpacing == 0) used to tell when to add support.
@@ -146,7 +146,7 @@ Track.prototype.insertPiece = function (piece) {
             track.currPiece.boundingBox = bbox;
             scene.add(bbox);
             // makes them visible or not as appropriate
-            bbox.visible = track.boxes;
+            bbox.visible = false;
             track.advanceCurrent(); //moves where the next piece will go
 
             // recursive call to place the next piece of the array
