@@ -448,6 +448,11 @@ TrackConst.prototype.turnLeftBig = function () {
     support2.heightOffset = 2;
     turnLeftBig.supportData.push(support2);
 
+    var support3 = new SupportDataObj();
+    support3.x = turnLeftBig.size.x / 2 - (PIECE_WIDTH / 2);
+    support3.z = turnLeftBig.size.z / 2 - (PIECE_WIDTH / 2);
+    support3.heightOffset = 2;
+    turnLeftBig.supportData.push(support3);
 
     return turnLeftBig;
 
@@ -502,6 +507,11 @@ TrackConst.prototype.turnRightBig = function () {
     support2.heightOffset = 2;
     turnRightBig.supportData.push(support2);
 
+    var support3 = new SupportDataObj();
+    support3.x = turnRightBig.size.x  * 3 / 4 - (PIECE_WIDTH / 2);
+    support3.z = turnRightBig.size.z* 3 / 4 - (PIECE_WIDTH / 2);
+    support3.heightOffset = 2;
+    turnRightBig.supportData.push(support3);
 
     return turnRightBig;
 

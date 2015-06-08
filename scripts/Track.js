@@ -435,12 +435,12 @@ Track.prototype.toggleSupports = function () {
 // FOR DEBUG
 window.onload = function () {
     TRACK.insertPiece([
-        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-        new Piece(TRACK_TYPES.TURN_RIGHT_BIG),
+        new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
+        new Piece(TRACK_TYPES.TURN_LEFT_BIG),
         new Piece(TRACK_TYPES.FLAT),
         //new Piece(TRACK_TYPES.TURN_LEFT_BIG),
         new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
-        new Piece(TRACK_TYPES.TURN_RIGHT_BIG),
+        new Piece(TRACK_TYPES.TURN_LEFT_BIG),
         new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_UP),
