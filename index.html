@@ -19,7 +19,6 @@
 
     <!-- GUI stylesheets -->
     <link rel="stylesheet" type="text/css" href="gui/bar.css">
-    <link rel="stylesheet" type="text/css" href="gui/button.css">
     <link rel="stylesheet" type="text/css" href="gui/ribbon.css">
     <link rel="stylesheet" type="text/css" href="gui/inset.css">
 
@@ -28,14 +27,14 @@
 
 <!-- bar at the top -->
 <ul>
-    <li id="testButton" class="button">
+    <li id="downButton" onclick="insertDown()">
         <img src="images/Down.png" style="width:20px;height:20px;">
     </li>
-    <li id="testButton2" class="button">
-        <img src="images/Down.png" style="width:20px;height:20px;">
+    <li id="upButton" onclick="insertUp()">
+        <img src="images/up.png" style="width:20px;height:20px;">
     </li>
-    <li id="testButton3" class="button">
-        <img src="images/Down.png" style="width:20px;height:20px;">
+    <li id="flatButton" onclick="insertFlat()">
+        <img src="images/Flat.png" style="width:20px;height:20px;">
     </li>
 </ul>
 
