@@ -37,7 +37,7 @@ function Track() {
 
     // the starting positions for the track
     this.START_X = -2.5;
-    this.START_Y = 0;
+    this.START_Y = GROUND_HEIGHT + (100 * SCALE);
     this.START_Z = 1;
     // The X axis is red. The Y axis is green. The Z axis is blue.
 
@@ -408,6 +408,7 @@ Track.prototype.toggleBoxes = function () {
 
 // FOR DEBUG
 window.onload = function (){
+
     TRACK.insertPiece([
         new Piece(TRACK_TYPES.TURN_LEFT_BIG),
         new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
@@ -421,4 +422,4 @@ window.onload = function (){
         new Piece(TRACK_TYPES.DOWN_TO_FLAT)
     ]);
     scene.add(TRACK.debugSphere);
-};
+};//*/
