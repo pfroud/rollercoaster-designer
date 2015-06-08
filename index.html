@@ -19,22 +19,27 @@
 
     <!-- GUI stylesheets -->
     <link rel="stylesheet" type="text/css" href="gui/bar.css">
-    <link rel="stylesheet" type="text/css" href="gui/ribbon.css">
-    <link rel="stylesheet" type="text/css" href="gui/inset.css">
 
 </head>
 <body>
 
 <!-- bar at the top -->
 <ul>
-    <li id="downButton" onclick="insertDown()">
+    <li id="downButton" onclick="GUI.insertDown()">
         <img src="images/Down.png" style="width:20px;height:20px;">
     </li>
-    <li id="upButton" onclick="insertUp()">
-        <img src="images/up.png" style="width:20px;height:20px;">
+    <li id="upButton" onclick="GUI.insertUp()">
+        <img src="images/Up.png" style="width:20px;height:20px;">
     </li>
-    <li id="flatButton" onclick="insertFlat()">
+    <li id="flatButton" onclick="GUI.flatTrack()">
         <img src="images/Flat.png" style="width:20px;height:20px;">
+    </li>
+    <li id="leftSmallButton" onclick="GUI.insertLeftSmall()">
+        <img src="images/Left.png" style="width:20px;height:20px;">
+    </li>
+
+    <li id="RightSmallButton" onclick="GUI.insertRightSmall()">
+        <img src="images/Right.png" style="width:20px;height:20px;">
     </li>
 </ul>
 
@@ -45,8 +50,7 @@
 <script src="lib/three.js"></script>
 <script src="lib/OrbitControls.js"></script>
 
-<!-- our files -->
-<script src="gui/gui.js"></script>
+<!-- configuration -->
 <script src="scripts/index.js"></script>
 <script src="scripts/skybox.js"></script>
 
@@ -62,7 +66,7 @@
 <script src="scripts/Track.js"></script>
 <script src="scripts/Cart.js"></script>
 
-<!-- GUI java script -->
+<!-- GUI JavaScript -->
 <script src="gui/gui.js"></script>
 
 
