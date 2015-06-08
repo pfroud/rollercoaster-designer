@@ -6,7 +6,7 @@ const MATERIAL_TRAIN = new THREE.MeshLambertMaterial({color: "#00ff00"});
 var jsonLoader = new THREE.JSONLoader();
 var sc = 0.01;
 
-jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
+/*jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
 
         // create the mesh and add it to the scene
@@ -24,7 +24,7 @@ jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
         var bbox = new THREE.BoxHelper(mesh);
         scene.add(bbox);
     }
-);
+);*/
 
 
 var curve = new THREE.SplineCurve3( [
@@ -42,7 +42,9 @@ var geometry = new THREE.TubeGeometry(
     8,     //radiusSegments
     false  //closed
 );
+console.log(geometry);
 
 var mesh = THREE.Mesh(geometry, MATERIAL_TRAIN);
 console.log(mesh);
+
 scene.add(mesh);
