@@ -23,6 +23,14 @@ Gui.prototype.flatTrack = function (){
 
     // reference of what to insert
     var piece;
+
+    if (this.isFlat()){
+        // insert since it's now flat, make it more flat
+        piece = new Piece(TRACK_TYPES.FLAT);
+        TRACK.insertPiece(piece);
+        return
+    }
+
     // if we not on a flat place, make it flat
     if (this.prevPiece.type == TRACK_TYPES.UP ||
         this.prevPiece.type == TRACK_TYPES.FLAT_TO_UP
@@ -38,9 +46,7 @@ Gui.prototype.flatTrack = function (){
         return;
     }
 
-    // insert since it's now flat, make it more flat
-    piece = new Piece(TRACK_TYPES.FLAT);
-    TRACK.insertPiece(piece);
+    console.log("ERROR: reached end!!")
 };
 
 /**
