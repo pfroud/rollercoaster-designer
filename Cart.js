@@ -43,4 +43,6 @@ var geometry = new THREE.TubeGeometry(
     false  //closed
 );
 
-scene.add(THREE.Mesh(geometry, MATERIAL_TRAIN));
+var mesh = THREE.Mesh(geometry, MATERIAL_TRAIN);
+console.log(mesh);
+scene.add(mesh);

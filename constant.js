@@ -286,16 +286,12 @@ TrackConst.prototype.turnLeftSmall =  function() {
     support1.heightOffset = 2;
     turnLeftSmall.supportData.push(support1);
 
-    console.log("left turn support 1 pushed");
-
     var support2 = new SupportDataObj();
     support2.x = turnLeftSmall.size.x - (PIECE_WIDTH / 2);
     support2.z = turnLeftSmall.size.z - 6;
     support2.heightOffset = 2;
     turnLeftSmall.supportData.push(support2);
 
-    console.log("left turn support data 2 pushed");
-    console.log(turnLeftSmall.supportData);
 
     return turnLeftSmall;
 
@@ -328,7 +324,7 @@ TrackConst.prototype.turnRightSmall =  function() {
     support1.heightOffset = 2;
     turnRightSmall.supportData.push(support1);
 
-    console.log("left turn support 1 pushed");
+    ("left turn support 1 pushed");
 
     var support2 = new SupportDataObj();
     support2.x = turnRightSmall.size.x - (PIECE_WIDTH / 2);
@@ -336,8 +332,7 @@ TrackConst.prototype.turnRightSmall =  function() {
     support2.heightOffset = 2;
     turnRightSmall.supportData.push(support2);
 
-    console.log("left turn support data 2 pushed");
-    console.log(turnRightSmall.supportData);
+
 
 
     return turnRightSmall;
@@ -365,7 +360,6 @@ TrackConst.prototype.turnLeftBig = function (){
     support1.heightOffset = 2;
     turnLeftBig.supportData.push(support1);
 
-    console.log("left turn support 1 pushed");
 
     var support2 = new SupportDataObj();
     support2.x = turnLeftBig.size.x - (PIECE_WIDTH / 2);
@@ -373,8 +367,7 @@ TrackConst.prototype.turnLeftBig = function (){
     support2.heightOffset = 2;
     turnLeftBig.supportData.push(support2);
 
-    console.log("left turn support data 2 pushed");
-    console.log(turnLeftBig.supportData);
+
 
     return turnLeftBig;
 
@@ -407,7 +400,7 @@ TrackConst.prototype.turnRightBig = function (){
     support1.heightOffset = 2;
     turnRightBig.supportData.push(support1);
 
-    console.log("left turn support 1 pushed");
+    ("left turn support 1 pushed");
 
     var support2 = new SupportDataObj();
     support2.x = turnRightBig.size.x - (PIECE_WIDTH / 2);
@@ -415,8 +408,7 @@ TrackConst.prototype.turnRightBig = function (){
     support2.heightOffset = 2;
     turnRightBig.supportData.push(support2);
 
-    console.log("left turn support data 2 pushed");
-    console.log(turnRightBig.supportData);
+
 
 
     return turnRightBig;
