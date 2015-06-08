@@ -1,6 +1,5 @@
 "use strict";
 
-// http://stackoverflow.com/questions/23859512/how-to-get-the-width-height-length-of-a-mesh-in-three-js
 // json template for track pieces
 
 // the height and width of the track. NOTE: UNSCALED
@@ -9,16 +8,13 @@ var PIECE_WIDTH = 40.7995;
 
 // helper function to clone objects since JS passes objects by reference
 function cloneVector(object){
-    var clone = {
+    return {
         x: object.x,
         y: object.y,
         z: object.z
     };
-    return clone;
 }
 
-// iterators
-var i, n, j, t = 0;
 
 /**
  * TrackConst is an object which makes all of the constants. It was chosen over
@@ -83,6 +79,11 @@ TrackConst.prototype.flat = function(){
         y: 0,
         z: 0
     };
+    flat.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
     flat.name = "Flat";
     flat.directionChange = "none";
 
@@ -108,6 +109,11 @@ TrackConst.prototype.flatToUp = function() {
     flatToUp.advanceAxis = {
         x: 1,
         y: 1,
+        z: 0
+    };
+    flatToUp.centerOffset = {
+        x: 0,
+        y: 0,
         z: 0
     };
     flatToUp.directionChange = "none";
@@ -143,6 +149,11 @@ TrackConst.prototype.up = function(){
         y: 0.0,
         z: 0.0
     };
+    up.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
     up.advanceAxis = cloneVector(this.FLAT_TO_UP.advanceAxis);
     up.directionChange = "none";
 
@@ -175,6 +186,11 @@ TrackConst.prototype.upToFlat = function(){
         y: 0,
         z: 0
     };
+    upToFlat.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
     upToFlat.directionChange= "none";
 
     var support = new SupportDataObj();
@@ -197,6 +213,11 @@ TrackConst.prototype.flatToDown = function(){
         x: 52.4583,
         y: 33.8259,
         z: 40.8
+    };
+    flatToDown.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
     };
     flatToDown.startOffset.y = (this.FLAT.size.y + 0.2);
     flatToDown.advanceAxis.x = 1;
@@ -229,6 +250,11 @@ TrackConst.prototype.down = function(){
         y: -1,
         z: 0
     };
+    down.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
     down.directionChange = "none";
 
     var support = new SupportDataObj();
@@ -250,6 +276,11 @@ TrackConst.prototype.downToFlat = function (){
         x: 12,
         y: 26.6,
         z: 0.0
+    };
+    downToFlat.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
     };
     downToFlat.advanceAxis.x = 1;
     downToFlat.directionChange = "none";
@@ -277,6 +308,11 @@ TrackConst.prototype.turnLeftSmall =  function() {
         x: 1.0,
         y: 0.0,
         z: -1.0
+    };
+    turnLeftSmall.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
     };
     turnLeftSmall.directionChange = "left";
 
@@ -315,6 +351,11 @@ TrackConst.prototype.turnRightSmall =  function() {
         y: 0.0,
         z: 0.0
     };
+    turnRightSmall.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
 
     turnRightSmall.directionChange = "right";
 
@@ -324,7 +365,6 @@ TrackConst.prototype.turnRightSmall =  function() {
     support1.heightOffset = 2;
     turnRightSmall.supportData.push(support1);
 
-    ("left turn support 1 pushed");
 
     var support2 = new SupportDataObj();
     support2.x = turnRightSmall.size.x - (PIECE_WIDTH / 2);
@@ -351,6 +391,11 @@ TrackConst.prototype.turnLeftBig = function (){
         x: 1.0,
         y: 0.0,
         z: -1.0
+    };
+    turnLeftBig.centerOffset = {
+        x: 0, //NOT USED - gets set in piece constuctor
+        y: 0,
+        z: 0
     };
     turnLeftBig.directionChange = "left";
 
@@ -392,6 +437,11 @@ TrackConst.prototype.turnRightBig = function (){
         y: 0.0,
         z: 0.0
     };
+    turnRightBig.centerOffset = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
     turnRightBig.directionChange = "right";
 
     var support1 = new SupportDataObj();
@@ -400,7 +450,6 @@ TrackConst.prototype.turnRightBig = function (){
     support1.heightOffset = 2;
     turnRightBig.supportData.push(support1);
 
-    ("left turn support 1 pushed");
 
     var support2 = new SupportDataObj();
     support2.x = turnRightBig.size.x - (PIECE_WIDTH / 2);

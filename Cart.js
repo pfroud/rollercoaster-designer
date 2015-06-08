@@ -34,19 +34,23 @@ var sc = 0.01;
 
 var array = [];
 var ps = TRACK.pieces;
-var curr;
+var curr, x, y, z;
 
 function curve() {
 
     for (var i = 0; i < ps.length; i++) {
         curr = ps[i];
+        x = curr.x + curr.centerOffset.x;
+        y = curr.y + curr.centerOffset.y;
+        z = curr.z + curr.centerOffset.z;
+
         //debugger;
-        array.push(new THREE.Vector3(curr.x, curr.y, curr.z));
+        array.push(new THREE.Vector3(x, y, z));
 
         var point = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), new THREE.MeshBasicMaterial({color: 0xffffff}));
-        point.position.x = curr.x;
-        point.position.y = curr.y;
-        point.position.z = curr.z;
+        point.position.x = x;
+        point.position.y = y;
+        point.position.z = z;
         scene.add(point)
     }
 

@@ -4,7 +4,7 @@
 var TRACK = new Track(); // TODO: make unnecessary
 
 //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
-const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"});
+const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: true});
 const MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
 
 /**
@@ -65,7 +65,7 @@ function Track() {
 
 
     // DEBUG CODE!!!! =========================================================
-    var geometry = new THREE.SphereGeometry(.1, 32, 32);
+    var geometry = new THREE.SphereGeometry(.05, 32, 32);
     var material = new THREE.MeshBasicMaterial({color: 0xffff00});
     var sphere = new THREE.Mesh(geometry, material);
     sphere.position.x = this.currentX;
@@ -439,8 +439,8 @@ Track.prototype.toggleSupports = function () {
 window.onload = function () {
     TRACK.insertPiece([
         new Piece(TRACK_TYPES.TURN_LEFT_BIG),
-        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-        new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
+        //new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        //new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
         new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_UP),
         new Piece(TRACK_TYPES.UP),

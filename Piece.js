@@ -46,6 +46,14 @@ function Piece(type) {
         z: type.advanceAxis.z
     };
 
+    //used for generating the line to animate on
+    //the amount to move to get to the center of the track tube
+    this.centerOffset = {
+        x: -PIECE_WIDTH * SCALE / 2,
+        y: type.centerOffset.y,
+        z: type.centerOffset.z
+    };
+
     // string in english showing which direction the piece is facing
     this.facing = "";
     // string in english showing which way the track is facing
@@ -67,7 +75,7 @@ function Piece(type) {
     this.supportData = [];
 
     // copy all the objects over by a copy method since JS passes by reference
-    for (i = 0; i < type.supportData.length; i++)
+    for (var i = 0; i < type.supportData.length; i++)
         this.supportData.push(type.supportData[i].copy())
 
     // list of the meshes of the supports of the piece, will be pushed to when
@@ -79,7 +87,7 @@ function Piece(type) {
  * This function creates new supports. Passes a reference of the piece to the
  * support
  */
-Piece.prototype.makeSupports = function(){
+Piece.prototype.makeSupports = function () {
     for (var i = this.supportData.length; i > 0; i--)
         new Support(this.supportData.pop(), this)
 };
@@ -88,7 +96,7 @@ Piece.prototype.makeSupports = function(){
  * Deletes the piece and also calls the function to delete all of the supports
  * the piece has as well
  */
-Piece.prototype.delete = function(){
+Piece.prototype.delete = function () {
     scene.remove(this.mesh);
     scene.remove(this.boundingBox);
     for (var i = 0; i < this.supports.length; i++) {
@@ -100,9 +108,9 @@ Piece.prototype.delete = function(){
  * function to toggle the bounding boxes of all the pieces as well as the
  * supports
  */
-Piece.prototype.toggleBox = function(){
+Piece.prototype.toggleBox = function () {
     this.boundingBox.visible = !this.boundingBox.visible;
-    for (var i = 0; i <  this.supports.length; i++)
+    for (var i = 0; i < this.supports.length; i++)
         this.supports[i].toggleBox();
 };
 
@@ -110,8 +118,8 @@ Piece.prototype.toggleBox = function(){
  * function to toggle the bounding boxes of all the pieces as well as the
  * supports
  */
-Piece.prototype.toggleSupport = function(){
-    for (var i = 0; i <  this.supports.length; i++) {
+Piece.prototype.toggleSupport = function () {
+    for (var i = 0; i < this.supports.length; i++) {
         this.supports[i].toggleVisibility();
 
     }
