@@ -1,22 +1,14 @@
 This is our little todo file for our project.
 
-Choose JSON parser/format
-   jquery stuff of course
-
 Peter
-Choose which train/car model to use with Johnathan
-turned tracks?
-Make button to change camera work - this will be a pain and is not important
-
-PETER: LOOK AT Buttons.js IN THE debugJSON OBJECT!!!!! <----
-^ Is this still a thing? -P
-
+Train animation
 
 Jonathan
 Make UI stuff - editor 2D interface
    has buttons to execute functions
 Piece guarding.
 Direction???
+Big turns
 
 Function to move track piece in three.js world
 
