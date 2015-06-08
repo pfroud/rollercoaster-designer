@@ -43,10 +43,15 @@ function curve() {
         curr = ps[i];
         //console.log(curr);
         array.push(new THREE.Vector3(curr.x, curr.y, curr.z));
+        var point = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 10));
+        point.position.x = curr.x;
+        point.position.y = curr.y;
+        point.position.z = curr.z;
+        scene.add(point)
     }
 
     scene.add(new THREE.Mesh(
-            new THREE.TubeGeometry(new THREE.SplineCurve3(array), 50, 0.05, 10, true),
+            new THREE.TubeGeometry(new THREE.SplineCurve3(array), 50, 0.02, 10, false),
             new THREE.MeshLambertMaterial({color: 0x0000ff}))
     );
 }

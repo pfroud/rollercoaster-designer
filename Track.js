@@ -421,4 +421,5 @@ window.onload = function (){
         new Piece(TRACK_TYPES.DOWN_TO_FLAT)
     ]);
     scene.add(TRACK.debugSphere);
+
 };
