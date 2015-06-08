@@ -57,6 +57,12 @@ var testingButtonJson = {
     RightSmall: function(){
         TRACK.insertPiece(new Piece(TRACK_TYPES.TURN_RIGHT_SMALL));
     },
+    LeftBig: function(){
+        TRACK.insertPiece(new Piece(TRACK_TYPES.TURN_LEFT_BIG));
+    },
+    RightBig: function(){
+        TRACK.insertPiece(new Piece(TRACK_TYPES.TURN_RIGHT_BIG));
+    },
     Delete: function(){
         TRACK.deletePiece();
     },
