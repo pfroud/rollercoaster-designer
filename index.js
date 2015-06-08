@@ -4,14 +4,14 @@ var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase 
 
 /*Use if changing SCALE.
  Sets the size of the skybox, ground plane, and orthographic camera view size.*/
-var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 500);
+var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 1000);
 
 var scene = new THREE.Scene();
 
 if (CAMERA_PERSPECTIVE) {
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 } else {
-    var viewSize = WORLD_SIZE / 2;
+    var viewSize = WORLD_SIZE / 3;
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 }
