@@ -36,6 +36,8 @@ function TrackConst() {
     this.DOWN_TO_FLAT = this.downToFlat();
     this.TURN_LEFT_SMALL = this.turnLeftSmall();
     this.TURN_RIGHT_SMALL = this.turnRightSmall();
+    this.TURN_LEFT_BIG = this.turnLeftBig();
+    this.TURN_RIGHT_BIG = this.turnRightBig();
 
     // END OF TRACK DECLARATIONS
 
@@ -57,6 +59,8 @@ TrackConst.prototype.scale = function(){
     this.DOWN_TO_FLAT.scale();
     this.TURN_LEFT_SMALL.scale();
     this.TURN_RIGHT_SMALL.scale();
+    this.TURN_LEFT_BIG.scale();
+    this.TURN_RIGHT_BIG.scale();
 };
 
 /*
@@ -263,7 +267,7 @@ TrackConst.prototype.downToFlat = function (){
 TrackConst.prototype.turnLeftSmall =  function() {
     var turnLeftSmall = new TrackType();
     turnLeftSmall.name = "turn left small";
-    turnLeftSmall.filename = "modelJS/turnLeftSmall.json"
+    turnLeftSmall.filename = "modelJS/turnLeftSmall.json";
     turnLeftSmall.size = {
         x: 113.99999745190144,
         y: 16.799999624490738,
@@ -338,6 +342,89 @@ TrackConst.prototype.turnRightSmall =  function() {
 
     return turnRightSmall;
 };
+
+TrackConst.prototype.turnLeftBig = function (){
+    var turnLeftBig = new TrackType();
+    turnLeftBig.name = "turn left big";
+    turnLeftBig.filename = "modelJS/turnLeftBig.json";
+    turnLeftBig.size = {
+        x: 185.99999584257603,
+        y: PIECE_HEIGHT,
+        z: 191.25699572507293
+    };
+    turnLeftBig.advanceAxis = {
+        x: 1.0,
+        y: 0.0,
+        z: -1.0
+    };
+    turnLeftBig.directionChange = "left";
+
+    var support1 = new SupportDataObj();
+    support1.x = 6;
+    support1.z = PIECE_WIDTH / 2;
+    support1.heightOffset = 2;
+    turnLeftBig.supportData.push(support1);
+
+    console.log("left turn support 1 pushed");
+
+    var support2 = new SupportDataObj();
+    support2.x = turnLeftBig.size.x - (PIECE_WIDTH / 2);
+    support2.z = turnLeftBig.size.z - 6;
+    support2.heightOffset = 2;
+    turnLeftBig.supportData.push(support2);
+
+    console.log("left turn support data 2 pushed");
+    console.log(turnLeftBig.supportData);
+
+    return turnLeftBig;
+
+
+};
+
+TrackConst.prototype.turnRightBig = function (){
+    var turnRightBig = new TrackType();
+    turnRightBig.name = "turn right big";
+    turnRightBig.filename = "modelJS/turnRightBig.json";
+    turnRightBig.size = {
+        x: 185.99999584257603,
+        y: PIECE_HEIGHT,
+        z: 191.25699572507293
+    };
+
+    turnRightBig.startOffset.z = (turnRightBig.size.z - this.FLAT.size.z) * -1;
+    turnRightBig.endOffset.x =  this.FLAT.size.z * (-1);
+
+    turnRightBig.advanceAxis = {
+        x: 1.0,
+        y: 0.0,
+        z: 0.0
+    };
+    turnRightBig.directionChange = "right";
+
+    var support1 = new SupportDataObj();
+    support1.x = 6;
+    support1.z = turnRightBig.size.z - (PIECE_WIDTH / 2);
+    support1.heightOffset = 2;
+    turnRightBig.supportData.push(support1);
+
+    console.log("left turn support 1 pushed");
+
+    var support2 = new SupportDataObj();
+    support2.x = turnRightBig.size.x - (PIECE_WIDTH / 2);
+    support2.z = 6;
+    support2.heightOffset = 2;
+    turnRightBig.supportData.push(support2);
+
+    console.log("left turn support data 2 pushed");
+    console.log(turnRightBig.supportData);
+
+
+    return turnRightBig;
+
+
+};
+
+
 
 /**
  * TrackType is a small class that has many of the fields of the class Piece,

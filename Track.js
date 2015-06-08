@@ -409,15 +409,16 @@ Track.prototype.toggleBoxes = function () {
 // FOR DEBUG
 window.onload = function (){
     TRACK.insertPiece([
-        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-        new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
+        new Piece(TRACK_TYPES.TURN_LEFT_BIG)
+        /*new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.TURN_RIGHT_SMALL)
         new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_UP),
         new Piece(TRACK_TYPES.UP),
         new Piece(TRACK_TYPES.UP_TO_FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_DOWN),
         new Piece(TRACK_TYPES.DOWN),
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT)
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT)*/
     ]);
     scene.add(TRACK.debugSphere);
 };
