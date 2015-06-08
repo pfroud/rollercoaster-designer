@@ -32,15 +32,12 @@ Gui.prototype.flatTrack = function (){
     }
 
     // if we not on a flat place, make it flat
-    if (this.prevPiece.type == TRACK_TYPES.UP ||
-        this.prevPiece.type == TRACK_TYPES.FLAT_TO_UP
-    ){
+    if (this.isUp()){
         piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
         TRACK.insertPiece(piece);
         return;
     }
-    if(this.prevPiece.type == TRACK_TYPES.DOWN ||
-        this.prevPiece.type == TRACK_TYPES.FLAT_TO_DOWN) {
+    if(this.isDown()) {
         piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
         TRACK.insertPiece(piece);
         return;
@@ -59,8 +56,7 @@ Gui.prototype.insertUp = function(){
     var piece;
 
     // if the previous piece is valid insert a new one
-    if (this.prevPiece.type == TRACK_TYPES.FLAT_TO_UP ||
-        this.prevPiece.type == TRACK_TYPES.UP
+    if (this.isUp();
     ){
         piece = new Piece(TRACK_TYPES.UP);
     }
@@ -71,9 +67,7 @@ Gui.prototype.insertUp = function(){
     }
 
     // if it's down, make it go more up
-    if (this.prevPiece.type == TRACK_TYPES.DOWN ||
-        this.prevPiece.type == TRACK_TYPES.FLAT_TO_DOWN
-    ){
+    if (this.isDown()){
         piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
     }
 
@@ -132,7 +126,7 @@ Gui.prototype.insertRightSmall = function(){
 };
 
 
-// PRIVATE FUNCTION ===========================================================
+// PRIVATE FUNCTIONS ===========================================================
 /**
  * Private function used to determine
  * @returns {boolean} true if the previous piece is flat, false otherwise
@@ -149,8 +143,30 @@ Gui.prototype.isFlat = function(){
         TRACK_TYPES.TURN_RIGHT_SMALL
     ];
 
-    for (var i = 0; i < flatTypes.length; i++){
-        if (this.prevPiece.type == flatTypes[i])
+    return this.checkType(flatTypes);
+};
+
+Gui.prototype.isUp = function(){
+    var upTypes = [
+        TRACK_TYPES.UP,
+        TRACK_TYPES.FLAT_TO_UP
+    ];
+
+    return this.checkType(upTypes);
+};
+
+Gui.prototype.isDown = function(){
+    var upTypes = [
+        TRACK_TYPES.DOWN,
+        TRACK_TYPES.FLAT_TO_DOWN
+    ];
+
+    return this.checkType(upTypes);
+};
+
+Gui.prototype.checkType = function(types){
+    for (var i = 0; i < types.length; i++){
+        if (this.prevPiece.type == types[i])
             return true;
     }
     return false;
