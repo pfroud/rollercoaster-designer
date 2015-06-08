@@ -56,8 +56,7 @@ Gui.prototype.insertUp = function(){
     var piece;
 
     // if the previous piece is valid insert a new one
-    if (this.isUp();
-    ){
+    if (this.isUp()){
         piece = new Piece(TRACK_TYPES.UP);
     }
 
@@ -118,11 +117,35 @@ Gui.prototype.insertDown = function (){
 };
 
 Gui.prototype.insertLeftSmall = function(){
+    this.updateType();
+    var piece;
 
+    if (this.isUp()){
+        piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
+        TRACK.insertPiece(piece);
+    }
+    if (this.isDown()){
+        piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
+        TRACK.insertPiece(piece);
+    }
+    piece = new Piece(TRACK_TYPES.TURN_LEFT_SMALL);
+    TRACK.insertPiece(piece);
 };
 
 Gui.prototype.insertRightSmall = function(){
+    this.updateType();
+    var piece;
 
+    if (this.isUp()){
+        piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
+        TRACK.insertPiece(piece);
+    }
+    if (this.isDown()){
+        piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
+        TRACK.insertPiece(piece);
+    }
+    piece = new Piece(TRACK_TYPES.TURN_RIGHT_SMALL);
+    TRACK.insertPiece(piece);
 };
 
 
