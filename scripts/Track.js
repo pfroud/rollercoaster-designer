@@ -433,12 +433,7 @@ Track.prototype.toggleSupports = function () {
 };
 
 // FOR DEBUG
-<<<<<<< HEAD:scripts/Track.js
-window.onload = function (){
-
-=======
 window.onload = function () {
->>>>>>> 285645eed0183b3761da6c0bd8f3f1132253f68c:Track.js
     TRACK.insertPiece([
         //new Piece(TRACK_TYPES.TURN_LEFT_BIG),
         //new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
