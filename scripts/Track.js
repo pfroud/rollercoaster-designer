@@ -152,7 +152,7 @@ Track.prototype.insertPiece = function (piece) {
 
             // recursive call to place the next piece of the array
             if (recur)track.insertPiece(piece);
-            if (lastOne) curve();
+            if (lastOne) generateCurve();
 
         }
     );
@@ -436,6 +436,7 @@ Track.prototype.toggleSupports = function () {
 window.onload = function () {
     TRACK.insertPiece([
         new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.TURN_RIGHT_BIG),
         new Piece(TRACK_TYPES.FLAT),
         //new Piece(TRACK_TYPES.TURN_LEFT_BIG),
         new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),

@@ -32,11 +32,11 @@ var sc = 0.01;
  new THREE.Vector3(10, 0, 10)
  ]*/
 
-var array = [];
-var ps = TRACK.pieces;
-var curr, x, y, z;
 
-function curve() {
+function generateCurve() {
+    var array = [];
+    var ps = TRACK.pieces;
+    var curr, x, y, z;
 
     for (var i = 0; i < ps.length; i++) {
         curr = ps[i];
@@ -124,8 +124,21 @@ function curve() {
 
     }
 
+    var curve = new THREE.SplineCurve3(array);
     scene.add(new THREE.Mesh(
-            new THREE.TubeGeometry(new THREE.SplineCurve3(array), 50, 0.015, 10, false),
+            new THREE.TubeGeometry(curve, 50, 0.015, 10, false),
             new THREE.MeshLambertMaterial({color: 0x0000ff}))
     );
+    return curve;
+}
+
+animateOnCurve(generateCurve)();
+
+function animateOnCurve(curve) {
+    var amountOfPoints = 100;
+    for (var i = 0; i < amountOfPoints; i += 0.5) {
+        var t = curve.getUtoTmapping(i / amountOfPoints);
+        var position = curve.getPoint(t);
+        var rotation = curve.getTangent(t);
+    }
 }
