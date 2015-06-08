@@ -22,10 +22,16 @@ var camDist = WORLD_SIZE / (CAMERA_PERSPECTIVE ? 3 : 1);
 camera.position.x = camera.position.y = camera.position.z = camDist;
 camera.lookAt(0, 0, 0);
 
+// Container for the HTML5 canvas
+var container = document.getElementById( 'canvas' );
+document.body.appendChild( container );
+
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight); //make canvas take up whole screen
-document.body.appendChild(renderer.domElement);
+
+// appending it to the child
+container.appendChild( renderer.domElement );
 
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 

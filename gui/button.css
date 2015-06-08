@@ -27,9 +27,8 @@ http://livetools.uiparade.com/
     vertical-align: middle;
 
     /* MY TINKERING ========================================================= */
-    position:absolute;
-    top:100%;
-    margin-top: -40px;
+    position:relative;
+    top:10px;
 }
 .button:hover {
     border: 1px solid #0a3c59;

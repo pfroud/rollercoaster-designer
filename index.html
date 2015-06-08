@@ -1,43 +1,71 @@
 <html>
-	<head>
-		<title>Roller coaster</title>
-        <link rel="icon"          type="image/x-icon" href="rc2.ico" />
-        <link rel="shortcut icon" type="image/x-icon" href="rc2.ico" />
-		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-		</style>
+<head>
+    <title>Roller coaster</title>
+    <link rel="icon" type="image/x-icon" href="rc2.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="rc2.ico"/>
 
-        <!-- GUI stylesheets -->
-        <link rel="stylesheet" type="text/css" href="gui/bar.css">
-        <link rel="stylesheet" type="text/css" href="gui/button.css">
-        <link rel="stylesheet" type="text/css" href="gui/ribbon.css">
-        <link rel="stylesheet" type="text/css" href="gui/inset.css">
-	</head>
-	<body>
-        <!-- Libraries -->
-        <script src="lib/dat.gui.js"></script>
-        <script src="lib/three.js"></script>
-        <script src="lib/OrbitControls.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
 
-        <!-- our files -->
-        <script src="gui/gui.js"></script>
-        <script src="index.js"></script>
-        <script src="skybox.js"></script>
+        canvas {
+            width: 100%;
+            height: 100%;
+            position: static; /* fixed or static */
+        }
+    </style>
 
-        <!-- constants and global variables -->
-        <script src="constant.js"></script>
+    <!-- GUI stylesheets -->
+    <link rel="stylesheet" type="text/css" href="gui/bar.css">
+    <link rel="stylesheet" type="text/css" href="gui/button.css">
+    <link rel="stylesheet" type="text/css" href="gui/ribbon.css">
+    <link rel="stylesheet" type="text/css" href="gui/inset.css">
 
-        <!-- debug stuff -->
-        <script src="buttons.js"></script>
+</head>
+<body>
 
-        <!-- Track Code -->
-        <script src="Support.js"></script>
-        <script src="Piece.js"></script>
-        <script src="Track.js"></script>
-        <script src="Cart.js"></script>
+<!-- bar at the top -->
+<ul>
+    <li id="testButton" class="button">
+        <img src="images/Down.png" style="width:20px;height:20px;">
+    </li>
+    <li id="testButton2" class="button">
+        <img src="images/Down.png" style="width:20px;height:20px;">
+    </li>
+    <li id="testButton3" class="button">
+        <img src="images/Down.png" style="width:20px;height:20px;">
+    </li>
+</ul>
 
-        <!-- GUI java script -->
-        <script src="gui/gui.js"></script>
-    </body>
+<div id="canvas"></div>
+<!-- Libraries -->
+<script src="lib/jquery-2.1.4.js"></script>
+<!--script src="lib/dat.gui.js"></script-->
+<script src="lib/three.js"></script>
+<script src="lib/OrbitControls.js"></script>
+
+<!-- our files -->
+<script src="gui/gui.js"></script>
+<script src="scripts/index.js"></script>
+<script src="scripts/skybox.js"></script>
+
+<!-- constants and global variables -->
+<script src="scripts/constant.js"></script>
+
+<!-- debug stuff -->
+<!--script src="buttons.js"></script>
+
+<!-- Track Code -->
+<script src="scripts/Support.js"></script>
+<script src="scripts/Piece.js"></script>
+<script src="scripts/Track.js"></script>
+<script src="scripts/Cart.js"></script>
+
+<!-- GUI java script -->
+<script src="gui/gui.js"></script>
+
+
+</body>
 </html>
