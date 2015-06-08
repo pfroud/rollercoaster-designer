@@ -118,34 +118,30 @@ Gui.prototype.insertDown = function (){
 
 Gui.prototype.insertLeftSmall = function(){
     this.updateType();
-    var piece;
+    var pieces =  [];
 
     if (this.isUp()){
-        piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
-        TRACK.insertPiece(piece);
+        pieces.push(new Piece(TRACK_TYPES.UP_TO_FLAT));
     }
     if (this.isDown()){
-        piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
-        TRACK.insertPiece(piece);
+        pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     }
-    piece = new Piece(TRACK_TYPES.TURN_LEFT_SMALL);
-    TRACK.insertPiece(piece);
+    pieces.push(new Piece(TRACK_TYPES.TURN_LEFT_SMALL));
+    TRACK.insertPiece(pieces);
 };
 
 Gui.prototype.insertRightSmall = function(){
     this.updateType();
-    var piece;
+    var pieces =  [];
 
     if (this.isUp()){
-        piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
-        TRACK.insertPiece(piece);
+        pieces.push(new Piece(TRACK_TYPES.UP_TO_FLAT));
     }
     if (this.isDown()){
-        piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
-        TRACK.insertPiece(piece);
+        pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     }
-    piece = new Piece(TRACK_TYPES.TURN_RIGHT_SMALL);
-    TRACK.insertPiece(piece);
+    pieces.push(new Piece(TRACK_TYPES.TURN_RIGHT_SMALL));
+    TRACK.insertPiece(pieces);
 };
 
 
