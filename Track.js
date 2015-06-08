@@ -231,25 +231,22 @@ Track.prototype.advanceCurrent = function () {
 
     // here's where the magic happens, advances x, y, and z based on the
     // correct direction. Note that all that changes is dx, and dz.
+    this.currentY += dy;
     switch (this.facing) {
         case "forward":
             this.currentX += dx;
-            this.currentY += dy;
             this.currentZ += dz;
             break;
         case "left":
             this.currentZ -= dx;
-            this.currentY += dy;
             this.currentX += dz;
             break;
         case "right":
             this.currentZ += dx;
-            this.currentY += dy;
             this.currentX -= dz;
             break;
         case "back":
             this.currentX -= dx;
-            this.currentY += dy;
             this.currentZ -= dz;
             break;
         default:
@@ -438,9 +435,10 @@ Track.prototype.toggleSupports = function () {
 // FOR DEBUG
 window.onload = function () {
     TRACK.insertPiece([
-        new Piece(TRACK_TYPES.TURN_LEFT_BIG),
-        //new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-        //new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
+        //new Piece(TRACK_TYPES.TURN_LEFT_BIG),
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
         new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_UP),
         new Piece(TRACK_TYPES.UP),

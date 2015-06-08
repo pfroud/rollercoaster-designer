@@ -40,9 +40,36 @@ function curve() {
 
     for (var i = 0; i < ps.length; i++) {
         curr = ps[i];
-        x = curr.x + curr.centerOffset.x;
+
+        console.log(curr.facing);
+
         y = curr.y + curr.centerOffset.y;
-        z = curr.z + curr.centerOffset.z;
+        switch (curr.facing) {
+            case "forward":
+                x = curr.x + curr.centerOffset.z;
+                z = curr.z + curr.centerOffset.x;
+                break;
+
+            case "left":
+                x = curr.x + curr.centerOffset.x;
+                z = curr.z + curr.centerOffset.z;
+
+                break;
+            case "right":
+                x = curr.x - curr.centerOffset.x;
+                z = curr.z - curr.centerOffset.z;
+                break;
+            case "back":
+                x = curr.x - curr.centerOffset.z;
+                z = curr.z - curr.centerOffset.x;
+                break;
+            default:
+                throw "ERROR: reached default case! Time to debug!"
+        }
+
+
+
+
 
         //debugger;
         array.push(new THREE.Vector3(x, y, z));
