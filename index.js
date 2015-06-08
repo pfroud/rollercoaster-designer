@@ -47,15 +47,16 @@ scene.add(directionalLight);
 // Y height of ground plane
 var GROUND_HEIGHT = -WORLD_SIZE / 5;
 
+var GROUND_PLANE;
 //ground plane
 //the callback function is called when the texture is done loading
 var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function () {
-    var groundPlane = new THREE.Mesh(new THREE.PlaneBufferGeometry(WORLD_SIZE, WORLD_SIZE, 1, 1),
+    GROUND_PLANE = new THREE.Mesh(new THREE.PlaneBufferGeometry(WORLD_SIZE, WORLD_SIZE, 1, 1),
         new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
-    groundPlane.rotateX(Math.PI / -2); //rotate so it's horizontal
-    groundPlane.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
+    GROUND_PLANE.rotateX(Math.PI / -2); //rotate so it's horizontal
+    GROUND_PLANE.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
     // Z is translated instead of Y because the mesh is rotated.
-    scene.add(groundPlane);
+    scene.add(GROUND_PLANE);
 
 
 });
