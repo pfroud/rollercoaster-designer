@@ -116,6 +116,10 @@ Gui.prototype.insertDown = function (){
 
 };
 
+/**
+ * Inserts a small left turn, if the track isn't flat it inserts a piece to make
+ * it flat before it inserts the turn
+ */
 Gui.prototype.insertLeftSmall = function(){
     this.updateType();
     var pieces =  [];
@@ -130,6 +134,10 @@ Gui.prototype.insertLeftSmall = function(){
     TRACK.insertPiece(pieces);
 };
 
+/**
+ * Inserts a small left turn, if the track isn't flat it inserts a piece to make
+ * it flat before it inserts the turn
+ */
 Gui.prototype.insertRightSmall = function(){
     this.updateType();
     var pieces =  [];
@@ -147,7 +155,7 @@ Gui.prototype.insertRightSmall = function(){
 
 // PRIVATE FUNCTIONS ===========================================================
 /**
- * Private function used to determine
+ * Private function used to determine if the previous piece is flat
  * @returns {boolean} true if the previous piece is flat, false otherwise
  */
 Gui.prototype.isFlat = function(){
@@ -165,6 +173,11 @@ Gui.prototype.isFlat = function(){
     return this.checkType(flatTypes);
 };
 
+/**
+ * Private function used to determine if the previous piece is going up
+ * @returns {boolean} true if the previous piece is going up, false otherwise
+ * @private
+ */
 Gui.prototype.isUp = function(){
     var upTypes = [
         TRACK_TYPES.UP,
@@ -174,6 +187,11 @@ Gui.prototype.isUp = function(){
     return this.checkType(upTypes);
 };
 
+/**
+ * Private function used to determine if the previous piece is going down
+ * @returns {boolean} true if the previous piece is going down, false otherwise
+ * @private
+ */
 Gui.prototype.isDown = function(){
     var upTypes = [
         TRACK_TYPES.DOWN,
@@ -183,6 +201,7 @@ Gui.prototype.isDown = function(){
     return this.checkType(upTypes);
 };
 
+// helper function for isDown
 Gui.prototype.checkType = function(types){
     for (var i = 0; i < types.length; i++){
         if (this.prevPiece.type == types[i])
