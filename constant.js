@@ -81,7 +81,7 @@ TrackConst.prototype.flat = function(){
     };
     flat.centerOffset = {
         x: 0,
-        y: 0,
+        y: 10*SCALE,
         z: 0
     };
     flat.name = "Flat";
@@ -113,7 +113,7 @@ TrackConst.prototype.flatToUp = function() {
     };
     flatToUp.centerOffset = {
         x: 0,
-        y: 0,
+        y: 10*SCALE,
         z: 0
     };
     flatToUp.directionChange = "none";
@@ -216,7 +216,7 @@ TrackConst.prototype.flatToDown = function(){
     };
     flatToDown.centerOffset = {
         x: 0,
-        y: 0,
+        y: 20*SCALE,
         z: 0
     };
     flatToDown.startOffset.y = (this.FLAT.size.y + 0.2);
@@ -252,7 +252,7 @@ TrackConst.prototype.down = function(){
     };
     down.centerOffset = {
         x: 0,
-        y: 0,
+        y: 50*SCALE,
         z: 0
     };
     down.directionChange = "none";
@@ -279,7 +279,7 @@ TrackConst.prototype.downToFlat = function (){
     };
     downToFlat.centerOffset = {
         x: 0,
-        y: 0,
+        y: 35*SCALE,
         z: 0
     };
     downToFlat.advanceAxis.x = 1;
