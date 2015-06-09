@@ -1,26 +1,28 @@
 /*************************** SETUP *********************************/
 var SCALE = 0.01;
-var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase if ortho camera is used
+var CAMERA_PERSPECTIVE = true; //true if the perspective camera is used, flase if ortho camera is used
 
 var loaderReady = true; // prevents user from pressing buttons too fast
 
 /*Use if changing SCALE.
  Sets the size of the skybox, ground plane, and orthographic camera view size.*/
-var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 1000);
+//var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 1000);
+var WORLD_SIZE = 50;
 
 var scene = new THREE.Scene();
 
 if (CAMERA_PERSPECTIVE) {
-    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
 } else {
-    var viewSize = WORLD_SIZE / 3;
+    var viewSize = 5;
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 }
 /* Camera distance only does anything with perspective camera.
 With ortho camera, things will get cut off if camera is too close, but otherwise there's no difference. */
 
-var camDist = WORLD_SIZE / (CAMERA_PERSPECTIVE ? 3 : 1);
+//var camDist = WORLD_SIZE / (CAMERA_PERSPECTIVE ? 10 : 1);
+var camDist = 5;
 camera.position.x = camera.position.y = camera.position.z = camDist;
 //camera.position.y = camDist;
 camera.lookAt(0, 0, 0);
@@ -39,8 +41,8 @@ container.appendChild( renderer.domElement );
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 
-scene.add(new THREE.AxisHelper(0.5));
-console.log("Red is X.\nGreen is Y.\nBlue is Z.");
+/*scene.add(new THREE.AxisHelper(0.5));
+console.log("Red is X.\nGreen is Y.\nBlue is Z.");*/
 
 
 // directional lighting
@@ -56,7 +58,7 @@ scene.add(dirLight2);
 //scene.add(new THREE.DirectionalLightHelper(dirLight2));
 
 // Y height of ground plane
-var GROUND_HEIGHT = -WORLD_SIZE / 5;
+var GROUND_HEIGHT = -5;
 
 var GROUND_PLANE;
 //ground plane

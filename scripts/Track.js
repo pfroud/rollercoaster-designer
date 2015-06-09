@@ -4,7 +4,7 @@
 var TRACK = new Track();
 
 //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
-const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: true}); //set transparent to true to enable opacity
+const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff"}); //set transparent to true to enable opacity
 const MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
 
 /**

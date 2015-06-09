@@ -51,24 +51,24 @@ Curve.prototype.generate = function () {
 
         vectorArray.push(new THREE.Vector3(x, y, z)); //add the point to the curve
 
-        var visiblePoint = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10),
+        /*var visiblePoint = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10),
             new THREE.MeshBasicMaterial({color: 0xffffff})); //create a ball so we can see where the curve goes.
         visiblePoint.position.x = x;
         visiblePoint.position.y = y;
         visiblePoint.position.z = z;
         scene.add(visiblePoint);
-        this.ballArray.push(visiblePoint);
+        this.ballArray.push(visiblePoint);*/
 
         if (curr.extraPoints.length > 0) addExtraPoints(this); //turn pieces have two extra points to make curve smooth.
     }
 
     this.spline = new THREE.SplineCurve3(vectorArray); //make the curve from an array of THREE.Vector3's.
-    this.curveMesh = new THREE.Mesh(
+    /*this.curveMesh = new THREE.Mesh(
         //  TubeGeometry(path, segments, radius, radialSegments, closed)
         new THREE.TubeGeometry(this.spline, 1000, 0.015, 10, false),
         new THREE.MeshLambertMaterial({color: 0x0000ff}));
 
-    scene.add(this.curveMesh);
+    scene.add(this.curveMesh);*/
     animReady = true; //tell when the curve for animation is ready. Checked in the render function in index.js.
     this.generated = true;
 
@@ -112,7 +112,7 @@ Curve.prototype.generate = function () {
             vectorArray.push(new THREE.Vector3(x1, y, z1)); //add extra points to curve. notice that y isn't changed.
 
             //this colors the first and second extra point different colors. probably not needed any more.
-            var mat;
+           /* var mat;
             if (j == 0) {
                 mat = new THREE.MeshBasicMaterial({color: 0xff00ff});
             } else {
@@ -125,7 +125,7 @@ Curve.prototype.generate = function () {
             visiblePoint.position.y = y;
             visiblePoint.position.z = z1;
             scene.add(visiblePoint);
-            that.ballArray.push(visiblePoint);
+            that.ballArray.push(visiblePoint);*/
         }
     }
 };
