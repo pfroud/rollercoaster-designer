@@ -2,6 +2,8 @@
 var SCALE = 0.01;
 var CAMERA_PERSPECTIVE = false; //true if the perspective camera is used, flase if ortho camera is used
 
+var loaderReady = true; // prevents user from pressing buttons too fast
+
 /*Use if changing SCALE.
  Sets the size of the skybox, ground plane, and orthographic camera view size.*/
 var WORLD_SIZE = SCALE * (CAMERA_PERSPECTIVE ? 1000 : 1000);
