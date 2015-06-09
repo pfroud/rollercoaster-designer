@@ -55,6 +55,7 @@ function animStep() {
             cart.position.y = cartPoint.y;
             cart.position.z = cartPoint.z;
             cart.rotation.y = REF_POINTS.getFlatAngle();
+            cart.rotation.x = REF_POINTS.getUpAngle();
         }
     }
 }
@@ -109,6 +110,9 @@ RefPoints.prototype.getFlatAngle = function(){
 RefPoints.prototype.getUpAngle = function(){
     var dy = this.point1.position.y - this.point2.position.y;
     var dz = this.point1.position.z - this.point2.position.z;
+
+    return  -1 * Math.atan(dy/dz);
+
 
 };
 
