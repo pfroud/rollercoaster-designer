@@ -1,12 +1,11 @@
 var jsonLoader = new THREE.JSONLoader(); //used to load the json file
-var sc = 0.01; //amount to scale the cart by
 
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
 
 jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-        cart.scale.set(sc, sc, sc);
+        cart.scale.set(SCALE, SCALE, SCALE);
         scene.add(cart);
         //scene.add(new THREE.BoxHelper(cart));
     }
@@ -155,7 +154,34 @@ function animStep() {
         //cart.rotation.x = rot.x;
         //cart.rotation.y = rot.y;
         cart.rotation.z = rot.z;
-
-
     }
 }
+
+/**
+ *
+ */
+function RefPoints (){
+
+    var material = new THREE.MeshBasicMaterial({color: 0xffff00});
+    var geometry = new THREE.SphereGeometry(.05, 32, 32);
+
+    this.point1 = new THREE.Mesh(geometry, material);
+    this.point2 = new THREE.Mesh(geometry, material);
+}
+
+function debugPoints(){
+    if (!REF_POINTS.point1.visible ||
+        !REF_POINTS.point2.visible) {
+        REF_POINTS.point1.visible = true;
+        REF_POINTS.point2.visible = true;
+    }
+}
+
+RefPoints.prototype.getAngle = function(){
+    var dx = this.point1.position.x - this.point2.position.x;
+    var dz = this.point1.position.z - this.point2.position.z;
+    return  Math.tan(dx / dz);
+};
+
+// global variable for the ref points
+var REF_POINTS = new RefPoints();
