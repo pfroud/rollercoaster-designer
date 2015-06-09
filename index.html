@@ -25,15 +25,27 @@
 
 <!-- bar at the top -->
 <ul id="topBar">
+
+    <li id="flatButton" onclick="GUI.flatTrack()">
+        <a href="#" class="tooltip">
+            <img src="images/Flat.png" style="width:20px;height:20px;">
+    <span>
+        <img class="callout" src="images/callout_black.gif" />
+        <strong>Flat Track</strong><br />
+        This will make a flat track for the train
+        or make the track more flat
+    </span>
+        </a>
+
+    </li>
     <li id="downButton" onclick="GUI.insertDown()">
+
         <img src="images/Down.png" style="width:20px;height:20px;">
     </li>
     <li id="upButton" onclick="GUI.insertUp()">
         <img src="images/Up.png" style="width:20px;height:20px;">
     </li>
-    <li id="flatButton" onclick="GUI.flatTrack()">
-        <img src="images/Flat.png" style="width:20px;height:20px;">
-    </li>
+
     <li id="leftBigButton" onclick="GUI.insertLeftBig()" style="
         background: #00ff00;">
         <img src="images/Left.png" style="width:20px;height:20px;">
