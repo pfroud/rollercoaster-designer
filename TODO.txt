@@ -1,15 +1,8 @@
 This is our little todo file for our project.
 
 Peter
-Train animation
 add extra points for transitional peices
 
 Jonathan
-Make UI stuff - editor 2D interface
-   has buttons to execute functions
-Piece guarding.
-Direction???
-Big turns
-
-Function to move track piece in three.js world
+Train animation
 
