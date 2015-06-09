@@ -134,8 +134,6 @@ RefPoints.prototype.rotateVertical = function(){
         return;
     }
     if (dz < 0 && dx < 0){
-        console.log("LOG");
-
         cart.rotation.z = Math.atan(dy/dz);
         return;
     }
