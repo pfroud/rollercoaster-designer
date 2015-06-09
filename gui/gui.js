@@ -28,7 +28,7 @@ Gui.prototype.flatTrack = function (){
         // insert since it's now flat, make it more flat
         piece = new Piece(TRACK_TYPES.FLAT);
         TRACK.insertPiece(piece);
-        return
+        return;
     }
 
     // if we not on a flat place, make it flat
