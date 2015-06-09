@@ -26,9 +26,22 @@
 <!-- bar at the top -->
 <ul id="topBar">
 
+
+    <li id="downButton" onclick="GUI.insertDown()">
+        <a href="#" class="tooltip">
+            <img src="images/slope-down.png" style="width:20px;height:20px;">
+    <span>
+        <img class="callout" src="images/callout_black.gif" />
+        <strong>Down Track</strong><br />
+        This will make a downward sloping track for the train
+        or make the track more downward
+    </span>
+        </a>
+    </li>
+
     <li id="flatButton" onclick="GUI.flatTrack()">
         <a href="#" class="tooltip">
-            <img src="images/Flat.png" style="width:20px;height:20px;">
+            <img src="images/slope-flat.png" style="width:20px;height:20px;">
     <span>
         <img class="callout" src="images/callout_black.gif" />
         <strong>Flat Track</strong><br />
@@ -38,38 +51,64 @@
         </a>
 
     </li>
-    <li id="downButton" onclick="GUI.insertDown()">
+
+    <li id="upButton" onclick="GUI.insertUp()">
         <a href="#" class="tooltip">
-            <img src="images/Down.png" style="width:20px;height:20px;">
+            <img src="images/slope-up.png" style="width:20px;height:20px;">
     <span>
         <img class="callout" src="images/callout_black.gif" />
-        <strong>Down Track</strong><br />
-        This will make a downward sloping track for the train
-        or make the track more downward
+        <strong>Up Track</strong><br />
+        This will make a upward sloping track for the train
+        or make the track more upward
     </span>
         </a>
 
-        <img src="images/slope-down.png" style="width:20px;height:20px;">
-    </li>
-    <li id="flatButton" onclick="GUI.flatTrack()">
-        <img src="images/slope-flat.png" style="width:20px;height:20px;">
-    </li>
-    <li id="upButton" onclick="GUI.insertUp()">
-        <img src="images/slope-up.png" style="width:20px;height:20px;">
     </li>
 
     <li id="leftBigButton" onclick="GUI.insertLeftBig()">
-        <img src="images/turn-left-big.png" style="width:20px;height:20px;">
+        <a href="#" class="tooltip">
+            <img src="images/turn-left-big.png" style="width:20px;height:20px;">
+    <span>
+        <img class="callout" src="images/callout_black.gif" />
+        <strong>Big Left Turn</strong><br />
+        This will make a large left turn
+    </span>
+        </a>
+
     </li>
     <li id="leftSmallButton" onclick="GUI.insertLeftSmall()">
-        <img src="images/turn-left-small.png" style="width:20px;height:20px;">
+        <a href="#" class="tooltip">
+            <img src="images/turn-left-small.png" style="width:20px;height:20px;">
+    <span>
+        <img class="callout" src="images/callout_black.gif" />
+        <strong>Small Left Turn</strong><br />
+        This will make a small left turn
+    </span>
+        </a>
+
     </li>
 
     <li id="rightSmallButton" onclick="GUI.insertRightSmall()">
-        <img src="images/turn-right-small.png" style="width:20px;height:20px;">
+        <a href="#" class="tooltip">
+            <img src="images/turn-right-small.png" style="width:20px;height:20px;">
+    <span>
+        <img class="callout" src="images/callout_black.gif" />
+        <strong>Small right Turn</strong><br />
+        This will make a small right turn
+    </span>
+        </a>
+
+
     </li>
-    <li id="rightBigButton" onclick="GUI.insertRightBig()" >
-        <img src="images/turn-right-big.png" style="width:20px;height:20px;">
+    <li id="rightBigButton" onclick="GUI.insertRightBig()">
+        <a href="#" class="tooltip">
+            <img src="images/turn-right-big.png" style="width:20px;height:20px;">
+    <span>
+        <img class="callout" src="images/callout_black.gif" />
+        <strong>Large Right Turn</strong><br />
+        This will make a large right turn
+    </span>
+        </a>
     </li>
 </ul>
 
