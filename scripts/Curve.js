@@ -83,16 +83,10 @@ Curve.prototype.generate = function () {
         for (var j = 0; j < curr.extraPoints.length; j++) { //iterate over the array of javascript objects
             offsetsObj = curr.extraPoints[j];
 
-            console.log(curr.facing);
-
-            console.log(offsetsObj);
-
-            var x1, z1;
+            var x1, z1; //values which get offset from the track piece origin
             switch (curr.facing) {
                 case "forward":
                     x1 = x + offsetsObj.x;
-                    console.log("x is", x);
-                    console.log("x1 is", x1);
                     z1 = z + offsetsObj.z;
                     break;
 
@@ -114,18 +108,10 @@ Curve.prototype.generate = function () {
                     throw "ERROR: reached default case! Time to debug!"
             }
 
-            var theY = y;
 
-            if (offsetsObj.y != 0) {
-                console.log("y offset is", offsetsObj.y);
-                theY = offsetsObj.y;
-            }
-            var vec = new THREE.Vector3(x1, theY, z1);
-            console.log(vec);
-            vectorArray.push(vec); //add extra points to curve. notice that y isn't changed.
+            vectorArray.push(new THREE.Vector3(x1, y, z1)); //add extra points to curve. notice that y isn't changed.
 
             //this colors the first and second extra point different colors. probably not needed any more.
-
             var mat;
             if (j == 0) {
                 mat = new THREE.MeshBasicMaterial({color: 0xff00ff});
@@ -136,7 +122,7 @@ Curve.prototype.generate = function () {
             //adds a colored ball so we can see where the curve goes
             visiblePoint = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 10), mat);
             visiblePoint.position.x = x1;
-            visiblePoint.position.y = theY;
+            visiblePoint.position.y = y;
             visiblePoint.position.z = z1;
             scene.add(visiblePoint);
             that.ballArray.push(visiblePoint);

@@ -7,8 +7,9 @@ jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         cart.scale.set(SCALE, SCALE, SCALE);
-        //scene.add(cart);
+        scene.add(cart);
         //cart.visible = false;
+        //scene.add(new THREE.BoxHelper(cart));
     }
 );
 

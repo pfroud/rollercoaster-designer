@@ -84,10 +84,7 @@ function Track() {
  * n times for an array of pieces of length n.
  */
 Track.prototype.insertPiece = function (piece) {
-    if(!loaderReady){ // prevent user from adding pieces too fast
-        console.warn("JSON loader not ready.");
-        return;
-    }
+    if(!loaderReady) return; // prevent user from adding pieces too fast
 
     // make function recursive in order to preserve order of tracks
     // TODO: use callbacks if we can instead
@@ -159,10 +156,11 @@ Track.prototype.insertPiece = function (piece) {
             bbox.visible = TRACK.boxes;
             track.advanceCurrent(); //moves where the next piece will go
 
-            loaderReady = true;
-
             // recursive call to place the next piece of the array
-            if (lastOne) CURVE.refresh();
+            if (lastOne){
+                CURVE.refresh();
+                loaderReady = true;
+            }
             if (recur)track.insertPiece(piece);
 
         }
@@ -455,12 +453,8 @@ Track.prototype.getJson = function () {
 
 window.onload = function () {
     TRACK.insertPiece([
-        new Piece(TRACK_TYPES.FLAT),
-        new Piece(TRACK_TYPES.FLAT_TO_UP),
-        new Piece(TRACK_TYPES.UP),
-        new Piece(TRACK_TYPES.UP_TO_FLAT),
-        new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT)
+        //new Piece(TRACK_TYPES.TURN_LEFT_BIG)
     ]);
     scene.add(TRACK.debugSphere);
 };//*/
