@@ -20,6 +20,7 @@ With ortho camera, things will get cut off if camera is too close, but otherwise
 
 var camDist = WORLD_SIZE / (CAMERA_PERSPECTIVE ? 3 : 1);
 camera.position.x = camera.position.y = camera.position.z = camDist;
+//camera.position.y = camDist;
 camera.lookAt(0, 0, 0);
 
 // Container for the HTML5 canvas
@@ -65,8 +66,6 @@ var tex = THREE.ImageUtils.loadTexture("texture/grass1.jpg", {}, function () {
     GROUND_PLANE.translateZ(GROUND_HEIGHT); //move down a tiny bit so track and axis helper draw on top of it.
     // Z is translated instead of Y because the mesh is rotated.
     scene.add(GROUND_PLANE);
-
-
 });
 
 
@@ -105,5 +104,4 @@ var render = function () {
 };
 render();
 
-/*************************** OTHER GLOBAL VARIABLES ******************/
 

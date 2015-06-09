@@ -2,6 +2,7 @@ This is our little todo file for our project.
 
 Peter
 Train animation
+add extra points for transitional peices
 
 Jonathan
 Make UI stuff - editor 2D interface

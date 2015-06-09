@@ -12,6 +12,7 @@ jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
 );
 
 var curve; // A THREE.SplineCurve3 object. Global so can be seen by function animStep().
+var curveMesh; //global so we can delete it easily...
 
 /**
  * Generate a 3D spline which goes through the middle of all the track pieces.
@@ -63,12 +64,12 @@ function generateCurve() {
     }
 
     curve = new THREE.SplineCurve3(vectorArray); //make the curve from an array of THREE.Vector3's.
+    curveMesh = new THREE.Mesh(
+        //  TubeGeometry(path, segments, radius, radialSegments, closed)
+        new THREE.TubeGeometry(curve, 1000, 0.015, 10, false),
+        new THREE.MeshLambertMaterial({color: 0x0000ff}));
 
-    scene.add(new THREE.Mesh(
-            //  TubeGeometry(path, segments, radius, radialSegments, closed)
-            new THREE.TubeGeometry(curve, 50, 0.015, 10, false),
-            new THREE.MeshLambertMaterial({color: 0x0000ff}))
-    );
+    scene.add(curveMesh);
     animReady = true; //tell when the curve for animation is ready. Checked in the render function in index.js.
 
 
