@@ -34,10 +34,19 @@
     <li id="flatButton" onclick="GUI.flatTrack()">
         <img src="images/Flat.png" style="width:20px;height:20px;">
     </li>
+    <li id="leftBigButton" onclick="GUI.insertLeftBig()" style="
+        background: #00ff00;">
+        <img src="images/Left.png" style="width:20px;height:20px;">
+    </li>
     <li id="leftSmallButton" onclick="GUI.insertLeftSmall()">
         <img src="images/Left.png" style="width:20px;height:20px;">
     </li>
+
     <li id="rightSmallButton" onclick="GUI.insertRightSmall()">
+        <img src="images/Right.png" style="width:20px;height:20px;">
+    </li>
+    <li id="rightBigButton" onclick="GUI.insertRightBig()" style="
+        background: #00ff00;">
         <img src="images/Right.png" style="width:20px;height:20px;">
     </li>
     <li id="deleteButton" onclick="TRACK.deletePiece()">
@@ -46,6 +55,9 @@
     <li id="deleteAllButton" onclick="TRACK.deleteAll()" style="
         background: #ff0000;">
         <img src="images/Delete_Icon.png" style="width:20px;height:20px;">
+    </li>
+    <li id="randomButton" onclick="genRandTrack(10)">
+        <img src="images/Random.png" style="width:20px;height:20px;">
     </li>
 </ul>
 

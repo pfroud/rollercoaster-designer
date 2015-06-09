@@ -135,6 +135,42 @@ Gui.prototype.insertLeftSmall = function(){
 };
 
 /**
+ * Inserts a big left turn, if the track isn't flat it inserts a piece to make
+ * it flat before it inserts the turn
+ */
+Gui.prototype.insertLeftBig = function(){
+    this.updateType();
+    var pieces =  [];
+
+    if (this.isUp()){
+        pieces.push(new Piece(TRACK_TYPES.UP_TO_FLAT));
+    }
+    if (this.isDown()){
+        pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
+    }
+    pieces.push(new Piece(TRACK_TYPES.TURN_LEFT_BIG));
+    TRACK.insertPiece(pieces);
+};
+
+/**
+ * Inserts a big right turn, if the track isn't flat it inserts a piece to make
+ * it flat before it inserts the turn
+ */
+Gui.prototype.insertRightBig = function(){
+    this.updateType();
+    var pieces =  [];
+
+    if (this.isUp()){
+        pieces.push(new Piece(TRACK_TYPES.UP_TO_FLAT));
+    }
+    if (this.isDown()){
+        pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
+    }
+    pieces.push(new Piece(TRACK_TYPES.TURN_RIGHT_BIG));
+    TRACK.insertPiece(pieces);
+};
+
+/**
  * Inserts a small left turn, if the track isn't flat it inserts a piece to make
  * it flat before it inserts the turn
  */
@@ -151,6 +187,7 @@ Gui.prototype.insertRightSmall = function(){
     pieces.push(new Piece(TRACK_TYPES.TURN_RIGHT_SMALL));
     TRACK.insertPiece(pieces);
 };
+
 
 
 // PRIVATE FUNCTIONS ===========================================================

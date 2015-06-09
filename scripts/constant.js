@@ -449,8 +449,9 @@ TrackConst.prototype.turnLeftBig = function () {
     turnLeftBig.supportData.push(support2);
 
     var support3 = new SupportDataObj();
-    support3.x = turnLeftBig.size.x / 2 - (PIECE_WIDTH / 2);
-    support3.z = turnLeftBig.size.z / 2 - (PIECE_WIDTH / 2);
+    // magic numbers... I'm so sorry. Doing something better would be math
+    support3.x = turnLeftBig.size.x / 2 + (PIECE_WIDTH / 2) + 6;
+    support3.z = turnLeftBig.size.z / 4 + (PIECE_WIDTH / 2);
     support3.heightOffset = 2;
     turnLeftBig.supportData.push(support3);
 
