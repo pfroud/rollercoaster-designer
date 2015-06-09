@@ -3,7 +3,7 @@ var jsonLoader = new THREE.JSONLoader(); //used to load the json file
 
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
 
-jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
+/*jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         cart.scale.set(SCALE, SCALE, SCALE);
@@ -11,7 +11,7 @@ jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
         //cart.visible = false;
         //scene.add(new THREE.BoxHelper(cart));
     }
-);
+);*/
 
 
 
