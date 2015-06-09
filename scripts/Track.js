@@ -89,7 +89,7 @@ Track.prototype.insertPiece = function (piece) {
     var recur = false;
     var lastOne = (piece.length == 1);
 
-    scene.remove(curveMesh);
+    //scene.remove(curveMesh);
 
     // if the argument is an array, shift the element off and recur
     if (Array.isArray(piece)) {
@@ -153,8 +153,8 @@ Track.prototype.insertPiece = function (piece) {
             track.advanceCurrent(); //moves where the next piece will go
 
             // recursive call to place the next piece of the array
+            if (lastOne) CURVE.generate();
             if (recur)track.insertPiece(piece);
-            if (lastOne) generateCurve();
 
         }
     );
@@ -437,7 +437,7 @@ Track.prototype.toggleSupports = function () {
 /**
  * This does not work. TypeError: converting circular structure to json.
  */
-Track.prototype.getJson = function() {
+Track.prototype.getJson = function () {
     return JSON.stringify(this.pieces);
 };
 
@@ -445,8 +445,8 @@ Track.prototype.getJson = function() {
 
 window.onload = function () {
     TRACK.insertPiece([
-        new Piece(TRACK_TYPES.FLAT),
-        new Piece(TRACK_TYPES.TURN_LEFT_BIG)
+        new Piece(TRACK_TYPES.FLAT)
+        //new Piece(TRACK_TYPES.TURN_LEFT_BIG)
     ]);
     scene.add(TRACK.debugSphere);
 };//*/

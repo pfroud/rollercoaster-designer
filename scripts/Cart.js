@@ -3,14 +3,14 @@ var jsonLoader = new THREE.JSONLoader(); //used to load the json file
 
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
 
-jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
+/*jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         cart.scale.set(SCALE, SCALE, SCALE);
         scene.add(cart);
         //scene.add(new THREE.BoxHelper(cart));
     }
-);
+);*/
 
 
 
@@ -29,13 +29,13 @@ function animStep() {
         steps += 0.1; //This also changes the speed. I don't know how it compares with amountOfPoints.
 
         var u = steps / amountOfPoints; // u is "relative position in curve according to arc length"? see three.js docs
-        var t = curve.getUtoTmapping(u); // t is between 0 and 1
-        var pos = curve.getPoint(t); // Returns a vector for point t of the curve where t is between 0 and 1
+        var t = TRACK.spline.getUtoTmapping(u); // t is between 0 and 1
+        var pos = TRACK.spline.getPoint(t); // Returns a vector for point t of the curve where t is between 0 and 1
         cart.position.x = pos.x;
         cart.position.y = pos.y;
         cart.position.z = pos.z;
 
-        var rot = curve.getTangent(t); // Returns a unit vector tangent at t. Could also do getTangentAt(u), same thing.
+        var rot = TRACK.spline.getTangent(t); // Returns a unit vector tangent at t. Could also do getTangentAt(u), same thing.
         //cart.rotation.x = rot.x;
         //cart.rotation.y = rot.y;
         cart.rotation.z = rot.z;

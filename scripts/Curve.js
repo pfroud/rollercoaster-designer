@@ -1,14 +1,19 @@
 "use strict";
 
+function Curve(){
+    this.spline; // A THREE.SplineCurve3 object.
+    this.curveMesh; //Mesh made from spline
+    this.ballArray = [];
+}
 
-var curve; // A THREE.SplineCurve3 object. Global so can be seen by function animStep().
-var curveMesh; //global so we can delete it easily...
+var CURVE = new Curve();
+
 
 /**
  * Generate a 3D spline which goes through the middle of all the track pieces.
  * Called at the end of insertPiece() in Track.js.
  */
-function generateCurve() {
+Curve.prototype.generate = function () {
     var vectorArray = []; //array of THREE.Vector3's which will construct the curve.
     var curr,//the current piece while we iterate over TRACK.pieces.
         x, y, z; //point to get added to the curve.
@@ -49,17 +54,18 @@ function generateCurve() {
         visiblePoint.position.y = y;
         visiblePoint.position.z = z;
         scene.add(visiblePoint);
+        this.ballArray.push(visiblePoint);
 
-        if (curr.extraPoints.length > 0) addExtraPoints(); //turn pieces have two extra points to make curve smooth.
+        if (curr.extraPoints.length > 0) addExtraPoints(this); //turn pieces have two extra points to make curve smooth.
     }
 
-    curve = new THREE.SplineCurve3(vectorArray); //make the curve from an array of THREE.Vector3's.
-    curveMesh = new THREE.Mesh(
+    this.spline = new THREE.SplineCurve3(vectorArray); //make the curve from an array of THREE.Vector3's.
+    this.curveMesh = new THREE.Mesh(
         //  TubeGeometry(path, segments, radius, radialSegments, closed)
-        new THREE.TubeGeometry(curve, 1000, 0.015, 10, false),
+        new THREE.TubeGeometry(this.spline, 1000, 0.015, 10, false),
         new THREE.MeshLambertMaterial({color: 0x0000ff}));
 
-    scene.add(curveMesh);
+    scene.add(this.curveMesh);
     animReady = true; //tell when the curve for animation is ready. Checked in the render function in index.js.
 
 
@@ -68,7 +74,7 @@ function generateCurve() {
      * curr.extraPoints is an array of javascript objects. For example [ {x:0, y:0}, {x:0, y:0} ]
      * The for loop iterates over the array. Each object represents one point.
      */
-    function addExtraPoints() {
+    function addExtraPoints(that) {
         var offsetsObj; //gets set to the object with the offsets for where to put the additional points
         for (var j = 0; j < curr.extraPoints.length; j++) { //iterate over the array of javascript objects
             offsetsObj = curr.extraPoints[j];
@@ -115,6 +121,26 @@ function generateCurve() {
             visiblePoint.position.y = y;
             visiblePoint.position.z = z1;
             scene.add(visiblePoint);
+            that.ballArray.push(visiblePoint);
         }
     }
-}
+};
+
+/**
+ *
+ */
+Curve.prototype.delete = function() {
+        scene.remove(this.curveMesh);
+
+        while(this.ballArray.length > 0){
+            scene.remove(this.ballArray.shift());
+        }
+};
+
+/**
+ *
+ */
+Curve.prototype.refresh = function() {
+    this.delete();
+    this.generate();
+};
