@@ -2,7 +2,7 @@
 var jsonLoader = new THREE.JSONLoader(); //used to load the json file
 var debugSphere;
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
-
+var SPEED = .1;
 jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
@@ -27,15 +27,16 @@ var amountOfPoints = 100; //Number of points to move over? Smaller number goes f
  */
 function animStep() {
     if (steps < amountOfPoints) {
-        steps += 1; //This also changes the speed. I don't know how it compares with amountOfPoints.
+        steps += SPEED; //This also changes the speed. I don't know how it compares with amountOfPoints.
 
 
         var u = steps / amountOfPoints; // u is "relative position in curve according to arc length"? see three.js docs
         
-        var u1 = (steps +10) / amountOfPoints;
+        var u1 = (steps + (20/TRACK.pieces.length)) / amountOfPoints;
         var u2 = u;
 
-        if ((steps + 10 ) / amountOfPoints > 1){
+        // loop back to the beginning if we are at the end
+        if (u1 > 1){
             steps = 0;
             return;
         }
@@ -50,18 +51,18 @@ function animStep() {
 
         var cartPoint = REF_POINTS.getMidpoint();
 
-        console.log(REF_POINTS.getFlatAngle());
-
         debugSphere.position.x = cartPoint.x;
         debugSphere.position.y = cartPoint.y;
         debugSphere.position.z = cartPoint.z;
 
         if (typeof cart !== "undefined"){
+            // update position
             cart.position.x = cartPoint.x;
             cart.position.y = cartPoint.y;
             cart.position.z = cartPoint.z;
-            cart.rotation.y = REF_POINTS.getFlatAngle();
-            cart.rotation.x = REF_POINTS.getUpAngle();
+
+            REF_POINTS.rotateHorizontal();
+            REF_POINTS.rotateVertical();
         }
     }
 }
@@ -98,28 +99,53 @@ function debugPoints(){
     }
 }
 
-RefPoints.prototype.getFlatAngle = function(){
+
+RefPoints.prototype.rotateHorizontal = function(){
     var dx = this.point1.position.x - this.point2.position.x;
+    var dy = this.point1.position.y - this.point2.position.y;
     var dz = this.point1.position.z - this.point2.position.z;
 
     var divide = dx / dz;
     var ret = Math.atan(divide);
 
-    if (dz > 0){
+    if (dz < 0){
         ret += Math.PI;
     }
-    ret += Math.PI/2;
+    ret -= Math.PI/2;
 
-    return ret;
+    cart.rotation.y = ret;
 };
 
-RefPoints.prototype.getUpAngle = function(){
+RefPoints.prototype.rotateVertical = function(){
+    var dx = this.point1.position.x - this.point2.position.x;
     var dy = this.point1.position.y - this.point2.position.y;
     var dz = this.point1.position.z - this.point2.position.z;
 
-    return  -1 * Math.atan(dy/dz);
+    if (dz < 0 && dx >= 0) {
+        cart.rotation.z = Math.atan(dy/dz);
+        cart.rotation.z *= -1;
+        return;
+    }
 
+    if (dz >= 0 && dx < 0) {
 
+        cart.rotation.z = Math.atan(dy/dx);
+        cart.rotation.z *= -1;
+        return;
+    }
+    if (dz < 0 && dx < 0){
+        console.log("LOG");
+
+        cart.rotation.z = Math.atan(dy/dz);
+        return;
+    }
+
+    //console.log(cart.rotation.z);
+    if (dz >= 0 && dx > 0){
+
+        cart.rotation.z = Math.atan(dy/dx);
+        return;
+    }
 };
 
 RefPoints.prototype.getMidpoint = function(){
