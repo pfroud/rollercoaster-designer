@@ -153,8 +153,9 @@ function animStep() {
 
         var t = curve.getUtoTmapping(steps / amountOfPoints);
         var pos = curve.getPoint(t);
-        box.position = pos;
-        //debugger;
+        box.position.x = pos.x;
+        box.position.y = pos.y;
+        box.position.z = pos.z;
 
         var rotation = curve.getTangent(t);
     }
