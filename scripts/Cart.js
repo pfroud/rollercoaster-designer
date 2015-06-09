@@ -4,33 +4,19 @@ const MATERIAL_TRAIN = new THREE.MeshLambertMaterial({color: "#00ff00"});
 var jsonLoader = new THREE.JSONLoader();
 var sc = 0.01;
 
-/*jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
- function createScene(geometry, materials) {
+var cart;
 
- // create the mesh and add it to the scene
- var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
+    function createScene(geometry, materials) {
 
- //mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), 1);
+        cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 
- mesh.position.x = 0;
- mesh.position.y = 0;
- mesh.position.z = 0;
- mesh.scale.set(sc, sc, sc);
- scene.add(mesh);
+        cart.scale.set(sc, sc, sc);
+        scene.add(cart);
+        //scene.add(new THREE.BoxHelper(cart));
+    }
+);
 
-
- var bbox = new THREE.BoxHelper(mesh);
- scene.add(bbox);
- }
- );*/
-
-/*[
- new THREE.Vector3(-10, 0, 10),
- new THREE.Vector3(-5, 5, 5),
- new THREE.Vector3(0, 0, 0),
- new THREE.Vector3(5, -5, 5),
- new THREE.Vector3(10, 0, 10)
- ]*/
 
 var curve;
 
@@ -138,25 +124,24 @@ function generateCurve() {
 var steps = 0;
 var amountOfPoints = 100;
 
-var box = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 0.2),
-    new THREE.MeshBasicMaterial({color: 0xff3388}));
-//box.matrixAutoUpdate = true;
-scene.add(box);
-
 
 function animStep() {
 
     if (steps < amountOfPoints && animReady) {
-        box.rotation.x += 0.1;
-        //console.log("animStep");
-        steps++;
+        steps += 0.1;
 
-        var t = curve.getUtoTmapping(steps / amountOfPoints);
+        var u = steps / amountOfPoints;
+        var t = curve.getUtoTmapping(u);
         var pos = curve.getPoint(t);
-        box.position.x = pos.x;
-        box.position.y = pos.y;
-        box.position.z = pos.z;
+        cart.position.x = pos.x;
+        cart.position.y = pos.y;
+        cart.position.z = pos.z;
 
-        var rotation = curve.getTangent(t);
+        rot = curve.getTangent(t);
+        //cart.rotation.x = rot.x;
+        //cart.rotation.y = rot.y;
+        cart.rotation.z = rot.z;
+
+
     }
 }
