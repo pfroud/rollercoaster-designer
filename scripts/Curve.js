@@ -1,9 +1,10 @@
 "use strict";
 
-function Curve(){
+function Curve() {
     this.spline; // A THREE.SplineCurve3 object.
     this.curveMesh; //Mesh made from spline
     this.ballArray = [];
+    this.generated = false;
 }
 
 var CURVE = new Curve();
@@ -12,6 +13,8 @@ var CURVE = new Curve();
 /**
  * Generate a 3D spline which goes through the middle of all the track pieces.
  * Called at the end of insertPiece() in Track.js.
+ *
+ * YOU SHOULD NEVER CALL THIS, CALL REFRESH() INSTEAD
  */
 Curve.prototype.generate = function () {
     var vectorArray = []; //array of THREE.Vector3's which will construct the curve.
@@ -67,6 +70,7 @@ Curve.prototype.generate = function () {
 
     scene.add(this.curveMesh);
     animReady = true; //tell when the curve for animation is ready. Checked in the render function in index.js.
+    this.generated = true;
 
 
     /**
@@ -127,20 +131,20 @@ Curve.prototype.generate = function () {
 };
 
 /**
- *
+ * Deleted the displayed curve.
  */
-Curve.prototype.delete = function() {
-        scene.remove(this.curveMesh);
+Curve.prototype.delete = function () {
+    scene.remove(this.curveMesh);
 
-        while(this.ballArray.length > 0){
-            scene.remove(this.ballArray.shift());
-        }
+    while (this.ballArray.length > 0) {
+        scene.remove(this.ballArray.shift());
+    }
 };
 
 /**
- *
+ * Deletes and recomputes the displayed curve.
  */
-Curve.prototype.refresh = function() {
-    this.delete();
+Curve.prototype.refresh = function () {
+    if (this.generated) this.delete();
     this.generate();
 };

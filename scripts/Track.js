@@ -153,7 +153,7 @@ Track.prototype.insertPiece = function (piece) {
             track.advanceCurrent(); //moves where the next piece will go
 
             // recursive call to place the next piece of the array
-            if (lastOne) CURVE.generate();
+            if (lastOne) CURVE.refresh();
             if (recur)track.insertPiece(piece);
 
         }
@@ -379,6 +379,7 @@ Track.prototype.deletePiece = function () {
         tmp.delete();
         this.counter--;
         this.updatePosition();
+        CURVE.refresh();
     }
 };
 
