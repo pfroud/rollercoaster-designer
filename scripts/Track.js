@@ -36,9 +36,9 @@ function Track() {
     this.pieces = [];
 
     // the starting positions for the track
-    this.START_X = -1;
-    this.START_Y = GROUND_HEIGHT + 1;
-    this.START_Z = 1;
+    this.START_X = -3;
+    this.START_Y = GROUND_HEIGHT;
+    this.START_Z = 0;
     // The X axis is red. The Y axis is green. The Z axis is blue.
 
 
@@ -84,7 +84,7 @@ function Track() {
  * n times for an array of pieces of length n.
  */
 Track.prototype.insertPiece = function (piece) {
-    if(!loaderReady){ // prevent user from adding pieces too fast
+    if (!loaderReady) { // prevent user from adding pieces too fast
         console.warn("JSON loader not ready.");
         return;
     }
@@ -458,35 +458,85 @@ window.onload = function () {
     TRACK.insertPiece([
         new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.TURN_LEFT_BIG),
+        new Piece(TRACK_TYPES.FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_UP),
-        new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
         new Piece(TRACK_TYPES.UP_TO_FLAT),
         new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-        new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+        new Piece(TRACK_TYPES.FLAT_TO_UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP),
+        new Piece(TRACK_TYPES.UP_TO_FLAT),
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN),
+        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
+        new Piece(TRACK_TYPES.TURN_RIGHT_BIG),
+        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+        new Piece(TRACK_TYPES.DOWN),
         new Piece(TRACK_TYPES.DOWN_TO_FLAT),
         new Piece(TRACK_TYPES.TURN_LEFT_BIG),
-        new Piece(TRACK_TYPES.FLAT_TO_UP),
-        new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
-        new Piece(TRACK_TYPES.UP_TO_FLAT),
-        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-        new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
-        new Piece(TRACK_TYPES.TURN_LEFT_BIG),
-        new Piece(TRACK_TYPES.FLAT_TO_UP),
-        new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
-        new Piece(TRACK_TYPES.UP_TO_FLAT),
-        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-        new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT),
-        new Piece(TRACK_TYPES.TURN_LEFT_BIG),
-        new Piece(TRACK_TYPES.FLAT_TO_UP),
-        new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
-        new Piece(TRACK_TYPES.UP_TO_FLAT),
-        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-        new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT)
+        new Piece(TRACK_TYPES.FLAT)
     ]);
-    //scene.add(TRACK.debugSphere);
-};//*/
+};
+
+
+/*window.onload = function () {
+ TRACK.insertPiece([
+ new Piece(TRACK_TYPES.FLAT),
+ new Piece(TRACK_TYPES.TURN_LEFT_BIG),
+ new Piece(TRACK_TYPES.FLAT_TO_UP),
+ new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
+ new Piece(TRACK_TYPES.UP_TO_FLAT),
+ new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+ new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
+ new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+ new Piece(TRACK_TYPES.TURN_LEFT_BIG),
+ new Piece(TRACK_TYPES.FLAT_TO_UP),
+ new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
+ new Piece(TRACK_TYPES.UP_TO_FLAT),
+ new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+ new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
+ new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+ new Piece(TRACK_TYPES.TURN_LEFT_BIG),
+ new Piece(TRACK_TYPES.FLAT_TO_UP),
+ new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
+ new Piece(TRACK_TYPES.UP_TO_FLAT),
+ new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+ new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
+ new Piece(TRACK_TYPES.DOWN_TO_FLAT),
+ new Piece(TRACK_TYPES.TURN_LEFT_BIG),
+ new Piece(TRACK_TYPES.FLAT_TO_UP),
+ new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),new Piece(TRACK_TYPES.UP),
+ new Piece(TRACK_TYPES.UP_TO_FLAT),
+ new Piece(TRACK_TYPES.FLAT_TO_DOWN),
+ new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
+ new Piece(TRACK_TYPES.DOWN_TO_FLAT)
+ ]);
+ };*/
 
 
