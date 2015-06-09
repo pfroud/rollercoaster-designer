@@ -47,11 +47,12 @@ function animStep() {
  */
 function RefPoints (){
 
-    var material = new THREE.MeshBasicMaterial({color: 0xffff00});
-    var geometry = new THREE.SphereGeometry(.05, 32, 32);
+    var material1 = new THREE.MeshBasicMaterial({color: 0xffff00});
+    var material2 = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    var geometry = new THREE.SphereGeometry(.0005, .32, .32);
 
-    this.point1 = new THREE.Mesh(geometry, material);
-    this.point2 = new THREE.Mesh(geometry, material);
+    this.point1 = new THREE.Mesh(geometry, material1);
+    this.point2 = new THREE.Mesh(geometry, material2);
 }
 
 function debugPoints(){
