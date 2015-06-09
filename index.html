@@ -24,7 +24,7 @@
 <body>
 
 <!-- bar at the top -->
-<ul>
+<ul id="topBar">
     <li id="downButton" onclick="GUI.insertDown()">
         <img src="images/Down.png" style="width:20px;height:20px;">
     </li>
@@ -60,6 +60,17 @@
         <img src="images/Random.png" style="width:20px;height:20px;">
     </li>
 </ul>
+
+
+<ul id="bottomBar" style="bottom: -20px">
+    <li id="playButton" onclick="play = !play;">
+        <img src="images/play.png" style="width:20px;height:20px;">
+    </li>
+    <li id="reset" onclick="step = 0">
+        <img src="images/reset.png" style="width:20px;height:20px;">
+    </li>
+</ul>
+
 
 <div id="canvas"></div>
 <!-- Libraries -->
