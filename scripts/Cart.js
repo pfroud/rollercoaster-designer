@@ -29,11 +29,17 @@ function animStep() {
     if (steps < amountOfPoints) {
         steps += 1; //This also changes the speed. I don't know how it compares with amountOfPoints.
 
+
         var u = steps / amountOfPoints; // u is "relative position in curve according to arc length"? see three.js docs
         
         var u1 = (steps +10) / amountOfPoints;
         var u2 = u;
-        
+
+        if ((steps + 10 ) / amountOfPoints > 1){
+            steps = 0;
+            return;
+        }
+
         var t1 = CURVE.spline.getUtoTmapping(u1);
         var t2 = CURVE.spline.getUtoTmapping(u2);
         
