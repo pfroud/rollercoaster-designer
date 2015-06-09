@@ -9,6 +9,8 @@ function insertPiece(type){
  */
 function Gui (){
     this.prevPiece = TRACK.currPiece;
+    this.multiple = false;
+    this.insertArray = [];
 }
 
 /**
@@ -34,12 +36,12 @@ Gui.prototype.flatTrack = function (){
     // if we not on a flat place, make it flat
     if (this.isUp()){
         piece = new Piece(TRACK_TYPES.UP_TO_FLAT);
-        TRACK.insertPiece(piece);
+        this.insertPiece(piece);
         return;
     }
     if(this.isDown()) {
         piece = new Piece(TRACK_TYPES.DOWN_TO_FLAT);
-        TRACK.insertPiece(piece);
+        this.insertPiece(piece);
         return;
     }
 
@@ -76,7 +78,7 @@ Gui.prototype.insertUp = function(){
     }
 
     // final insert
-    TRACK.insertPiece(piece);
+    this.insertPiece(piece);
 
 };
 
@@ -112,7 +114,7 @@ Gui.prototype.insertDown = function (){
         throw "ERROR! Piece not defined"
     }
 
-    TRACK.insertPiece(piece);
+    this.insertPiece(piece);
 
 };
 
@@ -131,7 +133,7 @@ Gui.prototype.insertLeftSmall = function(){
         pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     }
     pieces.push(new Piece(TRACK_TYPES.TURN_LEFT_SMALL));
-    TRACK.insertPiece(pieces);
+    this.insertPiece(pieces);
 };
 
 /**
@@ -149,7 +151,7 @@ Gui.prototype.insertLeftBig = function(){
         pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     }
     pieces.push(new Piece(TRACK_TYPES.TURN_LEFT_BIG));
-    TRACK.insertPiece(pieces);
+    this.insertPiece(pieces);
 };
 
 /**
@@ -167,7 +169,7 @@ Gui.prototype.insertRightBig = function(){
         pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     }
     pieces.push(new Piece(TRACK_TYPES.TURN_RIGHT_BIG));
-    TRACK.insertPiece(pieces);
+    this.insertPiece(pieces);
 };
 
 /**
@@ -185,8 +187,46 @@ Gui.prototype.insertRightSmall = function(){
         pieces.push(new Piece(TRACK_TYPES.DOWN_TO_FLAT));
     }
     pieces.push(new Piece(TRACK_TYPES.TURN_RIGHT_SMALL));
-    TRACK.insertPiece(pieces);
+    this.insertPiece(pieces);
 };
+
+function genRandTrack(length){
+    var rand;
+    GUI.multiple = true;
+    for(var i=0; i< length; i++){
+        console.log("Iterating....", i);
+        rand = getRandomInt(1, 5);
+        switch(rand){
+            case 1:
+                GUI.insertLeftSmall();
+                break;
+            case 2:
+                GUI.insertRightSmall();
+                break;
+            case 3:
+                GUI.insertRightBig();
+                break;
+            case 4:
+                GUI.insertLeftBig();
+                break;
+        }
+        console.log("Pushed case", rand);
+    }
+    this.multiple = false;
+    console.log("inserting", GUI.insertArray);
+    TRACK.insertPiece(GUI.insertArray);
+    this.insertArray = [];
+
+    /**
+     * Returns a random integer between min (included) and max (excluded).
+     * from
+     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+     */
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+}
 
 
 
@@ -240,8 +280,17 @@ Gui.prototype.isDown = function(){
 
 // helper function for isDown
 Gui.prototype.checkType = function(types){
+
+    var type;
+
+    if (this.multiple && this.insertArray.length > 0) {
+        type = this.insertArray[this.insertArray.length - 1];
+    } else{
+        type = this.prevPiece.type;
+    }
+
     for (var i = 0; i < types.length; i++){
-        if (this.prevPiece.type == types[i])
+        if (type == types[i])
             return true;
     }
     return false;
@@ -253,6 +302,22 @@ Gui.prototype.checkType = function(types){
  */
 Gui.prototype.updateType = function(){
     this.prevPiece = TRACK.currPiece;
+};
+
+Gui.prototype.insertPiece = function(piece){
+    if (Array.isArray(piece) && this.multiple){
+        for (var i = 0; i < piece.length; i++)
+            this.insertArray.push(piece[i]);
+        return;
+    }
+
+    if (this.multiple){
+        this.insertArray.push(piece);
+        return;
+    }
+
+    TRACK.insertPiece(piece);
+
 };
 
 var GUI = new Gui();
