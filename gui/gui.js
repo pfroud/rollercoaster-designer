@@ -194,7 +194,6 @@ function genRandTrack(length){
     var rand;
     GUI.multiple = true;
     for(var i=0; i< length; i++){
-        console.log("Iterating....", i);
         rand = getRandomInt(1, 5);
         switch(rand){
             case 1:
@@ -210,10 +209,8 @@ function genRandTrack(length){
                 GUI.insertLeftBig();
                 break;
         }
-        console.log("Pushed case", rand);
     }
     this.multiple = false;
-    console.log("inserting", GUI.insertArray);
     TRACK.insertPiece(GUI.insertArray);
     this.insertArray = [];
 

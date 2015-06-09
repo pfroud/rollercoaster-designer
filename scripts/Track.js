@@ -4,7 +4,7 @@
 var TRACK = new Track(); // TODO: make unnecessary
 
 //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
-const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: false});
+const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: false}); //set transparent to true to enable opacity
 const MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
 
 /**
@@ -88,6 +88,8 @@ Track.prototype.insertPiece = function (piece) {
     // TODO: use callbacks if we can instead
     var recur = false;
     var lastOne = (piece.length == 1);
+
+    scene.remove(curveMesh);
 
     // if the argument is an array, shift the element off and recur
     if (Array.isArray(piece)) {
@@ -432,23 +434,19 @@ Track.prototype.toggleSupports = function () {
         this.pieces[i].toggleSupport();
 };
 
+/**
+ * This does not work. TypeError: converting circular structure to json.
+ */
+Track.prototype.getJson = function() {
+    return JSON.stringify(this.pieces);
+};
+
 // FOR DEBUG
+
 window.onload = function () {
     TRACK.insertPiece([
-        new Piece(TRACK_TYPES.TURN_LEFT_SMALL),
-        new Piece(TRACK_TYPES.TURN_RIGHT_BIG),
         new Piece(TRACK_TYPES.FLAT),
-        //new Piece(TRACK_TYPES.TURN_LEFT_BIG),
-        new Piece(TRACK_TYPES.TURN_RIGHT_SMALL),
-        new Piece(TRACK_TYPES.TURN_RIGHT_BIG),
-        new Piece(TRACK_TYPES.FLAT),
-        new Piece(TRACK_TYPES.FLAT),
-        new Piece(TRACK_TYPES.FLAT_TO_UP)/*,
-        new Piece(TRACK_TYPES.UP),
-        new Piece(TRACK_TYPES.UP_TO_FLAT),
-        new Piece(TRACK_TYPES.FLAT_TO_DOWN),
-        new Piece(TRACK_TYPES.DOWN),
-        new Piece(TRACK_TYPES.DOWN_TO_FLAT)*/
+        new Piece(TRACK_TYPES.TURN_LEFT_BIG)
     ]);
     scene.add(TRACK.debugSphere);
 };//*/

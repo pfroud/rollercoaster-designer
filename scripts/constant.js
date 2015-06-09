@@ -419,7 +419,7 @@ TrackConst.prototype.turnLeftBig = function () {
         z: -1.0
     };
     turnLeftBig.centerOffset = {
-        x: 0, //NOT USED - gets set in piece constuctor
+        x: -PIECE_WIDTH/2 * SCALE,
         y: PIECE_HEIGHT * SCALE,
         z: 0
     };
