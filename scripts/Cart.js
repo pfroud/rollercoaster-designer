@@ -96,13 +96,22 @@ RefPoints.prototype.getFlatAngle = function(){
     var dz = this.point1.position.z - this.point2.position.z;
 
     var divide = dx / dz;
-
+    var flip = false;
+    if (divide < 0){
+        //divide = dz / dx;
+        divide *= -1;
+        flip = true;
+    }
+    // TODO: WHAT THE FUCKING HELL SHIT MOTHER FUCKER JS
     if (dz == 0) throw "ERROR: dz = 0";
     console.log("dx/dz:",(divide));
-    var ret = Math.atan(divide) + (Math.PI / 2);
+    var ret = Math.atan(divide) ;
 
-    if (divide < 0){
-        ret -= Math.PI;
+    if (flip){
+        ret *= -1;
+        ret += Math.PI / 2;
+    } else {
+        ret -= (Math.PI / 2);
     }
 
     return ret;
