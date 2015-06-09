@@ -83,12 +83,13 @@ function RefPoints (){
     
     this.point1 = new THREE.Mesh(geometry, material1);
     this.point2 = new THREE.Mesh(geometry, material2);
+    this.point1.visible = this.point2.visible = false;
     
     scene.add(this.point1);
     scene.add(this.point2);
 
     debugSphere = new THREE.Mesh(geometry, material3);
-    scene.add(debugSphere);
+    //scene.add(debugSphere);
 }
 
 function debugPoints(){
