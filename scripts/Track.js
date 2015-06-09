@@ -1,7 +1,7 @@
 "use strict";
 
 // GLOBAL VARIABLES ============================================================
-var TRACK = new Track(); // TODO: make unnecessary
+var TRACK = new Track();
 
 //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
 const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: true}); //set transparent to true to enable opacity
@@ -486,7 +486,7 @@ window.onload = function () {
         new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),new Piece(TRACK_TYPES.DOWN),
         new Piece(TRACK_TYPES.DOWN_TO_FLAT)
     ]);
-    scene.add(TRACK.debugSphere);
+    //scene.add(TRACK.debugSphere);
 };//*/
 
 

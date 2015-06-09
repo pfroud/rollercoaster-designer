@@ -128,13 +128,13 @@ RefPoints.prototype.rotateVertical = function(){
     }
 
     if (dz >= 0 && dx < 0) {
-
         cart.rotation.z = Math.atan(dy/dx);
         cart.rotation.z *= -1;
         return;
     }
     if (dz < 0 && dx < 0){
-        cart.rotation.z = Math.atan(dy/dz);
+        console.log("log");
+        //cart.rotation.z = Math.atan(dy/dz);
         return;
     }
 
@@ -144,6 +144,9 @@ RefPoints.prototype.rotateVertical = function(){
         cart.rotation.z = Math.atan(dy/dx);
         return;
     }
+    // it goes here. I don't know why, it just does.
+    // The third if should cal it. It doesn't I don't know why.
+    cart.rotation.z = Math.atan(dy/dz);
 };
 
 RefPoints.prototype.getMidpoint = function(){
