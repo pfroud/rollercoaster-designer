@@ -102,6 +102,7 @@ Track.prototype.insertPiece = function (piece) {
         // handles the case in which the piece is just one piece
         this.currPiece = piece;
         this.pieces.push(piece);
+        lastOne = true;
     }
 
     // JS sucks and doesn't let us use "this" in the inner function.
