@@ -13,7 +13,7 @@ var scene = new THREE.Scene();
 if (CAMERA_PERSPECTIVE) {
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 } else {
-    var viewSize = WORLD_SIZE / 5;
+    var viewSize = WORLD_SIZE / 3;
     var aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.OrthographicCamera(-viewSize * aspect, viewSize * aspect, viewSize, -viewSize, 1, 10000);
 }
@@ -96,6 +96,7 @@ function onWindowResize() {
 
 /*************************** RENDER *********************************/
 var animReady = false;
+var play = false;
 var render = function () {
 
     //if(animReady) animStep();
@@ -105,5 +106,6 @@ var render = function () {
     controls.update();
 };
 render();
+
 
 

@@ -1,6 +1,6 @@
 "use strict";
 var jsonLoader = new THREE.JSONLoader(); //used to load the json file
-
+var debugSphere;
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
 
 jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
@@ -30,7 +30,7 @@ function animStep() {
 
         var u = steps / amountOfPoints; // u is "relative position in curve according to arc length"? see three.js docs
         
-        var u1 = (steps + 1) / amountOfPoints;
+        var u1 = (steps +10) / amountOfPoints;
         var u2 = u;
         
         var t1 = CURVE.spline.getUtoTmapping(u1);
@@ -42,11 +42,19 @@ function animStep() {
         REF_POINTS.setPositions(pos1, pos2);
 
         var cartPoint = REF_POINTS.getMidpoint();
-/*
-        cart.position.x = cartPoint.x;
-        cart.position.y = cartPoint.y;
-        cart.position.z = cartPoint.z;
-  */
+
+        console.log(REF_POINTS.getFlatAngle());
+
+        debugSphere.position.x = cartPoint.x;
+        debugSphere.position.y = cartPoint.y;
+        debugSphere.position.z = cartPoint.z;
+
+        if (typeof cart !== "undefined"){
+            cart.position.x = cartPoint.x;
+            cart.position.y = cartPoint.y;
+            cart.position.z = cartPoint.z;
+            cart.rotation.y = REF_POINTS.getFlatAngle();
+        }
     }
 }
 
@@ -57,6 +65,7 @@ function RefPoints (){
 
     var material1 = new THREE.MeshBasicMaterial({color: 0xffff00});
     var material2 = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    var material3 = new THREE.MeshBasicMaterial({color: 0xff0000});
     var geometry = new THREE.SphereGeometry(.05, 32, 32);
 
     
@@ -68,6 +77,9 @@ function RefPoints (){
     
     scene.add(this.point1);
     scene.add(this.point2);
+
+    debugSphere = new THREE.Mesh(geometry, material3);
+    scene.add(debugSphere);
 }
 
 function debugPoints(){
@@ -81,18 +93,35 @@ function debugPoints(){
 RefPoints.prototype.getFlatAngle = function(){
     var dx = this.point1.position.x - this.point2.position.x;
     var dz = this.point1.position.z - this.point2.position.z;
-    return  Math.tan(dx / dz);
+
+    var divide = dx / dz;
+
+    if (dz == 0) throw "ERROR: dz = 0";
+    console.log("dx/dz:",(divide));
+    var ret = Math.atan(divide) + (Math.PI / 2);
+
+    if (divide < 0){
+        ret -= Math.PI;
+    }
+
+    return ret;
+};
+
+RefPoints.prototype.getUpAngle = function(){
+    var dy = this.point1.position.y - this.point2.position.y;
+    var dz = this.point1.position.z - this.point2.position.z;
+
 };
 
 RefPoints.prototype.getMidpoint = function(){
     var ret = {};
-    var dx = this.point1.position.x - this.point2.position.x;
-    var dy = this.point1.position.y - this.point2.position.y;
-    var dz = this.point1.position.z - this.point2.position.z;
+    var dx = this.point1.position.x + this.point2.position.x;
+    var dy = this.point1.position.y + this.point2.position.y;
+    var dz = this.point1.position.z + this.point2.position.z;
 
-    ret.x = this.point1.position.x + (dx / 2);
-    ret.y = this.point1.position.y + (dy / 2);
-    ret.z = this.point1.position.z + (dz / 2);
+    ret.x = dx / 2;
+    ret.y = dy / 2;
+    ret.z = dz / 2;
     return ret;
 };
 
@@ -108,3 +137,4 @@ RefPoints.prototype.setPositions = function (pos1, pos2){
 };
 // global variable for the ref points
 var REF_POINTS = new RefPoints();
+
