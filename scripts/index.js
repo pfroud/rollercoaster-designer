@@ -35,21 +35,22 @@ container.appendChild( renderer.domElement );
 
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-var light = new THREE.AmbientLight(0xffffff);
-//scene.add(light);
 
 scene.add(new THREE.AxisHelper(0.5));
 console.log("Red is X.\nGreen is Y.\nBlue is Z.");
 
 
-// add subtle ambient lighting
-//var ambientLight = new THREE.AmbientLight(0x222222);
-//scene.add(ambientLight);
-
 // directional lighting
-var directionalLight = new THREE.DirectionalLight(0xffffff);
-directionalLight.position.set(1, 1, 1).normalize();
-scene.add(directionalLight);
+var dirLight1 = new THREE.DirectionalLight(0xffffff, 1.0);
+dirLight1.position.set(2, 1, 2);
+scene.add(dirLight1);
+
+var dirLight2 = new THREE.DirectionalLight(0xffffff,.7);
+dirLight2.position.set(-2, -1, -2);
+scene.add(dirLight2);
+
+//scene.add(new THREE.DirectionalLightHelper(dirLight1)); //uncomment to see where lights are
+//scene.add(new THREE.DirectionalLightHelper(dirLight2));
 
 // Y height of ground plane
 var GROUND_HEIGHT = -WORLD_SIZE / 5;
@@ -96,7 +97,7 @@ function onWindowResize() {
 var animReady = false;
 var render = function () {
 
-    if(animReady) animStep();
+    //if(animReady) animStep();
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);

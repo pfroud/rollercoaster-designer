@@ -151,7 +151,7 @@ function animStep() {
         cart.position.y = pos.y;
         cart.position.z = pos.z;
 
-        rot = curve.getTangent(t); // Returns a unit vector tangent at t. Could also do getTangentAt(u), same thing.
+        var rot = curve.getTangent(t); // Returns a unit vector tangent at t. Could also do getTangentAt(u), same thing.
         //cart.rotation.x = rot.x;
         //cart.rotation.y = rot.y;
         cart.rotation.z = rot.z;
