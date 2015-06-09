@@ -1,8 +1,0 @@
-This is our little todo file for our project.
-
-Peter
-add extra points for transitional peices
-
-Jonathan
-Train animation
-

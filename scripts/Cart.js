@@ -3,7 +3,7 @@ var jsonLoader = new THREE.JSONLoader(); //used to load the json file
 var debugSphere;
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
 var SPEED = .1;
-jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
+jsonLoader.load("modelJS/cart.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         cart.scale.set(SCALE, SCALE, SCALE);
