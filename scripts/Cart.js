@@ -8,11 +8,10 @@ jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         cart.scale.set(SCALE, SCALE, SCALE);
         scene.add(cart);
-        //cart.visible = false;
+        cart.visible = false;
         //scene.add(new THREE.BoxHelper(cart));
     }
 );
-
 
 
 var steps = 0; //counts how many frames the animation has gone for
@@ -27,6 +26,7 @@ var amountOfPoints = 100; //Number of points to move over? Smaller number goes f
  */
 function animStep() {
     if (steps < amountOfPoints) {
+        cart.visible = true;
         steps += SPEED; //This also changes the speed. I don't know how it compares with amountOfPoints.
 
 
