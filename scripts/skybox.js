@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+ * from
+ * http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-three-js
+ *
+ * see Credits.txt for skybox image source.
+ */
 
 var skyboxImages = [
     "skybox/skybox1.jpg",
