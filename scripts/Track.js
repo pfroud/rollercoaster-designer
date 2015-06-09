@@ -4,7 +4,7 @@
 var TRACK = new Track(); // TODO: make unnecessary
 
 //play with http://threejs.org/docs/scenes/material-browser.html#MeshLambertMaterial
-const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: false}); //set transparent to true to enable opacity
+const MATERIAL_TRACK = new THREE.MeshLambertMaterial({color: "#00ffff", opacity: 0.5, transparent: true}); //set transparent to true to enable opacity
 const MATERIAL_SUPPORT = new THREE.MeshLambertMaterial({color: "#cc3333"});
 
 /**
@@ -84,10 +84,13 @@ function Track() {
  * n times for an array of pieces of length n.
  */
 Track.prototype.insertPiece = function (piece) {
+    if(!loaderReady) return; // prevent user from adding pieces too fast
+
     // make function recursive in order to preserve order of tracks
     // TODO: use callbacks if we can instead
     var recur = false;
     var lastOne = (piece.length == 1);
+    loaderReady = false; // must wait for this to be true to add another piece
 
     //scene.remove(curveMesh);
 
@@ -154,7 +157,10 @@ Track.prototype.insertPiece = function (piece) {
             track.advanceCurrent(); //moves where the next piece will go
 
             // recursive call to place the next piece of the array
-            if (lastOne) CURVE.refresh();
+            if (lastOne){
+                CURVE.refresh();
+                loaderReady = true;
+            }
             if (recur)track.insertPiece(piece);
 
         }
