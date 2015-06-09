@@ -96,7 +96,7 @@ function onWindowResize() {
 var animReady = false;
 var render = function () {
 
-    //if(animReady) animStep();
+    if(animReady) animStep();
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
