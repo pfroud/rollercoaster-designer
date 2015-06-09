@@ -27,7 +27,7 @@ var amountOfPoints = 100; //Number of points to move over? Smaller number goes f
  */
 function animStep() {
     if (steps < amountOfPoints) {
-        steps += 0.1; //This also changes the speed. I don't know how it compares with amountOfPoints.
+        steps += 1; //This also changes the speed. I don't know how it compares with amountOfPoints.
 
         var u = steps / amountOfPoints; // u is "relative position in curve according to arc length"? see three.js docs
         
@@ -96,22 +96,12 @@ RefPoints.prototype.getFlatAngle = function(){
     var dz = this.point1.position.z - this.point2.position.z;
 
     var divide = dx / dz;
-    //var flip = false;
-    //if (divide < 0){
-    //    //divide = dz / dx;
-    //    divide *= -1;
-    //    flip = true;
-    //}
-    //
-    //if (dz == 0) throw "ERROR: dz = 0";
-    var ret = Math.atan(divide) ;
+    var ret = Math.atan(divide);
 
-    //if (flip){
-    //    ret *= -1;
-    //    ret += Math.PI / 2;
-    //} else {
-    //    //ret += (Math.PI / 2);
-    //}
+    if (dz > 0){
+        ret += Math.PI;
+    }
+    ret += Math.PI/2;
 
     return ret;
 };
