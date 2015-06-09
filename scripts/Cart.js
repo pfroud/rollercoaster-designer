@@ -3,7 +3,7 @@ var jsonLoader = new THREE.JSONLoader(); //used to load the json file
 
 var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen by function animStep().
 
-/*jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
+jsonLoader.load("train 3D models/3 - json/Cart_dims.json",
     function createScene(geometry, materials) {
         cart = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
         cart.scale.set(SCALE, SCALE, SCALE);
@@ -11,7 +11,7 @@ var cart; //The mesh for the cart, set by the jsonLoader. Global so can be seen 
         //cart.visible = false;
         //scene.add(new THREE.BoxHelper(cart));
     }
-);*/
+);
 
 
 
@@ -34,20 +34,20 @@ function animStep() {
         var u1 = (steps + 1) / amountOfPoints;
         var u2 = u;
         
-        var t1 = curve.getUtoTmapping(u1);
-        var t2 = curve.getUtoTmapping(u2);
+        var t1 = CURVE.spline.getUtoTmapping(u1);
+        var t2 = CURVE.spline.getUtoTmapping(u2);
         
-        var pos1 = curve.getPoint(t1);
-        var pos2 = curve.getPoint(t2);
+        var pos1 = CURVE.spline.getPoint(t1);
+        var pos2 = CURVE.spline.getPoint(t2);
         
         REF_POINTS.setPositions(pos1, pos2);
 
         var cartPoint = REF_POINTS.getMidpoint();
-
+/*
         cart.position.x = cartPoint.x;
         cart.position.y = cartPoint.y;
         cart.position.z = cartPoint.z;
-        
+  */
     }
 }
 
