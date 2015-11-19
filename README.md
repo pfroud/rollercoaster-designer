@@ -125,7 +125,7 @@ You can access all of the original and intermediate files in [`track 3D models/`
 
 ###Video
 
-<video src="https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/report/demo.mov" controls>Your browser doens't support the video tag.</video>
+You can see a video at the bottom of [this page](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/report/index.html).
 
 ###Screenshots
 
