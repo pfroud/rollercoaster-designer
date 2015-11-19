@@ -95,7 +95,7 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 Notable global variables:
 
 - `TRACK`: instance of `Track()` and the track displayed on the screen. Declared in [`Track.js`](scripts/Track.js).
-- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in [`index.js`](index.js).
+- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in [`index.js`](scripts/index.js).
 - `SPEED`: how fast the roller coaster moves across the track. Declared in [`Cart.js`](scripts/Cart.js).
 - `PLAY`: boolean that tells the renderer whether or not to run the Cart animation.
 
