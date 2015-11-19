@@ -2,7 +2,9 @@
 
 Jonathan Bridge & Peter Froud  
 CS 160 fall 2015   
-[View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/)
+[View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/) - hosted by the UCSC Baskin School of Engineering. Click the thumbnail in third place, then click 'view project' at the top.
+
+If you just want to look at the code, go to `scripts/`.
 
 ##How to use
 
@@ -14,80 +16,110 @@ Press the play button at the bottom to start or stop the cart moving.
 
 ##Implementation
 
+The coaster you see is a `Track` instance which holds an array of Pieces. Every piece holds information about it's position, rotation, and the mesh to display. The track also manages insertion and deletion of Pieces.
+
+
+We had a hard time finding a good way to store the constants for mesh dimensions. We started with a giant JSON thing, but we wanted to reference the object while still creating it. For example, we wanted to do something like this:
+```
+{"down": [
+	{
+		"size": [{"y": "54.3057"}]
+	},
+	{
+		"startOffset": [{"y": "down.size.y-11.88"}]
+}]}
+```
+which JSON can't do. (This json example might be broken, I'm writing this long after we had the problem.) By using Javascript "classes", we can do this:
+```
+TrackConst.prototype.down = function () {
+    var down = new TrackType();
+    down.size = {
+        y: 54.3057,
+    };
+    down.startOffset.y = down.size.y
+```
+which does work. That example from line 241 of `scripts/constant.js`.
+
+
+We had to rush towards the end while implementing the animated Cart and learned that arctangent from Javascript's Math class doesn't behave as expected. After a lot of ugly coding, we did eventually manage to get something that has a semblance of working. But the implementation is gross.
+
+
 ###Classes
 
-**Track:** the 'main' class of the project.
+Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
-- Holds the pieces and all data about the track’s current position and direction.
-- Pieces are inserted with `Track.insert(piece)`, where piece is a new `Piece()` object
-- `deletePiece()` deletes the most recent piece and `deleteAll()` deletes all pieces
+[diagram]
+
+**Track:** a sequence of Pieces; the main class of the project.
+
+-  Holds an array of Pieces plus Supports and start and end coordinates.
+- Manages adding Pieces through`Track.insertPiece(piece)`, where piece is either a single Piece or an array of Peices.  Each Piece must be moved and rotated to lign up with the previous one.
+- Also manages deleting Pieces.
 - Location: `scripts/Track.js`
 
-**Piece:** a class used for generating individual track pieces.
 
-- Only functions are to generate the supports and to scale the meshes.
+**Piece:** one track segment.
+
+- Knows its location, direction, dimensions, and how much pre- and post-correction must be made to make other Pieces fit.
 - Location: `scripts/Piece.js`
 
 **Support:** generates the support beams beneath a track piece.
 
-- Only called by `Piece` class
+- Only called by `Piece` class. Basically makes a cylinder and moves it around just so.
 - Location: `scripts/Support.js`
+
 
 **TrackConst:** A single class that holds all the constant data.
 
-- Location: `scripts/Constant.js`
-- referenced through `TRACK_TYPES`
-
-**TrackType:** Inner class to `TrackConst`.
-
-- Only used in generating the constants since it was a good way to standardize what went in and keep code looking good.
-- Only called by `TrackConst` as `TRACK_TYPES` is being built.
+- For each type of track, holds numbers the mesh's dimensions and how much pre- and post-correction must be made to make other Pieces fit.
+- For turn pieces, defines where extra Supports go to make it not look stupid.
+- For turn or not-flat pieces, defines how the Cart animates over it.
+- Never accessed directly, only through global constant `TRACK_TYPES` which is an instance of `TrackType()`.
 - Location: `scripts/Constant.js`
 
-**Gui:** Class that the buttons used to access the other classes.
+**TrackType:**  Inner class to `TrackConst`.  Should be called PieceType. Holds constants for each type of Piece.
 
-- Didn’t actually use the GUI, rather it was simply an interface to streamline other code.
+- Each type of Piece (e.g. `FLAT_TO_UP`) gets a `TrackType` which holds constants for that type. Then the constants are access through `TRACK_TYPES.FLAT_TO_UP`, for example.
+- Prevents code from being horrible, believe it or not.
+- Only used to make global constant `TRACK_TYPES`, which only happens in the constructor for `TrackConst`.
+- Location: `scripts/Constant.js`
+
+**Gui:** how the user interface buttons access the other classes.
+
+- Each button has its own object.
+- Accessed only by the global variable `GUI`. (Probably should be constant)
 - Location: `gui/gui.js`
-- Only one instance existed, called GUI every button has a function in Gui class
 
 ### Other
 
-Global variables:
+Notable global variables:
 
-- TRACK: the reference to the track object
-- SCALE: a scalar for all pieces. Ultimately never actually used, however we thought it’d be useful in early implementations
-- SPEED: how fast the roller coaster moves across the track
-- PLAY: boolean that tells the renderer whether or not to start the animation.
+- `TRACK`: instance of `Track()` and the track displayed on the screen. Declared in `Track.js`.
+- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in `index.js`.
+- `SPEED`: how fast the roller coaster moves across the track. Declared in `Cart.js`.
+- `PLAY`: boolean that tells the renderer whether or not to run the Cart animation.
 
 Libraries used:
 
-- three.js: the big one. This is the main framework of our project
-- jquery: three.js requires it as a dependency
-dat.gui.js: helper GUI that we used when first implementing because it was easier than messing around with CSS every time we wanted to do something. No longer used, but kept in the library
-- OrbitControls.js: plugin for three.js that allows for a better camera
+- three.js: the big one. This is the main framework of our project.
+- jquery: dependency of three.js.
+- dat.gui.js: helper GUI that we used when first implementing because it was easier than messing around with CSS every time we wanted to do something. No longer used, but kept in the library.
+- OrbitControls.js: plugin for three.js that gives for a not-terrible camera.
 
 Other files of note:
 
-- index.html: the “main” file of the project, where everything is put in
-- index.js: the initializer for three.js. Sets up the whole page
-- Skybox.js: makes the skybox around the track.
+- index.html: project entry point, where everything is put in.
+- index.js: the initializer for three.js. Sets up things like camera, controls, ground plane, skybox, lighting, and renderer.
+- Skybox.js: makes the skybox around the track, using a shader from a library that comes with three.js. [Source.](http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-three-js)
 - Cart.js: the frankenstein’s monster that controls the car. Could be cleaned up a bunch. It’s ugly because we were rushed.
-
-The coaster works by having a Track object which holds the pieces in an array. Every piece is an object that holds information about it, as well as a reference to the mesh it has in the world. Additionally the methods each had deletion and scaling.
-
-We had a problem finding a good way to store all the constants in the program. Initially we just made a large object in brackets, using the JSON style, however we wanted it to reference itself so we instead implemented constants as its own class and then just generated a single instance as TRACK_TYPES.
-
-Towards the end, we started rushing as we implemented the cart and found that JavaScript’s Math class didn’t behave the way we thought it would when calculating ArcTan. After a lot of ugly coding we did eventually manage to get something that has a semblance of working. But the implementation is gross.
-
-[diagram goes here]
 
 ##Novelties
 
-We began by using [Rollercoaster Pre-fab by Adam W](https://3dwarehouse.sketchup.com/collection.html?id=e0bf9bb1c154d8095c9ed170ce1aefed), but thought it would be better to have total control over the models.
+We began by using 3D models from [Rollercoaster Pre-fab by Adam W](https://3dwarehouse.sketchup.com/collection.html?id=e0bf9bb1c154d8095c9ed170ce1aefed), but weren't really satisfied. We thought it would be better to have total control over the models.
 
-We used [Autodesk Inventor](http://www.autodesk.com/products/inventor/overview) to model all our own track pieces. We had to jump through some hoops to get those models into the json format the three.js uses. From Inventor, we exported the model to a .dwg file, which we imported into a trial version of [SketchUp Pro](http://www.sketchup.com/). From Sketchup we exported an .obj file, which could be converted using [convert_obj_three.py](https://github.com/mrdoob/three.js/blob/master/utils/converters/obj/convert_obj_three.py), included in three.js.
+We used [Autodesk Inventor](http://www.autodesk.com/products/inventor/overview) to model all our own track pieces. We had to jump through some hoops to get those models into the json format the three.js uses. From Inventor, we exported the model to a .dwg file, which we imported into a trial version of [SketchUp Pro](http://www.sketchup.com/). From Sketchup we exported an .obj file, which could be converted using [convert_obj_three.py](https://github.com/mrdoob/three.js/blob/master/utils/converters/obj/convert_obj_three.py) which is included in three.js.
 
-You can access all of the original and intermediate files on our GitHub repository at [https://github.com/pfroud/160final](https://github.com/pfroud/160final).
+You can access all of the original and intermediate files in `track 3D models/`.
 
 ##Sample output
 
