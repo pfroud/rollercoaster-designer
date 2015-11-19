@@ -48,7 +48,7 @@ We had to rush towards the end while implementing the animated Cart and learned 
 
 Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
-[diagram]
+![Diagram of classes](images for readme/diagram.jpg?raw=true)
 
 **Track:** a sequence of Pieces; the main class of the project.
 
@@ -129,7 +129,11 @@ You can access all of the original and intermediate files in [`track 3D models/`
 
 ###Screenshots
 
-[screenshots go here]
+![Screenshot 1](images for readme/screenshot1.jpg?raw=true)
+
+![Screenshot 2](images for readme/screenshot2.jpg?raw=true)
+
+![Screenshot 3](images for readme/screenshot3.jpg?raw=true)
 
 ##Credits
 Made with [three.js](http://threejs.org/). [Skybox source](http://www.braynzarsoft.net/vision/texturesamples/Above_The_Sea.jpg). [Favicon source](http://www.iconarchive.com/show/windows-8-icons-by-icons8/City-Roller-Coaster-icon.html).
