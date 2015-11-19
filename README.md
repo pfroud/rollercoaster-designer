@@ -48,7 +48,7 @@ We had to rush towards the end while implementing the animated Cart and learned 
 
 Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
-![Diagram of classes](images for readme/diagram.jpg?raw=true)
+![Diagram of classes](images for readme/diagram.JPG?raw=true)
 
 **Track:** a sequence of Pieces; the main class of the project.
 
