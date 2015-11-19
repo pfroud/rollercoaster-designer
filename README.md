@@ -4,7 +4,7 @@ Jonathan Bridge & Peter Froud
 CS 160 fall 2015   
 [View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/) - hosted by the UCSC Baskin School of Engineering. Click the thumbnail in third place, then click 'view project' at the top.
 
-If you just want to look at the code, go to `scripts/`.
+If you just want to look at the code, go to [`scripts/`](scripts).
 
 ##How to use
 
@@ -38,7 +38,7 @@ TrackConst.prototype.down = function () {
     };
     down.startOffset.y = down.size.y
 ```
-which does work. That example from line 241 of `scripts/constant.js`.
+which does work. That example from line 241 of [`scripts/constant.js`](scripts/constant.js).
 
 
 We had to rush towards the end while implementing the animated Cart and learned that arctangent from Javascript's Math class doesn't behave as expected. After a lot of ugly coding, we did eventually manage to get something that has a semblance of working. But the implementation is gross.
@@ -55,18 +55,18 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 -  Holds an array of Pieces plus Supports and start and end coordinates.
 - Manages adding Pieces through`Track.insertPiece(piece)`, where piece is either a single Piece or an array of Peices.  Each Piece must be moved and rotated to lign up with the previous one.
 - Also manages deleting Pieces.
-- Location: `scripts/Track.js`
+- Location: [`scripts/Track.js`](scripts/Track.js)
 
 
 **Piece:** one track segment.
 
 - Knows its location, direction, dimensions, and how much pre- and post-correction must be made to make other Pieces fit.
-- Location: `scripts/Piece.js`
+- Location: [`scripts/Piece.js`](scripts/Piece.js)
 
 **Support:** generates the support beams beneath a track piece.
 
 - Only called by `Piece` class. Basically makes a cylinder and moves it around just so.
-- Location: `scripts/Support.js`
+- Location: [`scripts/Support.js`](scripts/Support.js)
 
 
 **TrackConst:** A single class that holds all the constant data.
@@ -75,28 +75,28 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 - For turn pieces, defines where extra Supports go to make it not look stupid.
 - For turn or not-flat pieces, defines how the Cart animates over it.
 - Never accessed directly, only through global constant `TRACK_TYPES` which is an instance of `TrackType()`.
-- Location: `scripts/Constant.js`
+- Location: [`scripts/constant.js`](scripts/constant.js). You might be asking why some of our filenames are capitalized and some aren't. Because we're fundamentally bad people, that's why.
 
 **TrackType:**  Inner class to `TrackConst`.  Should be called PieceType. Holds constants for each type of Piece.
 
 - Each type of Piece (e.g. `FLAT_TO_UP`) gets a `TrackType` which holds constants for that type. Then the constants are access through `TRACK_TYPES.FLAT_TO_UP`, for example.
 - Prevents code from being horrible, believe it or not.
 - Only used to make global constant `TRACK_TYPES`, which only happens in the constructor for `TrackConst`.
-- Location: `scripts/Constant.js`
+- Location: [`scripts/constant.js`](scripts/constant.js)
 
 **Gui:** how the user interface buttons access the other classes.
 
 - Each button has its own object.
 - Accessed only by the global variable `GUI`. (Probably should be constant)
-- Location: `gui/gui.js`
+- Location: [`gui/gui.js`](gui/gui.js)
 
 ### Other
 
 Notable global variables:
 
-- `TRACK`: instance of `Track()` and the track displayed on the screen. Declared in `Track.js`.
-- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in `index.js`.
-- `SPEED`: how fast the roller coaster moves across the track. Declared in `Cart.js`.
+- `TRACK`: instance of `Track()` and the track displayed on the screen. Declared in [`Track.js`](scripts/Track.js).
+- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in [`index.js`](index.js).
+- `SPEED`: how fast the roller coaster moves across the track. Declared in [`Cart.js`](scripts/Cart.js).
 - `PLAY`: boolean that tells the renderer whether or not to run the Cart animation.
 
 Libraries used:
@@ -108,10 +108,10 @@ Libraries used:
 
 Other files of note:
 
-- index.html: project entry point, where everything is put in.
-- index.js: the initializer for three.js. Sets up things like camera, controls, ground plane, skybox, lighting, and renderer.
-- Skybox.js: makes the skybox around the track, using a shader from a library that comes with three.js. [Source.](http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-three-js)
-- Cart.js: the frankenstein’s monster that controls the car. Could be cleaned up a bunch. It’s ugly because we were rushed.
+- [`index.html`](index.html): project entry point, where everything is put in.
+- [`index.js`](scripts/index.js): the initializer for three.js. Sets up things like camera, controls, ground plane, skybox, lighting, and renderer.
+- [`skybox.js`](scripts/skybox.js): makes the skybox around the track, using a shader from a library that comes with three.js. [Source.](http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-three-js)
+- [`Cart.js`](scripts/Cart.js): the frankenstein’s monster that controls the car. Could be cleaned up a bunch. It’s ugly because we were rushed.
 
 ##Novelties
 
@@ -119,7 +119,7 @@ We began by using 3D models from [Rollercoaster Pre-fab by Adam W](https://3dwar
 
 We used [Autodesk Inventor](http://www.autodesk.com/products/inventor/overview) to model all our own track pieces. We had to jump through some hoops to get those models into the json format the three.js uses. From Inventor, we exported the model to a .dwg file, which we imported into a trial version of [SketchUp Pro](http://www.sketchup.com/). From Sketchup we exported an .obj file, which could be converted using [convert_obj_three.py](https://github.com/mrdoob/three.js/blob/master/utils/converters/obj/convert_obj_three.py) which is included in three.js.
 
-You can access all of the original and intermediate files in `track 3D models/`.
+You can access all of the original and intermediate files in [`track 3D models/`](track 3D models).
 
 ##Sample output
 
