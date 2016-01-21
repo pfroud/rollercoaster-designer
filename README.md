@@ -2,7 +2,7 @@
 
 Jonathan Bridge & Peter Froud  
 CS 160 fall 2015   
-[View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/) - hosted by the UCSC Baskin School of Engineering. Click the thumbnail in third place, then click 'view project' at the top.
+[View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/index.html) - hosted by the UCSC Baskin School of Engineering. We got [third place](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/)!
 
 If you just want to look at the code, go to [`scripts/`](scripts).
 
