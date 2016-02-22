@@ -16,7 +16,7 @@ Press the play button at the bottom to start or stop the cart moving.
 
 ##Implementation
 
-The coaster you see is a `Track` instance which holds an array of Pieces. Every piece holds information about it's position, rotation, and the mesh to display. The track also manages insertion and deletion of Pieces.
+The coaster you see is a `Track` instance which holds an array of Pieces. Every piece holds information about its position, rotation, and the mesh to display. The track also manages insertion and deletion of Pieces.
 
 
 We had a hard time finding a good way to store the constants for mesh dimensions. We started with a giant JSON thing, but we wanted to reference the object while still creating it. For example, we wanted to do something like this:
@@ -29,7 +29,7 @@ We had a hard time finding a good way to store the constants for mesh dimensions
 		"startOffset": [{"y": "down.size.y-11.88"}]
 }]}
 ```
-which JSON can't do. (This json example might be broken, I'm writing this long after we had the problem.) By using Javascript "classes", we can do this:
+which JSON can't do because you can't refrence something before you have finished creating it. (This json example might be broken, I'm writing this long after we had the problem.) By using Javascript "classes", we can do this:
 ```
 TrackConst.prototype.down = function () {
     var down = new TrackType();
@@ -38,7 +38,7 @@ TrackConst.prototype.down = function () {
     };
     down.startOffset.y = down.size.y
 ```
-which does work. That example from line 241 of [`scripts/constant.js`](scripts/constant.js).
+which does work. That example from [`scripts/constant.js`](https://github.com/pfroud/160final/blob/8b9c44b7cbe9e4658099069ed0aa6550d92613d4/scripts/constant.js#L241-L273).
 
 
 We had to rush towards the end while implementing the animated Cart and learned that arctangent from Javascript's Math class doesn't behave as expected. After a lot of ugly coding, we did eventually manage to get something that has a semblance of working. But the implementation is gross.
@@ -94,9 +94,9 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 
 Notable global variables:
 
-- `TRACK`: instance of `Track()` and the track displayed on the screen. Declared in [`Track.js`](scripts/Track.js).
-- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in [`index.js`](scripts/index.js).
-- `SPEED`: how fast the roller coaster moves across the track. Declared in [`Cart.js`](scripts/Cart.js).
+- `TRACK`: instance of `Track()` and the track displayed on the screen. Declared in [`Track.js`](https://github.com/pfroud/160final/blob/8b9c44b7cbe9e4658099069ed0aa6550d92613d4/scripts/Track.js#L4).
+- `SCALE`: can change the size of pieces. Ultimately not needed, however we thought it’d be useful in early implementations. Declared in [`index.js`](https://github.com/pfroud/160final/blob/8b9c44b7cbe9e4658099069ed0aa6550d92613d4/scripts/index.js#L2).
+- `SPEED`: how fast the roller coaster moves across the track. Declared in [`Cart.js`](https://github.com/pfroud/160final/blob/8b9c44b7cbe9e4658099069ed0aa6550d92613d4/scripts/Cart.js#L5).
 - `PLAY`: boolean that tells the renderer whether or not to run the Cart animation.
 
 Libraries used:
