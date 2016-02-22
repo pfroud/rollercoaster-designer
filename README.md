@@ -119,6 +119,11 @@ We began by using 3D models from [Rollercoaster Pre-fab by Adam W](https://3dwar
 
 We used [Autodesk Inventor](http://www.autodesk.com/products/inventor/overview) to model all our own track pieces. We had to jump through some hoops to get those models into the json format the three.js uses. From Inventor, we exported the model to a .dwg file, which we imported into a trial version of [SketchUp Pro](http://www.sketchup.com/). From Sketchup we exported an .obj file, which could be converted using [convert_obj_three.py](https://github.com/mrdoob/three.js/blob/master/utils/converters/obj/convert_obj_three.py) which is included in three.js.
 
+Modelling progression: tube, single strut, strut pattern, bend.
+
+![Screenshot of curved track cad](images for readme/cad-screenshot-curve-track.png?raw=true)
+![Screenshot of curved straight cad](images for readme/cad-screenshot-straight-track.png?raw=true)
+
 You can access all of the original and intermediate files in [`track 3D models/`](track 3D models).
 
 ##Sample output
