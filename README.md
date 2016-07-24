@@ -1,14 +1,16 @@
 #Roller Coaster Designer
 
 Jonathan Bridge & Peter Froud  
-CS 160 fall 2015   
+[CS 160](https://courses.soe.ucsc.edu/courses/cmps160) fall 2015
 [View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/index.html) - hosted by the UCSC Baskin School of Engineering. We got [third place](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/)!
 
 If you just want to look at the code, go to [`scripts/`](scripts).
 
 ##How to use
 
-Our program lets the user design a roller coaster track from modular pieces. To change the pre-loaded track, use the circular X button at the bottom to remove a piece. The button with a red background deletes the entire track. Then, use the seven buttons at the top to add flat, sloped, or turn pieces. You can also use the shuffle button at the bottom to add a random sequence of curved track.
+Our program lets the user design a roller coaster track from modular pieces.
+
+To change the track that automatically loads, use one of the red X buttons at the bottom. The button with a blue background removes one piece, and the button with a red background deletes the entire track. Then, use the seven buttons at the top to add flat, sloped, or turn pieces. You can also use the shuffle button at the bottom to add a random sequence of curved track.
 
 Press the play button at the bottom to start or stop the cart moving.
 
@@ -16,32 +18,39 @@ Press the play button at the bottom to start or stop the cart moving.
 
 ##Implementation
 
-The coaster you see is a `Track` instance which holds an array of Pieces. Every piece holds information about its position, rotation, and the mesh to display. The track also manages insertion and deletion of Pieces.
+The roller coaster you see is a `Track` instance which holds an array of Pieces. Every Piece holds information about its position, rotation, and the mesh to draw. The Track instance also manages insertion and deletion of Pieces.
 
 
-We had a hard time finding a good way to store the constants for mesh dimensions. We started with a giant JSON thing, but we wanted to reference the object while still creating it. For example, we wanted to do something like this:
+We had a hard time finding a good way to store the constants for mesh dimensions. We started with a giant JSON file but ran into a problem: but we wanted to reference an object while still creating it, which JSON doesn't allow. For example, we wanted to do something like this:
 ```
-{"down": [
-	{
-		"size": [{"y": "54.3057"}]
-	},
-	{
-		"startOffset": [{"y": "down.size.y-11.88"}]
-}]}
+{"down": {
+		"size": {
+			"x": 54.3057,
+			"y": 54.3057,
+			"z": 40.7995
+		},
+		"startOffset": {
+			"y": down.size.y - 11.88
+		}
+}}
 ```
-which JSON can't do because you can't refrence something before you have finished creating it. (This json example might be broken, I'm writing this long after we had the problem.) By using Javascript "classes", we can do this:
+which is invalid JSON.
+Using Javascript "classes", we can do this:
 ```
 TrackConst.prototype.down = function () {
     var down = new TrackType();
     down.size = {
+        x: 54.3057,
         y: 54.3057,
+        z: 40.7995
     };
-    down.startOffset.y = down.size.y
+    down.startOffset.y = down.size.y;
+    return down;
 ```
-which does work. That example from [`scripts/constant.js`](https://github.com/pfroud/160final/blob/8b9c44b7cbe9e4658099069ed0aa6550d92613d4/scripts/constant.js#L241-L273).
+which is what we want. That example is from [`scripts/constant.js`](https://github.com/pfroud/160final/blob/8b9c44b7cbe9e4658099069ed0aa6550d92613d4/scripts/constant.js#L241-L273).
 
 
-We had to rush towards the end while implementing the animated Cart and learned that arctangent from Javascript's Math class doesn't behave as expected. After a lot of ugly coding, we did eventually manage to get something that has a semblance of working. But the implementation is gross.
+We had to rush towards the end. When trying to implement the Cart moving along the track, we learned that arctangent from Javascript's Math class doesn't behave as expected. After a lot of ugly coding, we did eventually manage to get something that has a semblance of working. But the implementation is gross.
 
 
 ###Classes
@@ -50,10 +59,10 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 
 ![Diagram of classes](images for readme/diagram.JPG?raw=true)
 
-**Track:** a sequence of Pieces; the main class of the project.
+**Track:** the main class of the project
 
--  Holds an array of Pieces plus Supports and start and end coordinates.
-- Manages adding Pieces through`Track.insertPiece(piece)`, where piece is either a single Piece or an array of Peices.  Each Piece must be moved and rotated to lign up with the previous one.
+-  Holds an array of Pieces, which you see as a roller coaster track
+- Manages adding Pieces through`Track.insertPiece(piece)`, where `piece` is either a single Piece object or an array of Pieces.  Each Piece must be moved and rotated to lign up with the previous one.
 - Also manages deleting Pieces.
 - Location: [`scripts/Track.js`](scripts/Track.js)
 
@@ -65,14 +74,15 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 
 **Support:** generates the support beams beneath a track piece.
 
-- Only called by `Piece` class. Basically makes a cylinder and moves it around just so.
+- Basically makes a cylinder and moves it around just right.
+- Only called by `Piece` class. 
 - Location: [`scripts/Support.js`](scripts/Support.js)
 
 
 **TrackConst:** A single class that holds all the constant data.
 
-- For each type of track, holds numbers the mesh's dimensions and how much pre- and post-correction must be made to make other Pieces fit.
-- For turn pieces, defines where extra Supports go to make it not look stupid.
+- For each type of track, holds mesh's dimensions and how much pre- and post-correction must be made to make other Pieces fit.
+- Specifies where extra Supports go on curved pieces to make it look nice.
 - For turn or not-flat pieces, defines how the Cart animates over it.
 - Never accessed directly, only through global constant `TRACK_TYPES` which is an instance of `TrackType()`.
 - Location: [`scripts/constant.js`](scripts/constant.js). You might be asking why some of our filenames are capitalized and some aren't. Because we're fundamentally bad people, that's why.
@@ -87,7 +97,7 @@ Not actually classes because JS is prototype-based This diagram shows, poorly, h
 **Gui:** how the user interface buttons access the other classes.
 
 - Each button has its own object.
-- Accessed only by the global variable `GUI`. (Probably should be constant)
+- Accessed only by the global variable `GUI`.
 - Location: [`gui/gui.js`](gui/gui.js)
 
 ### Other
@@ -101,10 +111,10 @@ Notable global variables:
 
 Libraries used:
 
-- three.js: the big one. This is the main framework of our project.
-- jquery: dependency of three.js.
-- dat.gui.js: helper GUI that we used when first implementing because it was easier than messing around with CSS every time we wanted to do something. No longer used, but kept in the library.
-- OrbitControls.js: plugin for three.js that gives for a not-terrible camera.
+- [three.js](http://threejs.org/): the big one. Abstracts WebGL drawing.
+- [jquery](https://jquery.com/): dependency of three.js.
+- [dat.gui.js](https://github.com/dataarts/dat.gui): helper GUI that we used when first implementing because it was easier than messing around with CSS every time we wanted to do something. No longer used, but kept in the library.
+- [OrbitControls.js](http://threejs.org/examples/js/controls/OrbitControls.js): three.js plugin to make the camera usable. [View demo.](http://threejs.org/examples/#misc_controls_orbit)
 
 Other files of note:
 
@@ -139,6 +149,3 @@ You can see a video at the bottom of [this page](https://classes.soe.ucsc.edu/cm
 ![Screenshot 2](images for readme/screenshot2.jpg?raw=true)
 
 ![Screenshot 3](images for readme/screenshot3.jpg?raw=true)
-
-##Credits
-Made with [three.js](http://threejs.org/). [Skybox source](http://www.braynzarsoft.net/vision/texturesamples/Above_The_Sea.jpg). [Favicon source](http://www.iconarchive.com/show/windows-8-icons-by-icons8/City-Roller-Coaster-icon.html).
