@@ -1,7 +1,0 @@
-https://3dwarehouse.sketchup.com/collection.html?id=e0bf9bb1c154d8095c9ed170ce1aefed
-
-The converter comes with the three.js download, in 
-
-mrdoob-three.js-r71-1-gd49bb0e\utils\converters\obj\convert_obj_three.py
-
-you need python 2.7, not python 3!
