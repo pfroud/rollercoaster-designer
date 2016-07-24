@@ -1,13 +1,13 @@
 ## Track 3D models
 
 ### Workflow
-**Autodesk Inventor Professional 2015**
+**Autodesk Inventor Professional 2015**  
 Make the model, export `.dwg`.
 
-**Sketchup Pro 2015**
+**Sketchup Pro 2015**  
 Import `.dwg`, rotate and/or mirror if needed, export `.obj`.
 
-**`convert_obj_three.py`**
+**`convert_obj_three.py`**  
 Convert `.obj` to `.json`.
 
 JSON file used by three.js.
