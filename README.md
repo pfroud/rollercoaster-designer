@@ -57,7 +57,9 @@ We had to rush towards the end. When trying to implement the Cart moving along t
 
 Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
-![Diagram of classes](images for readme/diagram.JPG?raw=true)
+<p align="center">
+<img src="images for readme/diagram.JPG?raw=true" alt="Diagram of Javascript classes">
+</p>
 
 **Track:** the main class of the project
 
@@ -131,8 +133,12 @@ We used [Autodesk Inventor](http://www.autodesk.com/products/inventor/overview) 
 
 Modelling progression: tube, single strut, strut pattern, bend.
 
-![Screenshot of curved track cad](images for readme/cad-screenshot-curve-track.png?raw=true)
-![Screenshot of curved straight cad](images for readme/cad-screenshot-straight-track.png?raw=true)
+<p align="center">
+<a href="images for readme/cad-screenshot-curve-track.png?raw=true"><img src="images for readme/cad-screenshot-curve-track.png?raw=true" alt="Screenshot of curved track cad"></a>
+</p>
+<p align="center">
+<a href="images for readme/cad-screenshot-straight-track.png?raw=true"><img src="images for readme/cad-screenshot-straight-track.png?raw=true" alt="Screenshot of straight track cad"></a>
+</p>
 
 You can access all of the original and intermediate files in [`track 3D models/`](track 3D models).
 
@@ -144,8 +150,14 @@ You can see a video at the bottom of [this page](https://classes.soe.ucsc.edu/cm
 
 ###Screenshots
 
-![Screenshot 1](images for readme/screenshot1.jpg?raw=true)
 
-![Screenshot 2](images for readme/screenshot2.jpg?raw=true)
+<p align="center">
+<img src="images for readme/screenshot1.jpg?raw=true" alt="Screenshot 1">
+</p>
+<p align="center">
+<img src="images for readme/screenshot2.jpg?raw=true" alt="Screenshot 2">
+</p>
+<p align="center">
+<img src="images for readme/screenshot3.jpg?raw=true" alt="Screenshot 3">
+</p>
 
-![Screenshot 3](images for readme/screenshot3.jpg?raw=true)
