@@ -58,7 +58,7 @@ We had to rush towards the end. When trying to implement the Cart moving along t
 Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
 <p align="center">
-<img src="images-for-readme/diagram.JPG?raw=true" alt="Diagram of Javascript classes">
+<img src="images-for-readme/classes-diagram.PNG?raw=true" alt="Diagram of Javascript classes">
 </p>
 
 **Track:** the main class of the project
