@@ -35,6 +35,7 @@ We had a hard time finding a good way to store the constants for mesh dimensions
 }}
 ```
 which is invalid JSON. Amazingly, GitHub's syntax formatting tells us this.
+
 Using Javascript "classes", we can do this:
 ```js
 TrackConst.prototype.down = function () {
