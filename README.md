@@ -22,7 +22,7 @@ The roller coaster you see is a `Track` instance which holds an array of Pieces.
 
 
 We had a hard time finding a good way to store the constants for mesh dimensions. We started with a giant JSON file but ran into a problem: but we wanted to reference an object while still creating it, which JSON doesn't allow. For example, we wanted to do something like this:
-```
+```json
 {"down": {
 		"size": {
 			"x": 54.3057,
@@ -30,13 +30,13 @@ We had a hard time finding a good way to store the constants for mesh dimensions
 			"z": 40.7995
 		},
 		"startOffset": {
-			"y": down.size.y - 11.88
+			"y": down.size.y - 11.88,
 		}
 }}
 ```
-which is invalid JSON.
+which is invalid JSON. Amazingly, GitHub's syntax formatting tells us this.
 Using Javascript "classes", we can do this:
-```
+```js
 TrackConst.prototype.down = function () {
     var down = new TrackType();
     down.size = {
