@@ -4,8 +4,6 @@ Jonathan Bridge & Peter Froud
 [CS 160](https://courses.soe.ucsc.edu/courses/cmps160) fall 2015  
 [View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/index.html) - hosted by the UCSC Baskin School of Engineering. We got [third place](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/)!
 
-If you just want to look at the code, go to [`scripts/`](scripts).
-
 ##How to use
 
 Our program lets the user design a roller coaster track from modular pieces.
