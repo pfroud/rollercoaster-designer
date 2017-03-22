@@ -1,10 +1,10 @@
-#Roller Coaster Designer
+# Roller Coaster Designer
 
 Jonathan Bridge & Peter Froud  
 [CS 160](https://courses.soe.ucsc.edu/courses/cmps160) fall 2015  
 [View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/index.html) - hosted by the UCSC Baskin School of Engineering. We got [third place](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/)!
 
-##How to use
+## How to use
 
 Our program lets the user design a roller coaster track from modular pieces.
 
@@ -14,7 +14,7 @@ Press the play button at the bottom to start or stop the cart moving.
 
 *System requirements:* web browser that supports WebGL. You can see if your broswer supports webGL by going to [https://get.webgl.org/](https://get.webgl.org/).
 
-##Implementation
+## Implementation
 
 The roller coaster you see is a `Track` instance which holds an array of Pieces. Every Piece holds information about its position, rotation, and the mesh to draw. The Track instance also manages insertion and deletion of Pieces.
 
@@ -52,7 +52,7 @@ which is what we want. That example is from [`scripts/constant.js`](https://gith
 We had to rush towards the end. When trying to implement the Cart moving along the track, we learned that arctangent from Javascript's Math class doesn't behave as expected. After a lot of ugly coding, we did eventually manage to get something that has a semblance of working. But the implementation is gross.
 
 
-###Classes
+### Classes
 
 Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
@@ -124,7 +124,7 @@ Other files of note:
 - [`skybox.js`](scripts/skybox.js): makes the skybox around the track, using a shader from a library that comes with three.js. [Source.](http://blog.romanliutikov.com/post/58705840698/skybox-and-environment-map-in-three-js)
 - [`Cart.js`](scripts/Cart.js): the frankenstein’s monster that controls the car. Could be cleaned up a bunch. It’s ugly because we were rushed.
 
-##Novelties
+## Novelties
 
 We began by using 3D models from [Rollercoaster Pre-fab by Adam W](https://3dwarehouse.sketchup.com/collection.html?id=e0bf9bb1c154d8095c9ed170ce1aefed), but weren't really satisfied. We thought it would be better to have total control over the models.
 
@@ -141,13 +141,13 @@ Modelling progression: tube, single strut, strut pattern, bend.
 
 You can access all of the original and intermediate files in [`track 3D models/`](track 3D models).
 
-##Sample output
+## Sample output
 
-###Video
+### Video
 
 You can see a video at the bottom of [this page](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/report/index.html).
 
-###Screenshots
+### Screenshots
 
 
 <p align="center">
