@@ -14,7 +14,7 @@ To change the track that automatically loads, use one of the red X buttons at th
 
 Press the play button at the bottom to start or stop the cart moving.
 
-*System requirements:* web browser that supports WebGL. You can see if your broswer supports webGL by going to [https://get.webgl.org/](https://get.webgl.org/).
+*System requirements:* web browser that supports WebGL. You can see if your browser supports WebGL by going to [https://get.webgl.org/](https://get.webgl.org/).
 
 ## Implementation
 
