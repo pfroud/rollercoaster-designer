@@ -1,10 +1,13 @@
 # Roller Coaster Designer
 
-Jonathan Bridge & Peter Froud  
-[CS 160](https://courses.soe.ucsc.edu/courses/cmps160) fall 2015  
-[View project](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/index.html) - hosted by the UCSC Baskin School of Engineering. We got [third place](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/)!
+By Jonathan Bridge & Peter Froud. Final project for [CM160: Introduction to Computer Graphics](https://courses.soe.ucsc.edu/courses/cmps160) At UC Santa Cruz, fall 2015.
 
-Also viewable at https://pfroud.github.io/rollercoaster-designer, although in a somewhat wonky state.
+<table><tr>
+<td><img src="images-for-readme/screenshot1.jpg" alt="Screenshot of roller coaster designer"></td>
+<td><img src="images-for-readme/screenshot2.jpg" alt="Screenshot of roller coaster designer"></td>
+<td><img src="images-for-readme/screenshot3.jpg" alt="Screenshot of roller coaster designer"></td>
+</tr></table>
+
 
 ## How to use
 
@@ -59,7 +62,7 @@ We had to rush towards the end. When trying to implement the Cart moving along t
 Not actually classes because JS is prototype-based This diagram shows, poorly, how the classes interact:
 
 <p align="center">
-<img src="images-for-readme/classes-diagram.PNG?raw=true" alt="Diagram of Javascript classes">
+<img src="images-for-readme/classes-diagram.PNG" alt="Diagram of Javascript classes">
 </p>
 
 **Track:** the main class of the project
@@ -135,30 +138,11 @@ We used [Autodesk Inventor](http://www.autodesk.com/products/inventor/overview) 
 Modelling progression: tube, single strut, strut pattern, bend.
 
 <p align="center">
-<a href="images-for-readme/cad-screenshot-curve-track.png?raw=true"><img src="images-for-readme/cad-screenshot-curve-track.png?raw=true" alt="Screenshot of curved track cad"></a>
+<img src="images-for-readme/cad-screenshot-curve-track.png" alt="Screenshot of curved track in CAD">
 </p>
-<p align="center">
-<a href="images-for-readme/cad-screenshot-straight-track.png?raw=true"><img src="images-for-readme/cad-screenshot-straight-track.png?raw=true" alt="Screenshot of straight track cad"></a>
-</p>
-
-You can access all of the original and intermediate files in [`track 3D models/`](track 3D models).
-
-## Sample output
-
-### Video
-
-You can see a video at the bottom of [this page](https://classes.soe.ucsc.edu/cmps160/Spring15/projects/pfroud/report/index.html).
-
-### Screenshots
-
 
 <p align="center">
-<img src="images-for-readme/screenshot1.jpg?raw=true" alt="Screenshot 1">
-</p>
-<p align="center">
-<img src="images-for-readme/screenshot2.jpg?raw=true" alt="Screenshot 2">
-</p>
-<p align="center">
-<img src="images-for-readme/screenshot3.jpg?raw=true" alt="Screenshot 3">
+<img src="images-for-readme/cad-screenshot-straight-track.png" alt="Screenshot of straight track in CAD">
 </p>
 
+You can access all of the original and intermediate files in [track 3D models](track%203D%20models) folder.
